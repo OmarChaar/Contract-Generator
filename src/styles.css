@@ -1,1 +1,78 @@
-/* You can add global styles to this file, and also import other style files */
+.title {
+  color: red;
+}
+
+.box {
+  border: 1px solid black;
+  height: 70%;
+  overflow-y: scroll;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  width: 50%;
+  /* display: none; */
+}
+
+/* #content {
+  width: 50%;
+  display: none;
+} */
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  display: table-cell;
+}
+
+.ml {
+  margin-left: 5px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+tr:nth-child(even) td {
+  border-right-color: white;
+}
+
+.download {
+  text-align: center;
+  cursor: pointer;
+  border-right-color: #dddddd !important;
+}
+
+.downloadAll {
+  float: right;
+  font-size: 1.1rem;
+  text-decoration: underline;
+  font-family: system-ui;
+  cursor: pointer;
+}
+
+.downloadAll:hover {
+  color: blue;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.searchBox {
+  border-radius: 5px;
+  border: 1px solid;
+  padding: 0.5rem;
+  width: 50%;
+}
