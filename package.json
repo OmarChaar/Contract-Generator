@@ -4,12 +4,16 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng-packagr -p ng-package.json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
   "private": true,
   "dependencies": {
+    "firebase": "^9.16.0",
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
     "@angular/animations": "^14.0.0",
     "@angular/common": "^14.0.0",
     "@angular/compiler": "^14.0.0",
@@ -20,9 +24,9 @@
     "@angular/router": "^14.0.0",
     "docx": "^7.8.2",
     "file-saver": "^2.0.5",
+    "ng-packagr": "^14.2.2",
     "papaparse": "^5.3.2",
     "rxjs": "~7.5.0",
-    "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
