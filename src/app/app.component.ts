@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import * as Papa from 'papaparse';
 import { ContractService } from './services/contract.service';
-import { Document, Paragraph, TextRun } from "docx";
+import { Document, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from 'file-saver';
 
 declare const Office: any;
@@ -47,7 +47,7 @@ export class AppComponent {
     for(let i=0; i<importJSON.length; i++) {
       let personalization = importJSON[i];
 
-      if(personalization['SALVOU'] == true) {
+      if(personalization['ENVIADO'] == true) {
 
         let currentPersonalization = [];
         for (let key in personalization) {
@@ -122,32 +122,53 @@ export class AppComponent {
   }
 
   download(client: any) {
-    console.log("Client", client);
 
     let title = client.client;
     let fileName = title + ".docx";
     let element = document.getElementById(client.cpfCNPJ);
     if(element) {
-      console.log("element", element);
+
+      let splitByBR = element.innerHTML.split('<br>');
+
+      let children: any[] = [];
+      splitByBR.forEach((el) => {
+        if(el.trim().length > 0) {
+          const trimmedEl = el.split('\n')[1].trim();
+
+          const bold = trimmedEl.match(/<b>(.*?)<\/b>/);
+          const text = trimmedEl.match(/<\/b>(.*)/);
+          if(bold && text) {
+           children.push(
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `${bold[1]}\n`,
+                  bold: true
+                }),
+                new TextRun({
+                  text: `${text[1].replace(/&nbsp;/g, ' ')}`,
+                })
+              ]
+            })
+           )
+          }
+        }
+        else {
+          children.push(new Paragraph({}))
+        }
+
+      })
 
       const doc = new (Document as any)({
         sections: [{
             properties: {},
-            children: [
-              new Paragraph(element.innerHTML)
-            ],
+            children: children,
         }],
       });
 
-      // console.log("DOC", doc);
-      // let doc = new (Document as any)();
-      // let paragraph = new Paragraph(element.innerHTML);
-      // doc.addParagraph(paragraph);
-      // console.log("doc", doc);
-
-      doc.generateBlob({ type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }).then(function (blob: any) {
+      Packer.toBlob(doc).then((blob) => {
         saveAs(blob, fileName);
-      });
+      })
     }
 
   }

@@ -50,7 +50,7 @@ export class ContractService {
         <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'COZINHA - TORNEIRA - PREÇO'))} <br>
         <b>Bitbox - Cozinha / Área De Serviço:</b> ${this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO - ATIVADO') == 'S' ? 'Sim' : 'Não'} <br>
     `;
-    console.log(this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO - ATIVADO') );
+
     if(this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO - ATIVADO') == 'S') {
         div.innerHTML += `
             <b>Bitbox - Cozinha / Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO')} <br>
