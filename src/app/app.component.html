@@ -6,7 +6,7 @@
 
   <div *ngIf="submitted.length > 0">
     <div class="search">
-      <input class="searchBox" type="text" placeholder="Search..." id="search">
+      <input class="searchBox" type="text" placeholder="Search..." id="search" (keyup)="search($event)">
       <span class="downloadAll" id="downloadAll" (click)="downloadAll()">Download All</span>
     </div>
 

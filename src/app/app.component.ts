@@ -14,6 +14,7 @@ declare const Office: any;
 
 export class AppComponent {
 
+  public tempSubmitted: any = [];
   public submitted: any = [];
 
   constructor(
@@ -39,11 +40,20 @@ export class AppComponent {
       this.processJSON(jsonData);
     };
     fileReader.readAsText(fileToRead);
-
+    let upload = document.getElementById('upload') as HTMLInputElement;
+    upload.value = '';
 
   }
 
   processJSON(importJSON: any) {
+    this.submitted = [];
+    this.tempSubmitted = [];
+
+    const content = document.getElementById('content');
+    if (content) {
+      content.innerText = '';
+    }
+
     for(let i=0; i<importJSON.length; i++) {
       let personalization = importJSON[i];
 
@@ -54,6 +64,10 @@ export class AppComponent {
           currentPersonalization.push({key: key, value: personalization[key]});
         }
 
+        const areaPriv = this.getValue(currentPersonalization, 'ÁREA PRIV');
+
+        let tipo = '';
+
         this.submitted.push(
           {
             cpfCNPJ: this.getValue(currentPersonalization, 'CPF / CNPJ'),
@@ -61,6 +75,8 @@ export class AppComponent {
             client: this.getValue(currentPersonalization, 'NOME DO CLIENTE')
           }
         );
+
+        this.tempSubmitted = this.submitted;
 
         const div = document.createElement("div");
         div.id = personalization['CPF / CNPJ'];
@@ -73,33 +89,51 @@ export class AppComponent {
           <b>CLIENTE:</b> ${this.getValue(currentPersonalization, 'NOME DO CLIENTE')} <br>
           <b>CPF/CNPJ:</b> ${this.getValue(currentPersonalization, 'CPF / CNPJ')} <br>
           <b>UNIDADE:</b> ${this.getValue(currentPersonalization, 'APARTAMENTO')} <br>
-          <b>ÁREA PRIV.:</b> ${this.getValue(currentPersonalization, 'ÁREA PRIV')} M<sup>2</sup> <br>
+          <b>ÁREA PRIV.:</b> ${this.getValue(currentPersonalization, 'ÁREA PRIV')} M² <br>
         `;
 
         if(Number(this.getValue(currentPersonalization, 'ÁREA PRIV')) >= 100) {
+          tipo = this.getValue(currentPersonalization, 'TIPO') == 'Tipo 1' ? 'TIPO 1' : 'TIPO 2';
+
           div.innerHTML += `<b>TIPO:</b> ${this.getValue(currentPersonalization, 'TIPO') == 'Tipo 1' ? 'TIPO 1' : 'TIPO 2 - 3 dorms. - sendo 1 suite'} <br>`
         }
 
         this.contractService.setPISOS(div, currentPersonalization);
         this.contractService.setAreaServico(div, currentPersonalization);
+        this.contractService.setAreaServicoETerraco(div, currentPersonalization);
+
         this.contractService.setTerraco(div, currentPersonalization);
+
         this.contractService.setEstar(div, currentPersonalization);
-        this.contractService.setLavabo(div, currentPersonalization);
+        if(Number(areaPriv) >= 100) {
+          this.contractService.setLavabo(div, currentPersonalization);
+        }
+
+
         this.contractService.setSuite1(div, currentPersonalization);
-        this.contractService.setBanho1(div, currentPersonalization);
-        this.contractService.setDorm1(div, currentPersonalization);
-        this.contractService.setDorm2(div, currentPersonalization);
-        this.contractService.setBanho2(div, currentPersonalization);
+        this.contractService.setBanho1(div, currentPersonalization, areaPriv);
+
+        if(Number(areaPriv) >= 100 && tipo == 'TIPO 1') {
+          this.contractService.setSuite2(div, currentPersonalization);
+        }
+
+        if((Number(areaPriv) >= 100 && tipo == 'TIPO 2') || Number(areaPriv) < 100) {
+          this.contractService.setDorm1(div, currentPersonalization);
+        }
+
+        if(Number(areaPriv) >= 100 && tipo == 'TIPO 2') {
+          this.contractService.setDorm2(div, currentPersonalization);
+        }
+
+        this.contractService.setBanho2(div, currentPersonalization, areaPriv);
 
         div.innerHTML += `
             <br>
             <b>Total:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'TOTAL'))} <br>
-            <b>Forma de pagamento:</b> ${this.getValue(currentPersonalization, 'FORMA DE PAGAMENTO')} <br>
+            <b>Forma de pagamento:</b> ${this.getValue(currentPersonalization, 'FORMA DE PAGAMENTO') != null ? this.getValue(currentPersonalization, 'FORMA DE PAGAMENTO') : 'N/A'} <br>
         `;
 
       }
-
-
     }
   }
 
@@ -182,5 +216,16 @@ export class AppComponent {
     Office.context.document.setSelectedDataAsync(content, {coercionType: Office.CoercionType.Html});
   }
 
+  search(event: any) {
 
+    if(event.target.value.length > 0) {
+      this.submitted = this.tempSubmitted.filter((el: any) => {
+        return String(el.client).toLowerCase().indexOf(event.target.value) > -1 || String(el.cpfCNPJ).toLowerCase().indexOf(event.target.value) > -1;
+      });
+    }
+    else {
+      this.submitted =  this.tempSubmitted;
+    }
+
+  }
 }
