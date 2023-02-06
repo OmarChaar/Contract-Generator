@@ -1,5 +1,5 @@
 .title {
-  color: red;
+  color: #474bff;
 }
 
 .box {
@@ -88,4 +88,35 @@ tr:nth-child(even) td {
   border: 1px solid;
   padding: 0.5rem;
   width: 50%;
+}
+
+.loader {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #00000052;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+}
+
+.spinner {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  padding: 1.1px;
+  background: conic-gradient(#0000 10%,#474bff) content-box;
+  -webkit-mask: repeating-conic-gradient(#0000 0deg,#000 1deg 20deg,#0000 21deg 36deg),
+       radial-gradient(farthest-side,#0000 calc(100% - 9px),#000 calc(100% - 9px));
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+  animation: spinner-d55elj 1s infinite steps(10);
+}
+
+@keyframes spinner-d55elj {
+  to {
+     transform: rotate(1turn);
+  }
 }

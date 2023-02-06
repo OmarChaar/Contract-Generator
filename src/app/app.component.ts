@@ -17,6 +17,8 @@ export class AppComponent {
   public tempSubmitted: any = [];
   public submitted: any = [];
 
+  public loading = false;
+
   constructor(
     private http: HttpClient,
     public contractService: ContractService
@@ -25,6 +27,7 @@ export class AppComponent {
   }
 
   handleFileSelect(event: any) {
+    this.loading = true;
     const fileToRead = event.target.files.item(0);
     const fileReader = new FileReader();
 
@@ -143,6 +146,8 @@ export class AppComponent {
 
       }
     }
+
+    this.loading = false;
   }
 
   getValue(arr: any, key: any) {
