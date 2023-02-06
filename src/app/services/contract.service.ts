@@ -13,44 +13,48 @@ export class ContractService {
       <b>COZINHA:</b><br>
       <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - COZINHA')} - ${this.getValue(currentPersonalization, 'PISOS - COZINHA') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - COZINHA - NOME DA OPÇÃO')} cm  <br>
       <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - COZINHA - PREÇO'))} <br>
-      <b>Rodapé:</b> ${ this.getValue(currentPersonalization, 'PISOS - COZINHA - RODAPÉ') == 'S' ? 'Sim' : 'Não'} <br>
+      <b>Rodapé:</b> ${ this.getValue(currentPersonalization, 'PISOS - COZINHA - RODAPÉ') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'PISOS - COZINHA - RODAPÉ') == 'S') {
         div.innerHTML += `
-            <b>Rodapé - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - COZINHA - RODAPÉ - PREÇO'))} <br>
+          <b>Rodapé - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - COZINHA - RODAPÉ - PREÇO'))} <br>
         `;
     }
 
     if(this.getValue(currentPersonalization, 'PAREDE - COZINHA') != null) {
         div.innerHTML += `
-            <b>Revestimento Parede - Opção:</b> ${this.getValue(currentPersonalization, 'PAREDE - COZINHA')} - ${this.getValue(currentPersonalization, 'PAREDE - COZINHA') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PAREDE - COZINHA - NOME DA OPÇÃO')} cm <br>
-            <b>Revestimento Parede - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PAREDE - COZINHA - PREÇO'))} <br>
+          <b>Revestimento Parede - Opção:</b> ${this.getValue(currentPersonalization, 'PAREDE - COZINHA')} - ${this.getValue(currentPersonalization, 'PAREDE - COZINHA') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PAREDE - COZINHA - NOME DA OPÇÃO')} cm <br>
+          <b>Revestimento Parede - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PAREDE - COZINHA - PREÇO'))} <br>
         `;
     }
     else {
-        div.innerHTML += `
-            <b>Revestimento Parede:</b> Sem Revestimento <br>
-        `;
+      div.innerHTML += `
+          <b>Revestimento Parede:</b> Sem Revestimento <br>
+      `;
     }
 
     div.innerHTML += `
-        <b>Bancada Tipo - Opção:</b> ${this.getValue(currentPersonalization, 'COZINHA - BANCADA TIPO')} - ${this.getValue(currentPersonalization, 'COZINHA - BANCADA TIPO - NOME DA OPÇÃO')} cm <br>
-        <b>Revestimento Bancada - Opção:</b> ${this.getValue(currentPersonalization, 'COZINHA - REVESTIMENTO BANCADA')} - ${this.getValue(currentPersonalization, 'COZINHA - REVESTIMENTO BANCADA') <= 2 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'COZINHA - REVESTIMENTO BANCADA - NOME DA OPÇÃO')} <br>
-        <b>Revestimento Bancada - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'COZINHA - REVESTIMENTO BANCADA - PREÇO'))} <br>
-        <b>Cuba - Opção:</b> ${this.getValue(currentPersonalization, 'COZINHA - CUBA')} - ${this.getValue(currentPersonalization, 'COZINHA - CUBA - NOME DA OPÇÃO')} <br>
-        <b>Cuba - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'COZINHA - CUBA - PREÇO'))} <br>
-        <b>Torneira - Opção:</b> ${this.getValue(currentPersonalization, 'COZINHA - TORNEIRA')} - ${this.getValue(currentPersonalization, 'COZINHA - TORNEIRA - NOME DA OPÇÃO')} <br>
-        <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'COZINHA - TORNEIRA - PREÇO'))} <br>
-        <b>Bitbox - Cozinha / Área De Serviço:</b> ${this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO - ATIVADO') == 'S' ? 'Sim' : 'Não'} <br>
+      <b>Bancada Tipo - Opção:</b> ${this.getValue(currentPersonalization, 'COZINHA - BANCADA TIPO')} - ${this.getValue(currentPersonalization, 'COZINHA - BANCADA TIPO - NOME DA OPÇÃO')} cm <br>
+      <b>Revestimento Bancada - Opção:</b> ${this.getValue(currentPersonalization, 'COZINHA - REVESTIMENTO BANCADA')} - ${this.getValue(currentPersonalization, 'COZINHA - REVESTIMENTO BANCADA') <= 2 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'COZINHA - REVESTIMENTO BANCADA - NOME DA OPÇÃO')} <br>
+      <b>Revestimento Bancada - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'COZINHA - REVESTIMENTO BANCADA - PREÇO'))} <br>
+      <b>Cuba - Opção:</b> ${this.getValue(currentPersonalization, 'COZINHA - CUBA')} - ${this.getValue(currentPersonalization, 'COZINHA - CUBA - NOME DA OPÇÃO')} <br>
+      <b>Cuba - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'COZINHA - CUBA - PREÇO'))} <br>
+      <b>Torneira - Opção:</b> ${this.getValue(currentPersonalization, 'COZINHA - TORNEIRA')} - ${this.getValue(currentPersonalization, 'COZINHA - TORNEIRA - NOME DA OPÇÃO')} <br>
+      <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'COZINHA - TORNEIRA - PREÇO'))} <br>
+      <b>Bitbox - Cozinha / Área De Serviço:</b> ${this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO - ATIVADO') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO - ATIVADO') == 'S') {
         div.innerHTML += `
-            <b>Bitbox - Cozinha / Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
-            <b>Bitbox - Cozinha / Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO - PREÇO'))} <br><br>
+          <b>Bitbox - Cozinha / Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
+          <b>Bitbox - Cozinha / Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BITBOX - COZINHA / ÁREA DE SERVIÇO - PREÇO'))} <br>
         `;
     }
+
+    div.innerHTML += `
+      <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br><br>
+    `;
   }
 
   setAreaServico(div: any, currentPersonalization: any) {
@@ -59,7 +63,7 @@ export class ContractService {
       <b>ÁREA DE SERVIÇO:</b><br>
       <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'PISOS - ÁREA DE SERVIÇO') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
       <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - ÁREA DE SERVIÇO - PREÇO'))} <br>
-      <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - ÁREA DE SERVIÇO - RODAPÉ') == 'S' ? 'Sim' : 'Não'} <br>
+      <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - ÁREA DE SERVIÇO - RODAPÉ') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'PISOS - ÁREA DE SERVIÇO - RODAPÉ') == 'S') {
@@ -72,8 +76,6 @@ export class ContractService {
       div.innerHTML += `
         <b>Revestimento Parede - Opção:</b> ${this.getValue(currentPersonalization, 'PAREDE - ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'PAREDE - ÁREA DE SERVIÇO') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PAREDE - ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
         <b>Revestimento Parede - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PAREDE - ÁREA DE SERVIÇO - PREÇO'))} <br>
-
-        <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br>
       `;
     }
     else {
@@ -81,10 +83,6 @@ export class ContractService {
         <b>Revestimento Parede:</b> Sem Revestimento <br>
       `;
     }
-
-    div.innerHTML += `
-      <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br>
-    `;
 
     if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'N') {
 
@@ -94,7 +92,7 @@ export class ContractService {
 
       if(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '1') {
         div.innerHTML += `
-          <b>Tanque:</b> Modelo Padrão - Área de Serviço com Tanque 18L - Deca <br>
+          <b>Tanque:</b> Modelo Padrão - Tanque 18L 50x38cm Branco Gelo - Deca <br>
           <b>Tanque - Preço:</b> ${this.convertPrice('0')} <br>
         `;
       }
@@ -113,10 +111,10 @@ export class ContractService {
 
         `
       }
-
+      console.log("A");
       div.innerHTML += `
-        <b>Torneira Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
-        <b>Torneira Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br><br>
+        <b>Torneira Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - OPÇÃO - NOME DA OPÇÃO')} <br>
+        <b>Torneira Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
       `;
     }
     else if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S' || this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') {
@@ -137,12 +135,16 @@ export class ContractService {
           <b>Revestimento bancada Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - PREÇO'))} <br>
         `;
       }
-
+      console.log("B");
       div.innerHTML += `
-        <b>Torneira Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
-        <b>Torneira Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br><br>
+        <b>Torneira Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} <br>
+        <b>Torneira Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
       `;
     }
+
+    div.innerHTML += `
+      <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br><br>
+    `;
   }
 
   setAreaServicoETerraco(div: any, currentPersonalization: any) {
@@ -168,7 +170,7 @@ export class ContractService {
       <b>TERRAÇO:</b><br>
       <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - TERRAÇO')} - ${this.getValue(currentPersonalization, 'PISOS - TERRAÇO') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - TERRAÇO - NOME DA OPÇÃO')} cm <br>
       <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - TERRAÇO - PREÇO'))} <br>
-      <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - TERRAÇO - RODAPÉ') == 'S' ? 'Sim' : 'Não'} <br>
+      <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - TERRAÇO - RODAPÉ') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'PISOS - TERRAÇO - RODAPÉ') == 'S') {
@@ -189,10 +191,6 @@ export class ContractService {
       `;
     }
 
-    div.innerHTML += `
-      <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br>
-    `;
-
     if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S' || this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') {
       div.innerHTML += `
         <b>Área De Serviço E Terraço - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO - NOME DA OPÇÃO')} cm <br>
@@ -205,13 +203,13 @@ export class ContractService {
         `;
       }
 
-
+      console.log("C");
       if(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '5') {
         div.innerHTML += `
           <b>Tanque Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TANQUE ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TANQUE ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
           <b>Tanque Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TANQUE ÁREA DE SERVIÇO - PREÇO'))} <br>
 
-          <b>Torneira Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm<br>
+          <b>Torneira Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO')}<br>
           <b>Torneira Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
         `;
       }
@@ -225,26 +223,30 @@ export class ContractService {
 
       div.innerHTML += `
         <b>Torneira Kit Churrasqueira - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA KIT CHURRASQUEIRA')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA KIT CHURRASQUEIRA - NOME DA OPÇÃO')} <br>
-        <b>Torneira Kit Churrasqueira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA KIT CHURRASQUEIRA - PREÇO'))} <br><br>
+        <b>Torneira Kit Churrasqueira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA KIT CHURRASQUEIRA - PREÇO'))} <br>
       `;
     }
     else {
       div.innerHTML += '<b>Terraço Sem Bancada</b><br>';
     }
+
+    div.innerHTML += `
+      <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br><br>
+    `;
   }
 
   setEstar(div: any, currentPersonalization: any) {
     div.innerHTML += `
       <br>
       <b>ESTAR / JANTAR / CIRC.:</b><br>
-      <b>Pisos:</b> ${this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - ATIVADO') == 'S' ? 'Sim' : 'Não'} <br>
+      <b>Pisos:</b> ${this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - ATIVADO') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - ATIVADO') == 'S') {
       div.innerHTML += `
         <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC.')} - ${this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC.') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - NOME DA OPÇÃO')} cm <br>
         <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - PREÇO'))} <br>
-        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - RODAPE') == 'S' ? 'Sim' : 'Não'} <br>
+        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
       `;
 
       if(this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - RODAPE') == 'S') {
@@ -255,7 +257,7 @@ export class ContractService {
     }
 
     div.innerHTML += `
-      <b>Baguete - Estar / Terraço:</b> ${this.getValue(currentPersonalization, 'BAGUETE - ESTAR / TERRAÇO - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Não'} <br>
+      <b>Baguete - Estar / Terraço:</b> ${this.getValue(currentPersonalization, 'BAGUETE - ESTAR / TERRAÇO - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'BAGUETE - ESTAR / TERRAÇO - ATIVADO') == 'S') {
@@ -272,7 +274,7 @@ export class ContractService {
       <b>LAVABO:</b><br>
       <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - LAVABO')} - ${this.getValue(currentPersonalization, 'PISOS - LAVABO') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - LAVABO - NOME DA OPÇÃO')} cm <br>
       <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - LAVABO - PREÇO'))} <br>
-      <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - LAVABO - RODAPE') == 'S' ? 'Sim' : 'Não'} <br>
+      <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - LAVABO - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'PISOS - LAVABO - RODAPE') == 'S') {
@@ -297,7 +299,7 @@ export class ContractService {
     div.innerHTML += `
       <br>
       <b>SUÍTE 1:</b><br>
-      <b>Pisos:</b> ${this.getValue(currentPersonalization, 'PISOS - SUÍTE 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Não'} <br>
+      <b>Pisos:</b> ${this.getValue(currentPersonalization, 'PISOS - SUÍTE 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Sem'} <br>
 
     `;
 
@@ -305,7 +307,7 @@ export class ContractService {
       div.innerHTML += `
         <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - SUÍTE 1')} - ${this.getValue(currentPersonalization, 'PISOS - SUÍTE 1') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - SUÍTE 1 - NOME DA OPÇÃO')} cm <br>
         <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - SUÍTE 1 - PREÇO'))} <br>
-        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - SUÍTE 1 - RODAPE') == 'S' ? 'Sim' : 'Não'} <br>
+        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - SUÍTE 1 - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
       `
 
       if(this.getValue(currentPersonalization, 'PISOS - SUÍTE 1 - RODAPE') == 'S') {
@@ -316,7 +318,7 @@ export class ContractService {
     }
 
     div.innerHTML += `
-      <b>Baguete:</b> ${this.getValue(currentPersonalization, 'BAGUETE - SUÍTE 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Não'} <br>
+      <b>Baguete:</b> ${this.getValue(currentPersonalization, 'BAGUETE - SUÍTE 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'BAGUETE - SUÍTE 1 - ATIVADO') == 'S') {
@@ -332,14 +334,14 @@ export class ContractService {
     div.innerHTML += `
       <br>
       <b>SUÍTE 2:</b><br>
-      <b>Pisos:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Não'} <br>
+      <b>Pisos:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - ATIVADO') == 'S') {
       div.innerHTML += `
         <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO')} - ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - NOME DA OPÇÃO')} cm <br>
         <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - PREÇO'))} <br>
-        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S' ? 'Sim' : 'Não'} <br>
+        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
       `;
 
       if(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S') {
@@ -350,7 +352,7 @@ export class ContractService {
     }
 
     div.innerHTML += `
-      <b>Baguete:</b> ${this.getValue(currentPersonalization, 'BAGUETE - DORM 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Não'} <br>
+      <b>Baguete:</b> ${this.getValue(currentPersonalization, 'BAGUETE - DORM 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'BAGUETE - DORM 1 - ATIVADO') == 'S') {
@@ -368,7 +370,7 @@ export class ContractService {
       <b>BANHO 1:</b><br>
       <b>Pisos Banheiro - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - BANHO 1')} - ${this.getValue(currentPersonalization, 'PISOS - BANHO 1') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - BANHO 1 - NOME DA OPÇÃO')} cm <br>
       <b>Pisos Banheiro - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - BANHO 1 - PREÇO'))} <br>
-      <b>Rodapé Banheiro:</b> ${this.getValue(currentPersonalization, 'PISOS - BANHO 1 - RODAPÉ') == 'S' ? 'Sim' : 'Não'} <br>
+      <b>Rodapé Banheiro:</b> ${this.getValue(currentPersonalization, 'PISOS - BANHO 1 - RODAPÉ') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'PISOS - BANHO 1 - RODAPÉ') == 'S') {
@@ -380,7 +382,7 @@ export class ContractService {
     div.innerHTML += `
       <b>Pisos Box - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - BANHO 1 - BOX')} - ${this.getValue(currentPersonalization, 'PISOS - BANHO 1 - BOX') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - BANHO 1 - BOX - NOME DA OPÇÃO')} cm <br>
       <b>Pisos Box - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - BANHO 1 - BOX - PREÇO'))} <br>
-      <b>Rodapé Box:</b> ${this.getValue(currentPersonalization, 'PISOS - BANHO 1 - BOX - RODAPÉ') == 'S' ? 'Sim' : 'Não'} <br>
+      <b>Rodapé Box:</b> ${this.getValue(currentPersonalization, 'PISOS - BANHO 1 - BOX - RODAPÉ') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'PISOS - BANHO 1 - BOX - RODAPÉ') == 'S') {
@@ -407,14 +409,22 @@ export class ContractService {
       <b>Torneira - Opção:</b> ${this.getValue(currentPersonalization, 'BANHO 1 - TORNEIRA')} - ${this.getValue(currentPersonalization, 'BANHO 1 - TORNEIRA - NOME DA OPÇÃO')} <br>
       <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BANHO 1 - TORNEIRA - PREÇO'))} <br>
 
-      <b>Revestimento Parede:</b> ${this.getValue(currentPersonalization, 'PAREDE - COMPLETO OU SOMENTE O BOX') == 'SB' ? 'Somente Box' : 'Completo'} <br>
+      <b>Revestimento Parede:</b> ${this.getValue(currentPersonalization, 'PAREDE - COMPLETO OU SOMENTE O BOX') == 'SB' ? 'Padrão - Somente Box' : 'Completo'} <br>
       <b>Revestimento Parede - Opção:</b> ${this.getValue(currentPersonalization, 'PAREDE - BANHO 1')} - ${this.getValue(currentPersonalization, 'PAREDE - BANHO 1') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PAREDE - BANHO 1 - NOME DA OPÇÃO')} cm <br>
       <b>Revestimento Parede - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PAREDE - BANHO 1 - PREÇO'))} <br>
 
       <b>Ducha - Opção:</b> ${this.getValue(currentPersonalization, 'BANHO 1 - DUCHA')} - ${this.getValue(currentPersonalization, 'BANHO 1 - DUCHA - NOME DA OPÇÃO')} <br>
-      <b>Ducha - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BANHO 1 - DUCHA - PREÇO'))} <br>
 
-      <b>Box - Vidro:</b> ${this.getValue(currentPersonalization, 'BANHO 1 - BOX DE VIDRO') == 'S' ? 'Sim' : 'Não'} <br>
+    `;
+
+    if(this.getValue(currentPersonalization, 'BANHO 1 - DUCHA') > 1) {
+      div.innerHTML += `
+        <b>Ducha - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BANHO 1 - DUCHA - PREÇO'))} <br>
+      `
+    }
+
+    div.innerHTML += `
+      <b>Box - Vidro:</b> ${this.getValue(currentPersonalization, 'BANHO 1 - BOX DE VIDRO') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'BANHO 1 - BOX DE VIDRO') == 'S') {
@@ -425,7 +435,7 @@ export class ContractService {
     }
 
     div.innerHTML += `
-      <b>Bit box - Opção:</b> ${this.getValue(currentPersonalization, 'BIT BOX - BANHO 1')} - ${this.getValue(currentPersonalization, 'BIT BOX - BANHO 1 - NOME DA OPÇÃO')} <br>
+      <b>Bit box - Opção:</b> ${this.getValue(currentPersonalization, 'BIT BOX - BANHO 1')} - ${this.getValue(currentPersonalization, 'BIT BOX - BANHO 1 - NOME DA OPÇÃO')} cm<br>
       <b>Bit box - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BIT BOX - BANHO 1 - PREÇO'))} <br>
 
       <b>Baguete - Opção:</b> ${this.getValue(currentPersonalization, 'BAGUETE - BANHO 1')} - ${this.getValue(currentPersonalization, 'BAGUETE - BANHO 1 - NOME DA OPÇÃO')} cm <br>
@@ -442,7 +452,7 @@ export class ContractService {
       <b>BANHO 2:</b><br>
       <b>Pisos Banheiro - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - BANHO 2')} - ${this.getValue(currentPersonalization, 'PISOS - BANHO 2') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - BANHO 2 - NOME DA OPÇÃO')} cm <br>
       <b>Pisos Banheiro - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - BANHO 2 - PREÇO'))} <br>
-      <b>Rodapé Banheiro:</b> ${this.getValue(currentPersonalization, 'PISOS - BANHO 2 - RODAPÉ') == 'S' ? 'Sim' : 'Não'} <br>
+      <b>Rodapé Banheiro:</b> ${this.getValue(currentPersonalization, 'PISOS - BANHO 2 - RODAPÉ') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'PISOS - BANHO 2 - RODAPÉ') == 'S') {
@@ -454,7 +464,7 @@ export class ContractService {
     div.innerHTML += `
       <b>Pisos Box - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - BANHO 2 - BOX')} - ${this.getValue(currentPersonalization, 'PISOS - BANHO 2 - BOX') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - BANHO 2 - BOX - NOME DA OPÇÃO')} cm <br>
       <b>Pisos Box - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - BANHO 2 - BOX - PREÇO'))} <br>
-      <b>Rodapé Box:</b> ${this.getValue(currentPersonalization, 'PISOS - BANHO 2 - BOX - RODAPÉ') == 'S' ? 'Sim' : 'Não'} <br>
+      <b>Rodapé Box:</b> ${this.getValue(currentPersonalization, 'PISOS - BANHO 2 - BOX - RODAPÉ') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'PISOS - BANHO 2 - BOX - RODAPÉ') == 'S') {
@@ -481,14 +491,21 @@ export class ContractService {
       <b>Torneira - Opção:</b> ${this.getValue(currentPersonalization, 'BANHO 2 - TORNEIRA')} - ${this.getValue(currentPersonalization, 'BANHO 2 - TORNEIRA - NOME DA OPÇÃO')} <br>
       <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BANHO 2 - TORNEIRA - PREÇO'))} <br>
 
-      <b>Revestimento Parede:</b> ${this.getValue(currentPersonalization, 'PAREDE - COMPLETO OU SOMENTE O BOX') == 'SB' ? 'Somente Box' : 'Completo'} <br>
+      <b>Revestimento Parede:</b> ${this.getValue(currentPersonalization, 'PAREDE - COMPLETO OU SOMENTE O BOX') == 'SB' ? 'Padrão - Somente Box' : 'Completo'} <br>
       <b>Revestimento Parede - Opção:</b> ${this.getValue(currentPersonalization, 'PAREDE - BANHO 2')} - ${this.getValue(currentPersonalization, 'PAREDE - BANHO 2') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PAREDE - BANHO 2 - NOME DA OPÇÃO')} cm <br>
       <b>Revestimento Parede - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PAREDE - BANHO 2 - PREÇO'))} <br>
 
       <b>Ducha - Opção:</b> ${this.getValue(currentPersonalization, 'BANHO 2 - DUCHA')} - ${this.getValue(currentPersonalization, 'BANHO 2 - DUCHA - NOME DA OPÇÃO')} <br>
-      <b>Ducha - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BANHO 2 - DUCHA - PREÇO'))} <br>
+    `;
 
-      <b>Box - Vidro:</b> ${this.getValue(currentPersonalization, 'BANHO 2 - BOX DE VIDRO') == 'S' ? 'Sim' : 'Não'} <br>
+    if(this.getValue(currentPersonalization, 'BANHO 2 - DUCHA') > 1) {
+      div.innerHTML += `
+        <b>Ducha - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BANHO 2 - DUCHA - PREÇO'))} <br>
+      `;
+    }
+
+    div.innerHTML += `
+      <b>Box - Vidro:</b> ${this.getValue(currentPersonalization, 'BANHO 2 - BOX DE VIDRO') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'BANHO 2 - BOX DE VIDRO') == 'S') {
@@ -514,14 +531,14 @@ export class ContractService {
     div.innerHTML += `
       <br>
       <b>DORM. 1:</b><br>
-      <b>Pisos:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Não'} <br>
+      <b>Pisos:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - ATIVADO') == 'S') {
       div.innerHTML += `
         <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO')} - ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - NOME DA OPÇÃO')} cm <br>
         <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - PREÇO'))} <br>
-        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S' ? 'Sim' : 'Não'} <br>
+        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
       `;
 
       if(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S') {
@@ -532,7 +549,7 @@ export class ContractService {
     }
 
     div.innerHTML += `
-      <b>Baguete:</b> ${this.getValue(currentPersonalization, 'BAGUETE - DORM 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Não'} <br>
+      <b>Baguete:</b> ${this.getValue(currentPersonalization, 'BAGUETE - DORM 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'BAGUETE - DORM 1 - ATIVADO') == 'S') {
@@ -547,14 +564,14 @@ export class ContractService {
     div.innerHTML += `
       <br>
       <b>DORM. 2:</b><br>
-      <b>Pisos:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Não'} <br>
+      <b>Pisos:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - ATIVADO') == 'S') {
       div.innerHTML += `
         <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO')} - ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - NOME DA OPÇÃO')} cm  <br>
         <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - PREÇO'))} <br>
-        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S' ? 'Sim' : 'Não'} <br>
+        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
       `;
 
       if(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S') {
@@ -565,7 +582,7 @@ export class ContractService {
     }
 
     div.innerHTML += `
-      <b>Baguete:</b> ${this.getValue(currentPersonalization, 'BAGUETE - DORM 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Não'} <br>
+      <b>Baguete:</b> ${this.getValue(currentPersonalization, 'BAGUETE - DORM 1 - ATIVADO') == 'S' ? 'Sim - Personalização' : 'Sem'} <br>
     `;
 
     if(this.getValue(currentPersonalization, 'BAGUETE - DORM 1 - ATIVADO') == 'S') {

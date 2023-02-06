@@ -64,7 +64,7 @@ export class AppComponent {
           currentPersonalization.push({key: key, value: personalization[key]});
         }
 
-        const areaPriv = this.getValue(currentPersonalization, 'ÁREA PRIV');
+        const areaPriv = Number(this.getValue(currentPersonalization, 'ÁREA PRIV'));
 
         let tipo = '';
 
@@ -89,13 +89,14 @@ export class AppComponent {
           <b>CLIENTE:</b> ${this.getValue(currentPersonalization, 'NOME DO CLIENTE')} <br>
           <b>CPF/CNPJ:</b> ${this.getValue(currentPersonalization, 'CPF / CNPJ')} <br>
           <b>UNIDADE:</b> ${this.getValue(currentPersonalization, 'APARTAMENTO')} <br>
-          <b>ÁREA PRIV.:</b> ${this.getValue(currentPersonalization, 'ÁREA PRIV')} M² <br>
+          <b>ÁREA PRIVATIVA:</b> ${this.getValue(currentPersonalization, 'ÁREA PRIV')} M² <br>
         `;
 
-        if(Number(this.getValue(currentPersonalization, 'ÁREA PRIV')) >= 100) {
-          tipo = this.getValue(currentPersonalization, 'TIPO') == 'Tipo 1' ? 'TIPO 1' : 'TIPO 2';
+        if(areaPriv >= 100) {
 
-          div.innerHTML += `<b>TIPO:</b> ${this.getValue(currentPersonalization, 'TIPO') == 'Tipo 1' ? 'TIPO 1' : 'TIPO 2 - 3 dorms. - sendo 1 suite'} <br>`
+          tipo = this.getValue(currentPersonalization, 'TIPO') == 'Tipo 1' ? 'TIPO 1' : 'TIPO 2';
+          console.log("TIPO", tipo);
+          div.innerHTML += `<b>TIPO:</b> ${tipo == 'TIPO 1' ? 'Tipo 1 - 2 Suítes e Living ampliado' : 'TIPO 2 - 3 Dorms. - sendo 1 Suíte'} <br>`
         }
 
         this.contractService.setPISOS(div, currentPersonalization);
