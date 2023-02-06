@@ -8,8 +8,16 @@
   overflow-y: scroll;
   margin-bottom: 2rem;
   margin-top: 2rem;
-  width: 50%;
-  /* display: none; */
+  width: 100%;
+  display: none;
+}
+
+.show {
+  display: block !important;
+}
+
+.hidden {
+  display: none;
 }
 
 /* #content {
@@ -43,6 +51,11 @@ tr:nth-child(even) {
 
 tr:nth-child(even) td {
   border-right-color: white;
+}
+
+.preview {
+  text-align: center;
+  cursor: pointer;
 }
 
 .download {

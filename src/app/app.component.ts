@@ -68,6 +68,8 @@ export class AppComponent {
 
         let tipo = '';
 
+
+
         this.submitted.push(
           {
             cpfCNPJ: this.getValue(currentPersonalization, 'CPF / CNPJ'),
@@ -76,7 +78,12 @@ export class AppComponent {
           }
         );
 
+        this.submitted = this.submitted.sort((a: any, b: any) => {
+          return a.apartamento - b.apartamento;
+        })
+
         this.tempSubmitted = this.submitted;
+
 
         const div = document.createElement("div");
         div.id = personalization['CPF / CNPJ'];
@@ -228,5 +235,28 @@ export class AppComponent {
       this.submitted =  this.tempSubmitted;
     }
 
+  }
+
+  show(id: any) {
+    document.querySelectorAll('.box').forEach((box) => {
+      console.log("box", box.id);
+      box.classList.remove('show');
+      document.getElementById('show_'+box.id)?.classList.remove('hidden');
+      document.getElementById('hide_'+box.id)?.classList.add('hidden');
+    })
+    if(document.getElementById(id)) {
+      document.getElementById(id)?.classList.add('show');
+      document.getElementById('show_'+id)?.classList.add('hidden');
+      document.getElementById('hide_'+id)?.classList.remove('hidden');
+    }
+
+  }
+
+  hide(id: any) {
+    if(document.getElementById(id)) {
+      document.getElementById(id)?.classList.remove('show');
+      document.getElementById('show_'+id)?.classList.remove('hidden');
+      document.getElementById('hide_'+id)?.classList.add('hidden');
+    }
   }
 }
