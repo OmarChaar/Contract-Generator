@@ -95,7 +95,7 @@ export class AppComponent {
         if(areaPriv >= 100) {
 
           tipo = this.getValue(currentPersonalization, 'TIPO') == 'Tipo 1' ? 'TIPO 1' : 'TIPO 2';
-          console.log("TIPO", tipo);
+
           div.innerHTML += `<b>TIPO:</b> ${tipo == 'TIPO 1' ? 'Tipo 1 - 2 Suítes e Living ampliado' : 'TIPO 2 - 3 Dorms. - sendo 1 Suíte'} <br>`
         }
 

@@ -111,7 +111,7 @@ export class ContractService {
 
         `
       }
-      console.log("A");
+
       div.innerHTML += `
         <b>Torneira Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - OPÇÃO - NOME DA OPÇÃO')} <br>
         <b>Torneira Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
@@ -135,7 +135,7 @@ export class ContractService {
           <b>Revestimento bancada Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - PREÇO'))} <br>
         `;
       }
-      console.log("B");
+
       div.innerHTML += `
         <b>Torneira Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} <br>
         <b>Torneira Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
@@ -203,7 +203,6 @@ export class ContractService {
         `;
       }
 
-      console.log("C");
       if(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '5') {
         div.innerHTML += `
           <b>Tanque Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TANQUE ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TANQUE ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
