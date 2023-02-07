@@ -244,7 +244,6 @@ export class AppComponent {
 
   show(id: any) {
     document.querySelectorAll('.box').forEach((box) => {
-      console.log("box", box.id);
       box.classList.remove('show');
       document.getElementById('show_'+box.id)?.classList.remove('hidden');
       document.getElementById('hide_'+box.id)?.classList.add('hidden');
@@ -263,5 +262,25 @@ export class AppComponent {
       document.getElementById('show_'+id)?.classList.remove('hidden');
       document.getElementById('hide_'+id)?.classList.add('hidden');
     }
+  }
+
+  showAll() {
+    document.getElementById('showAll')?.classList.add('hidden');
+    document.getElementById('hideAll')?.classList.remove('hidden');
+    document.querySelectorAll('.box').forEach((box) => {
+      box.classList.add('show');
+      document.getElementById('show_'+box.id)?.classList.add('hidden');
+      document.getElementById('hide_'+box.id)?.classList.remove('hidden');
+    })
+  }
+
+  hideAll() {
+    document.getElementById('showAll')?.classList.remove('hidden');
+    document.getElementById('hideAll')?.classList.add('hidden');
+    document.querySelectorAll('.box').forEach((box) => {
+      box.classList.remove('show');
+      document.getElementById('show_'+box.id)?.classList.remove('hidden');
+      document.getElementById('hide_'+box.id)?.classList.add('hidden');
+    })
   }
 }

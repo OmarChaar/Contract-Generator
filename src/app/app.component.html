@@ -25,7 +25,10 @@
         <th>
           APARTAMENTO
         </th>
-        <th></th>
+        <th style="text-align: center; text-decoration: underline;">
+          <span (click)="showAll()" id="showAll">Show All</span>
+          <span (click)="hideAll()" id="hideAll" class="hidden">Hide All</span>
+        </th>
         <td></td>
       </tr>
       <tbody class="tbody" *ngIf="submitted.length > 0">
