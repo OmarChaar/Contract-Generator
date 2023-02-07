@@ -58,6 +58,8 @@ export class ContractService {
   }
 
   setAreaServico(div: any, currentPersonalization: any) {
+    const kitChurrasqueiraOpcao = Number(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO'))
+
     div.innerHTML += `
       <br>
       <b>ÁREA DE SERVIÇO:</b><br>
@@ -84,10 +86,12 @@ export class ContractService {
       `;
     }
 
+    // NO KIT CHURRASQUEIRA
     if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'N') {
 
       div.innerHTML += `
         <b>Área De Serviço E Terraço - Opção:</b> ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO')} - ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '1' ? 'Padrão' : 'Personalizado'} <br>
+
       `;
 
       if(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '1') {
@@ -99,49 +103,68 @@ export class ContractService {
 
       if(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '2') {
         div.innerHTML += `
-          <b>Tanque Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - CUBA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - CUBA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
-          <b>Tanque Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - CUBA ÁREA DE SERVIÇO - PREÇO'))} <br>
+          <b>Bancada - Opção:</b> Bancada 180x60 cm, Saia 0,04cm, Frontão 0,07cm <br>
+          <b>Revestimento bancada - Opção:</b> ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} <br>
+          <b>Revestimento bancada - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - PREÇO'))} <br>
+          <b>Tanque - Opção:</b> ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - CUBA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - CUBA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
+          <b>Tanque - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - CUBA ÁREA DE SERVIÇO - PREÇO'))} <br>
         `;
-      }
-
-      if(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '2') {
-        div.innerHTML += `
-          <b>Revestimento bancada Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} <br>
-          <b>Revestimento bancada Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - PREÇO'))} <br>
-
-        `
       }
 
       div.innerHTML += `
-        <b>Torneira Área De Serviço - Opção:</b> ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - OPÇÃO - NOME DA OPÇÃO')} <br>
-        <b>Torneira Área De Serviço - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
+        <b>Torneira - Opção:</b> ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - OPÇÃO - NOME DA OPÇÃO')} <br>
+        <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
       `;
     }
+    // YES KIT CHURRASQUEIRA
     else if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S' || this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') {
-      if(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') != '5') {
+      if(kitChurrasqueiraOpcao != 5) {
         div.innerHTML += `
-          <b>Área De Serviço E Terraço - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO')} - Personalizado <br>
+          <b>Área De Serviço E Terraço - Opção:</b> ${kitChurrasqueiraOpcao} - Personalizado <br>
         `;
       }
 
-      if(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '4' || this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '5') {
+      if(kitChurrasqueiraOpcao == 3 ) {
+        div.innerHTML += `
+          <b>Tanque - Opção:</b> Modelo Padrão – Área de Serviço com Tanque 18L - Deca <br>
+          <b>Tanque - Preço:</b> ${this.convertPrice(0)} <br>
+        `;
+      }
+
+      if(kitChurrasqueiraOpcao == 4 ) {
+        div.innerHTML += `
+          <b>Bancada - Opção: </b> Bancada 180x60 cm, Saia 0,04cm, Frontão 0,07cm <br>
+        `;
+      }
+
+      if(kitChurrasqueiraOpcao == 4 || kitChurrasqueiraOpcao == 5) {
         div.innerHTML += `
           <b>Tanque - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TANQUE ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TANQUE ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
           <b>Tanque - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TANQUE ÁREA DE SERVIÇO - PREÇO'))} <br>
         `;
       }
 
-      if(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '4') {
+      if(kitChurrasqueiraOpcao == 4) {
         div.innerHTML += `
           <b>Revestimento bancada - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
           <b>Revestimento bancada - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - PREÇO'))} <br>
         `;
       }
+      if(kitChurrasqueiraOpcao == 3) {
+        div.innerHTML += `
+          <b>Torneira - Opção:</b> 1 - Torneira Longa 1158 Nova Pertutti - Docol <br>
+          <b>Torneira - Preço:</b> ${this.convertPrice(0)} <br>
+        `;
+      }
+      else {
+        div.innerHTML += `
+          <b>Torneira - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} <br>
+          <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
+        `;
+      }
 
-      div.innerHTML += `
-        <b>Torneira - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} <br>
-        <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
-      `;
+
+
     }
 
     div.innerHTML += `
@@ -150,23 +173,22 @@ export class ContractService {
   }
 
   setAreaServicoETerraco(div: any, currentPersonalization: any) {
-    if((this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S' || this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') && this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '5') {
-      div.innerHTML += `
-      <br>
-      <b>ÁREA DE SERVIÇO & TERRAÇO:</b><br>
-    `
+    const kitChurrasqueiraOpcao = this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO');
 
+    if((this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S' || this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') && kitChurrasqueiraOpcao == 5) {
       div.innerHTML += `
-        <b>Bancada Tipo - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO')} - Bancada única com Tanque e Kit Churrasqueira 472 x 60cm <br>
+        <br>
+        <b>ÁREA DE SERVIÇO & TERRAÇO:</b><br>
+        <b>Bancada Tipo - Opção:</b> ${kitChurrasqueiraOpcao} - Bancada única com Tanque e Kit Churrasqueira 472 x 60cm <br>
         <b>Revestimento Bancada - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA - NOME DA OPÇÃO')} cm <br>
         <b>Revestimento Bancada - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA - PREÇO'))} <br><br>
       `;
     }
-
-
   }
 
   setTerraco(div: any, currentPersonalization: any) {
+
+    const kitChurrasqueiraOpcao = Number(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO'))
 
     div.innerHTML += `
       <b>TERRAÇO:</b><br>
@@ -193,33 +215,32 @@ export class ContractService {
       `;
     }
 
+    // YES KIT CHURRASQUEIRA
     if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S' || this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') {
-      if(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') != '5') {
+      if(kitChurrasqueiraOpcao != 5) {
         div.innerHTML += `
-          <b>Área De Serviço E Terraço - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO')} - Personalizado <br>
+          <b>Área De Serviço E Terraço - Opção:</b> ${kitChurrasqueiraOpcao} - Personalizado <br>
         `;
+      }
+      if(kitChurrasqueiraOpcao == 3) {
+        div.innerHTML += `
+          <b>Bancada - Opção: </b> Bancada Kit Churrasqueira 210 x 60cm<br>
+        `
       }
 
 
-      if(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '3' || this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '4') {
+      if(kitChurrasqueiraOpcao == 3 || kitChurrasqueiraOpcao == 4) {
         div.innerHTML += `
+
           <b>Revestimento bancada Kit Churrasqueira - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA KIT CHURRASQUEIRA')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA KIT CHURRASQUEIRA - NOME DA OPÇÃO')} cm <br>
           <b>Revestimento bancada Kit Churrasqueira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA KIT CHURRASQUEIRA - PREÇO'))} <br>
         `;
       }
 
-      if(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '5') {
+      if(kitChurrasqueiraOpcao == 4 || kitChurrasqueiraOpcao == 5 || kitChurrasqueiraOpcao == 3) {
         div.innerHTML += `
-
-          <b>Torneira - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO')}<br>
-          <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
-        `;
-      }
-
-      if(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '4' || this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '5') {
-        div.innerHTML += `
-          <b>Cuba Kit Churrasqueira - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} cm <br>
-          <b>Cuba Kit Churrasqueira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
+          <b>Cuba Kit Churrasqueira - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - CUBA KIT CHURRASQUEIRA')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - CUBA KIT CHURRASQUEIRA - NOME DA OPÇÃO')} cm <br>
+          <b>Cuba Kit Churrasqueira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - CUBA KIT CHURRASQUEIRA - PREÇO'))} <br>
         `;
       }
 
@@ -228,8 +249,13 @@ export class ContractService {
         <b>Torneira Kit Churrasqueira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA KIT CHURRASQUEIRA - PREÇO'))} <br>
       `;
     }
+    // NO KIT CHURRASQUEIRA
     else {
-      div.innerHTML += '<b>Terraço Sem Bancada</b><br>';
+      div.innerHTML += `
+        <b>Área De Serviço E Terraço - Opção:</b> ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO')} - ${this.getValue(currentPersonalization, 'NÃO KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO') == '1' ? 'Padrão' : 'Personalizado'} <br>
+        <b>Terraço Sem Bancada / Kit Churrasqueira</b><br>
+      `;
+
     }
 
     div.innerHTML += `
@@ -395,12 +421,12 @@ export class ContractService {
 
     if(area < 100) {
       div.innerHTML += `
-        <b>Bancada Tipo:</b> Modelo Padrão 70x51 cm, Saia 4 cm, Frontão 7 cm <br>
+        <b>Bancada - Opção:</b> Modelo Padrão 70x51 cm, Saia 4 cm, Frontão 7 cm <br>
       `
     }
     if(area >= 100) {
       div.innerHTML += `
-        <b>Bancada Tipo:</b> Modelo Padrão 70x51 cm, Saia 4 cm, Frontão 7 cm <br>
+        <b>Bancada - Opção:</b> Modelo Padrão 70x51 cm, Saia 4 cm, Frontão 7 cm <br>
       `
     }
 
