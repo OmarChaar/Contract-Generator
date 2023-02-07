@@ -118,6 +118,8 @@ export class ContractService {
     }
     // YES KIT CHURRASQUEIRA
     else if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S' || this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') {
+
+
       if(kitChurrasqueiraOpcao != 5) {
         div.innerHTML += `
           <b>Área De Serviço E Terraço - Opção:</b> ${kitChurrasqueiraOpcao} - Personalizado <br>
@@ -150,18 +152,13 @@ export class ContractService {
           <b>Revestimento bancada - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - PREÇO'))} <br>
         `;
       }
-      if(kitChurrasqueiraOpcao == 3) {
-        div.innerHTML += `
-          <b>Torneira - Opção:</b> 1 - Torneira Longa 1158 Nova Pertutti - Docol <br>
-          <b>Torneira - Preço:</b> ${this.convertPrice(0)} <br>
-        `;
-      }
-      else {
-        div.innerHTML += `
-          <b>Torneira - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} <br>
-          <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
-        `;
-      }
+
+
+
+      div.innerHTML += `
+        <b>Torneira - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO')} <br>
+        <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - PREÇO'))} <br>
+      `;
 
 
 
@@ -175,10 +172,26 @@ export class ContractService {
   setAreaServicoETerraco(div: any, currentPersonalization: any) {
     const kitChurrasqueiraOpcao = this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO');
 
+
     if((this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S' || this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') && kitChurrasqueiraOpcao == 5) {
       div.innerHTML += `
         <br>
         <b>ÁREA DE SERVIÇO & TERRAÇO:</b><br>
+      `;
+
+      if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S') {
+        div.innerHTML += `
+          <b>Kit Churrasqueira – Opção:</b> Já Comprado<br>
+        `;
+      }
+      else if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') {
+        div.innerHTML += `
+          <b>Kit Churrasqueira – Opção:</b> Quero Comprar<br>
+          <b>Kit Churrasqueira – Preço:</b> ${this.convertPrice(8873.51)} <br>
+        `;
+      }
+
+      div.innerHTML += `
         <b>Bancada Tipo - Opção:</b> ${kitChurrasqueiraOpcao} - Bancada única com Tanque e Kit Churrasqueira 472 x 60cm <br>
         <b>Revestimento Bancada - Opção:</b> ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA')} - ${this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA - NOME DA OPÇÃO')} cm <br>
         <b>Revestimento Bancada - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA - PREÇO'))} <br><br>
@@ -217,7 +230,20 @@ export class ContractService {
 
     // YES KIT CHURRASQUEIRA
     if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S' || this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') {
+
+
       if(kitChurrasqueiraOpcao != 5) {
+        if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S') {
+          div.innerHTML += `
+            <b>Kit Churrasqueira – Opção:</b> Já Comprado<br>
+          `;
+        }
+        else if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') {
+          div.innerHTML += `
+            <b>Kit Churrasqueira – Opção:</b> Quero Comprar<br>
+            <b>Kit Churrasqueira – Preço:</b> ${this.convertPrice(8873.51)} <br>
+          `;
+        }
         div.innerHTML += `
           <b>Área De Serviço E Terraço - Opção:</b> ${kitChurrasqueiraOpcao} - Personalizado <br>
         `;

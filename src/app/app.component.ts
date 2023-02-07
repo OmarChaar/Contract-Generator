@@ -141,8 +141,18 @@ export class AppComponent {
         div.innerHTML += `
             <br>
             <b>Total:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'TOTAL'))} <br>
-            <b>Forma de pagamento:</b> ${this.getValue(currentPersonalization, 'FORMA DE PAGAMENTO') != null ? this.getValue(currentPersonalization, 'FORMA DE PAGAMENTO') : 'N/A'} <br>
         `;
+
+        if(this.getValue(currentPersonalization, 'TOTAL') > 0) {
+          div.innerHTML += `
+            <b>Forma de pagamento:</b> ${this.getValue(currentPersonalization, 'FORMA DE PAGAMENTO')} <br>
+          `
+        }
+        else {
+          div.innerHTML += `
+            <b>Forma de pagamento:</b> N/A <br>
+          `
+        }
 
       }
     }
