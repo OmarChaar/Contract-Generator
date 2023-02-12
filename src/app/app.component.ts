@@ -64,10 +64,8 @@ export class AppComponent {
 
     for(let i=0; i<allClients.length; i++) {
       let personalization = allClients[i];
-
+      console.log("personalization", personalization);
       // if(personalization['ENVIADO'] == true) {
-        // console.log("personalization", JSON.parse(JSON.stringify(personalization)));
-        // this.parseDefault(personalization);
         let currentPersonalization = [];
         for (let key in personalization) {
           currentPersonalization.push({key: key, value: personalization[key]});
@@ -81,7 +79,8 @@ export class AppComponent {
           {
             cpfCNPJ: this.getValue(currentPersonalization, 'CPF / CNPJ'),
             apartamento: this.getValue(currentPersonalization, 'APARTAMENTO'),
-            client: this.getValue(currentPersonalization, 'NOME DO CLIENTE')
+            client: this.getValue(currentPersonalization, 'NOME DO CLIENTE'),
+            personalized: personalization.personalized
           }
         );
 
@@ -182,6 +181,7 @@ export class AppComponent {
     for(let i=0; i<importJSON.length; i++) {
       if(client.cpfCNPJ == importJSON[i]['CPF / CNPJ'] && client.apartamento == importJSON[i]['APARTAMENTO'] && importJSON[i]['ENVIADO'] == true) {
         tempClient = importJSON[i];
+        tempClient['personalized'] = true;
         break;
       }
     }
@@ -229,6 +229,9 @@ export class AppComponent {
         temp['APARTAMENTO'] = client.apartamento;
         tempClient = temp;
       }
+
+      tempClient['personalized'] = false;
+
     }
     return tempClient;
   }
