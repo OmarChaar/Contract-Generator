@@ -4,6 +4,8 @@ import * as Papa from 'papaparse';
 import { ContractService } from './services/contract.service';
 import { Document, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from 'file-saver';
+import { ClientsService } from './services/clients.service';
+import { DefaultsService } from './services/defaults.service';
 
 declare const Office: any;
 @Component({
@@ -21,10 +23,10 @@ export class AppComponent {
 
   constructor(
     private http: HttpClient,
-    public contractService: ContractService
-  ) {
-
-  }
+    public contractService: ContractService,
+    private clientsService: ClientsService,
+    private defaultsService: DefaultsService
+  ) {}
 
   handleFileSelect(event: any) {
     this.loading = true;
@@ -48,20 +50,24 @@ export class AppComponent {
 
   }
 
-  processJSON(importJSON: any) {
+  async processJSON(importJSON: any) {
+    // this.setClients(importJSON);
+
     this.submitted = [];
     this.tempSubmitted = [];
+    let allClients: any = await this.parseAll(importJSON);
 
     const content = document.getElementById('content');
     if (content) {
       content.innerText = '';
     }
 
-    for(let i=0; i<importJSON.length; i++) {
-      let personalization = importJSON[i];
+    for(let i=0; i<allClients.length; i++) {
+      let personalization = allClients[i];
 
-      if(personalization['ENVIADO'] == true) {
-
+      // if(personalization['ENVIADO'] == true) {
+        // console.log("personalization", JSON.parse(JSON.stringify(personalization)));
+        // this.parseDefault(personalization);
         let currentPersonalization = [];
         for (let key in personalization) {
           currentPersonalization.push({key: key, value: personalization[key]});
@@ -70,8 +76,6 @@ export class AppComponent {
         const areaPriv = Number(this.getValue(currentPersonalization, 'ÁREA PRIV'));
 
         let tipo = '';
-
-
 
         this.submitted.push(
           {
@@ -154,10 +158,79 @@ export class AppComponent {
           `
         }
 
-      }
+      // }
     }
 
     this.loading = false;
+  }
+
+  parseAll(importJSON: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let parsed = [];
+      for(let client of this.clientsService.clients) {
+
+        parsed.push(this.checkClientSubmitted(client, importJSON));
+      }
+
+      resolve(parsed);
+    })
+  }
+
+  checkClientSubmitted(client: any, importJSON: any) {
+    let tempClient = null;
+
+    for(let i=0; i<importJSON.length; i++) {
+      if(client.cpfCNPJ == importJSON[i]['CPF / CNPJ'] && client.apartamento == importJSON[i]['APARTAMENTO'] && importJSON[i]['ENVIADO'] == true) {
+        tempClient = importJSON[i];
+        break;
+      }
+    }
+
+    if(tempClient == null) {
+      if(client.areaPriv == 100 && client.tipo == 'TIPO 1') {
+        let temp = JSON.parse(JSON.stringify(this.defaultsService.default_100_tipo1));
+        temp['CPF / CNPJ'] = client.cpfCNPJ;
+        temp['NOME DO CLIENTE'] = client.client;
+        temp['APARTAMENTO'] = client.apartamento;
+        tempClient = temp;
+      }
+      else if(client.areaPriv == 100 && client.tipo == 'TIPO 2') {
+        let temp = JSON.parse(JSON.stringify(this.defaultsService.default_100_tipo2));
+        temp['CPF / CNPJ'] = client.cpfCNPJ;
+        temp['NOME DO CLIENTE'] = client.client;
+        temp['APARTAMENTO'] = client.apartamento;
+        tempClient = temp;
+      }
+      else if(client.areaPriv == 124.21 && client.tipo == 'TIPO 1') {
+        let temp = JSON.parse(JSON.stringify(this.defaultsService.default_124_tipo1));
+        temp['CPF / CNPJ'] = client.cpfCNPJ;
+        temp['NOME DO CLIENTE'] = client.client;
+        temp['APARTAMENTO'] = client.apartamento;
+        tempClient = temp;
+      }
+      else if(client.areaPriv == 124.21 && client.tipo == 'TIPO 2') {
+        let temp = JSON.parse(JSON.stringify(this.defaultsService.default_124_tipo2));
+        temp['CPF / CNPJ'] = client.cpfCNPJ;
+        temp['NOME DO CLIENTE'] = client.client;
+        temp['APARTAMENTO'] = client.apartamento;
+        tempClient = temp;
+      }
+      else if(client.areaPriv == 70) {
+        let temp = JSON.parse(JSON.stringify(this.defaultsService.default_70));
+        temp['CPF / CNPJ'] = client.cpfCNPJ;
+        temp['NOME DO CLIENTE'] = client.client;
+        temp['APARTAMENTO'] = client.apartamento;
+        tempClient = temp;
+      }
+      else if(client.areaPriv == 85.83) {
+        let temp = JSON.parse(JSON.stringify(this.defaultsService.default_85));
+        temp['CPF / CNPJ'] = client.cpfCNPJ;
+        temp['NOME DO CLIENTE'] = client.client;
+        temp['APARTAMENTO'] = client.apartamento;
+        tempClient = temp;
+      }
+    }
+    return tempClient;
   }
 
   getValue(arr: any, key: any) {
@@ -293,4 +366,47 @@ export class AppComponent {
       document.getElementById('hide_'+box.id)?.classList.add('hidden');
     })
   }
+
+  // parseDefault(arr: any) {
+  //   let temp = '';
+  //   for (let key in arr) {
+  //     let value: any;
+  //     if(typeof arr[key] === "boolean") {
+  //       value = arr[key];
+  //     }
+  //     else if(typeof arr[key] === "number") {
+  //       value = arr[key];
+  //     }
+  //     else if(typeof arr[key] === "string") {
+  //       value = `'${arr[key]}'`
+  //     }
+  //     else {
+  //       value = `''`;
+  //     }
+  //     temp += `'${key}': ${value},\n`
+  //   }
+
+  //   console.log("temp", temp);
+  // }
+
+  // setClients(importJSON: any) {
+  //   console.log("importJSON", importJSON);
+  //   let clients = [];
+  //   let cleintsSTR = '';
+  //   for(let client of importJSON) {
+  //     clients.push({
+  //       cpfCNPJ: client['CPF / CNPJ'],
+  //       apartamento: client['Unidade'],
+  //       client: client['Cliente'],
+  //       areaPriv: client['Área Priv.'],
+  //       tipo: client['Tipo'],
+  //     })
+
+  //     cleintsSTR += `{\n\tcpfCNPJ: '${client['CPF / CNPJ']}',\n\tapartamento: ${client['Unidade']},\n\tclient: '${client['Cliente']}',\n\tareaPriv: ${client['Área Priv.']},\n\ttipo: '${client['Tipo']}',\n},\n`;
+  //   }
+
+  //   // console.log("clients", (JSON.stringify(clients)));
+
+  //   console.log(cleintsSTR)
+  // }
 }
