@@ -52,9 +52,9 @@ export class ContractService {
         `;
     }
 
-    div.innerHTML += `
-      <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br><br>
-    `;
+    // div.innerHTML += `
+    //   <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br><br>
+    // `;
   }
 
   setAreaServico(div: any, currentPersonalization: any) {
@@ -164,9 +164,9 @@ export class ContractService {
 
     }
 
-    div.innerHTML += `
-      <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br><br>
-    `;
+    // div.innerHTML += `
+    //   <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br><br>
+    // `;
   }
 
   setAreaServicoETerraco(div: any, currentPersonalization: any) {
@@ -284,9 +284,9 @@ export class ContractService {
 
     }
 
-    div.innerHTML += `
-      <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br><br>
-    `;
+    // div.innerHTML += `
+    //   <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br><br>
+    // `;
   }
 
   setEstar(div: any, currentPersonalization: any) {
@@ -345,8 +345,10 @@ export class ContractService {
       <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'LAVABO - TORNEIRA - PREÇO'))} <br>
       <b>Baguete - Opção:</b> ${this.getValue(currentPersonalization, 'BAGUETE - LAVABO')} - ${this.getValue(currentPersonalization, 'BAGUETE - LAVABO - NOME DA OPÇÃO')} cm <br>
       <b>Baguete - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BAGUETE - LAVABO - PREÇO'))} <br>
-      <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br>
+
     `;
+
+     // <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br>
   }
 
   setSuite1(div: any, currentPersonalization: any) {
@@ -494,10 +496,10 @@ export class ContractService {
 
       <b>Baguete - Opção:</b> ${this.getValue(currentPersonalization, 'BAGUETE - BANHO 1')} - ${this.getValue(currentPersonalization, 'BAGUETE - BANHO 1 - NOME DA OPÇÃO')} cm <br>
       <b>Baguete - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BAGUETE - BANHO 1 - PREÇO'))} <br>
-      <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br>
+
     `;
 
-
+    // <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br>
   }
 
   setBanho2(div: any, currentPersonalization: any, area: any) {
@@ -575,9 +577,9 @@ export class ContractService {
 
       <b>Baguete - Opção:</b> ${this.getValue(currentPersonalization, 'BAGUETE - BANHO 2')} - ${this.getValue(currentPersonalization, 'BAGUETE - BANHO 2 - NOME DA OPÇÃO')} cm <br>
       <b>Baguete - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BAGUETE - BANHO 2 - PREÇO'))} <br>
-      <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br>
-    `;
 
+    `;
+      // <b>Acabamento Registro:</b> Padrão - Acabamento para Registro 1/2, 3/4 E 1 Pq Max-Cromado - Docol <br>
 
   }
 
@@ -645,6 +647,26 @@ export class ContractService {
         <b>Baguete - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BAGUETE - DORM 1 - PREÇO'))} <br>
       `;
     }
+  }
+
+  setLINHA(div: any, currentPersonalization: any) {
+    div.innerHTML += `
+      <br>
+      <b>LINHA FRIGORÍGENA:</b><br>
+    `;
+
+     if(this.getValue(currentPersonalization, 'LINHA FRIGORÍGENA - OPÇÃO') == 1) {
+        div.innerHTML += `
+          <b>Opção:</b> Padrão – Sem linha frigorígena, apenas com dreno <br>
+           <b>Preço:</b> ${this.convertPrice(0)} <br>
+        `;
+     }
+     else if(this.getValue(currentPersonalization, 'LINHA FRIGORÍGENA - OPÇÃO') == 2) {
+        div.innerHTML += `
+          <b>Opção:</b> Personalizado – Com linha frigorígena: instalações de tubulação e fiações para recebimento de ar condicionado (sem aparelho). Ambientes que vão receber a carga: Suíte 1 e Estar/jantar <br>
+          <b>Preço:</b> ${this.convertPrice(4998)} <br>
+        `;
+     }
   }
 
   getValue(arr: any, key: any) {

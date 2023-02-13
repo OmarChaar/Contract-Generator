@@ -141,6 +141,8 @@ export class AppComponent {
 
         this.contractService.setBanho2(div, currentPersonalization, areaPriv);
 
+        this.contractService.setLINHA(div, currentPersonalization);
+
         div.innerHTML += `
             <br>
             <b>Total:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'TOTAL'))} <br>
