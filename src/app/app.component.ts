@@ -6,6 +6,7 @@ import { Document, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from 'file-saver';
 import { ClientsService } from './services/clients.service';
 import { DefaultsService } from './services/defaults.service';
+import * as JSZip from 'jszip';
 
 declare const Office: any;
 @Component({
@@ -26,7 +27,9 @@ export class AppComponent {
     public contractService: ContractService,
     private clientsService: ClientsService,
     private defaultsService: DefaultsService
-  ) {}
+  ) {
+
+  }
 
   handleFileSelect(event: any) {
     this.loading = true;
@@ -64,7 +67,6 @@ export class AppComponent {
 
     for(let i=0; i<allClients.length; i++) {
       let personalization = allClients[i];
-      console.log("personalization", personalization);
       // if(personalization['ENVIADO'] == true) {
         let currentPersonalization = [];
         for (let key in personalization) {
@@ -189,28 +191,28 @@ export class AppComponent {
     }
 
     if(tempClient == null) {
-      if(client.areaPriv == 100 && client.tipo == 'TIPO 1') {
+      if(client.areaPriv == 100 && client.tipo == 'Tipo 1') {
         let temp = JSON.parse(JSON.stringify(this.defaultsService.default_100_tipo1));
         temp['CPF / CNPJ'] = client.cpfCNPJ;
         temp['NOME DO CLIENTE'] = client.client;
         temp['APARTAMENTO'] = client.apartamento;
         tempClient = temp;
       }
-      else if(client.areaPriv == 100 && client.tipo == 'TIPO 2') {
+      else if(client.areaPriv == 100 && client.tipo == 'Tipo 2') {
         let temp = JSON.parse(JSON.stringify(this.defaultsService.default_100_tipo2));
         temp['CPF / CNPJ'] = client.cpfCNPJ;
         temp['NOME DO CLIENTE'] = client.client;
         temp['APARTAMENTO'] = client.apartamento;
         tempClient = temp;
       }
-      else if(client.areaPriv == 124.21 && client.tipo == 'TIPO 1') {
+      else if(client.areaPriv == 124.21 && client.tipo == 'Tipo 1') {
         let temp = JSON.parse(JSON.stringify(this.defaultsService.default_124_tipo1));
         temp['CPF / CNPJ'] = client.cpfCNPJ;
         temp['NOME DO CLIENTE'] = client.client;
         temp['APARTAMENTO'] = client.apartamento;
         tempClient = temp;
       }
-      else if(client.areaPriv == 124.21 && client.tipo == 'TIPO 2') {
+      else if(client.areaPriv == 124.21 && client.tipo == 'Tipo 2') {
         let temp = JSON.parse(JSON.stringify(this.defaultsService.default_124_tipo2));
         temp['CPF / CNPJ'] = client.cpfCNPJ;
         temp['NOME DO CLIENTE'] = client.client;
@@ -256,60 +258,136 @@ export class AppComponent {
     return formatter.format(price);
   }
 
-  download(client: any) {
+  downloadWithCallback(client: any) {
+    this.download(client, (blob: Blob) => {
+      // Handle the blob here
+    });
+  }
 
-    let title = client.client;
+  download(client: any, callback: (blob: Blob) => void) {
+    let title = client.apartamento + '_' + client.client;
     let fileName = title + ".docx";
     let element = document.getElementById(client.cpfCNPJ);
-    if(element) {
-
+    if (element) {
       let splitByBR = element.innerHTML.split('<br>');
 
       let children: any[] = [];
       splitByBR.forEach((el) => {
-        if(el.trim().length > 0) {
+        if (el.trim().length > 0) {
           const trimmedEl = el.split('\n')[1].trim();
 
           const bold = trimmedEl.match(/<b>(.*?)<\/b>/);
           const text = trimmedEl.match(/<\/b>(.*)/);
-          if(bold && text) {
-           children.push(
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `${bold[1]}\n`,
-                  bold: true
-                }),
-                new TextRun({
-                  text: `${text[1].replace(/&nbsp;/g, ' ')}`,
-                })
-              ]
-            })
-           )
+          if (bold && text) {
+            children.push(
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `${bold[1]}\n`,
+                    bold: true,
+                  }),
+                  new TextRun({
+                    text: `${text[1].replace(/&nbsp;/g, ' ')}`,
+                  }),
+                ],
+              })
+            );
           }
+        } else {
+          children.push(new Paragraph({}));
         }
-        else {
-          children.push(new Paragraph({}))
-        }
-
-      })
+      });
 
       const doc = new (Document as any)({
-        sections: [{
+        sections: [
+          {
             properties: {},
             children: children,
-        }],
+          },
+        ],
+      });
+
+      Packer.toBlob(doc).then((blob) => {
+        callback(blob);
+      });
+    }
+  }
+
+  downloadSingle(client: any) {
+    let title = client.apartamento + '_' + client.client;
+    let fileName = title + ".docx";
+    let element = document.getElementById(client.cpfCNPJ);
+    if (element) {
+      let splitByBR = element.innerHTML.split('<br>');
+
+      let children: any[] = [];
+      splitByBR.forEach((el) => {
+        if (el.trim().length > 0) {
+          const trimmedEl = el.split('\n')[1].trim();
+
+          const bold = trimmedEl.match(/<b>(.*?)<\/b>/);
+          const text = trimmedEl.match(/<\/b>(.*)/);
+          if (bold && text) {
+            children.push(
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `${bold[1]}\n`,
+                    bold: true,
+                  }),
+                  new TextRun({
+                    text: `${text[1].replace(/&nbsp;/g, ' ')}`,
+                  }),
+                ],
+              })
+            );
+          }
+        } else {
+          children.push(new Paragraph({}));
+        }
+      });
+
+      const doc = new (Document as any)({
+        sections: [
+          {
+            properties: {},
+            children: children,
+          },
+        ],
       });
 
       Packer.toBlob(doc).then((blob) => {
         saveAs(blob, fileName);
-      })
+      });
     }
-
   }
 
   downloadAll() {
+    this.loading = true;
 
+    const zip = new JSZip();
+    const promises = [];
+
+    for (let client of this.submitted) {
+      const title = client.apartamento + '_' + client.client;
+      const fileName = title + ".docx";
+
+      promises.push(
+        new Promise((resolve) => {
+          this.download(client, (blob) => {
+            zip.file(fileName, blob);
+            resolve(true);
+          });
+        })
+      );
+    }
+
+    Promise.all(promises).then(() => {
+      zip.generateAsync({ type: 'blob' }).then((blob: any) => {
+        saveAs(blob, 'download.zip');
+        this.loading = false;
+      });
+    });
   }
 
   async insertDivIntoWord(content: string) {
