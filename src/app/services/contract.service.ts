@@ -466,11 +466,22 @@ export class ContractService {
       <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BANHO 1 - TORNEIRA - PREÇO'))} <br>
 
       <b>Revestimento Parede:</b> ${this.getValue(currentPersonalization, 'PAREDE - COMPLETO OU SOMENTE O BOX') == 'SB' ? 'Padrão - Somente Box' : 'Completo'} <br>
-      <b>Revestimento Parede - Opção:</b> ${this.getValue(currentPersonalization, 'PAREDE - BANHO 1')} - ${this.getValue(currentPersonalization, 'PAREDE - BANHO 1') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PAREDE - BANHO 1 - NOME DA OPÇÃO')} cm <br>
-      <b>Revestimento Parede - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PAREDE - BANHO 1 - PREÇO'))} <br>
+      <b>Revestimento Parede Banheiro - Opção:</b> ${this.getValue(currentPersonalization, 'PAREDE - BANHO 1 - BOX')} - ${this.getValue(currentPersonalization, 'PAREDE - BANHO 1 - BOX') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PAREDE - BANHO 1 - BOX - NOME DA OPÇÃO')} cm <br>
+      <b>Revestimento Parede Banheiro - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PAREDE - BANHO 1 - BOX - PREÇO'))} <br>
 
+
+
+    `;
+
+    if(this.getValue(currentPersonalization, 'PAREDE - COMPLETO OU SOMENTE O BOX') == 'C') {
+      div.innerHTML += `
+        <b>Revestimento Parede Box - Opção:</b> ${this.getValue(currentPersonalization, 'PAREDE - BANHEIRO - BANHO 1')} - ${this.getValue(currentPersonalization, 'PAREDE - BANHEIRO - BANHO 1') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PAREDE - BANHEIRO - BANHO 1 - NOME DA OPÇÃO')} cm <br>
+        <b>Revestimento Parede Box - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PAREDE - BANHEIRO - BANHO 1 - PREÇO'))} <br>
+      `
+    }
+
+    div.innerHTML += `
       <b>Ducha - Opção:</b> ${this.getValue(currentPersonalization, 'BANHO 1 - DUCHA')} - ${this.getValue(currentPersonalization, 'BANHO 1 - DUCHA - NOME DA OPÇÃO')} <br>
-
     `;
 
     if(this.getValue(currentPersonalization, 'BANHO 1 - DUCHA') > 1) {
@@ -548,9 +559,20 @@ export class ContractService {
       <b>Torneira - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'BANHO 2 - TORNEIRA - PREÇO'))} <br>
 
       <b>Revestimento Parede:</b> ${this.getValue(currentPersonalization, 'PAREDE - COMPLETO OU SOMENTE O BOX') == 'SB' ? 'Padrão - Somente Box' : 'Completo'} <br>
-      <b>Revestimento Parede - Opção:</b> ${this.getValue(currentPersonalization, 'PAREDE - BANHO 2')} - ${this.getValue(currentPersonalization, 'PAREDE - BANHO 2') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PAREDE - BANHO 2 - NOME DA OPÇÃO')} cm <br>
-      <b>Revestimento Parede - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PAREDE - BANHO 2 - PREÇO'))} <br>
+      <b>Revestimento Parede Banheiro - Opção:</b> ${this.getValue(currentPersonalization, 'PAREDE - BANHO 2 - BOX')} - ${this.getValue(currentPersonalization, 'PAREDE - BANHO 2 - BOX') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PAREDE - BANHO 2 - BOX - NOME DA OPÇÃO')} cm <br>
+      <b>Revestimento Parede Banheiro - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PAREDE - BANHO 2 - BOX - PREÇO'))} <br>
 
+
+    `;
+
+    if(this.getValue(currentPersonalization, 'PAREDE - COMPLETO OU SOMENTE O BOX') == 'C') {
+      div.innerHTML += `
+        <b>Revestimento Parede Box - Opção:</b> ${this.getValue(currentPersonalization, 'PAREDE - BANHEIRO - BANHO 2')} - ${this.getValue(currentPersonalization, 'PAREDE - BANHEIRO - BANHO 2') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PAREDE - BANHEIRO - BANHO 2 - NOME DA OPÇÃO')} cm <br>
+        <b>Revestimento Parede Box - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PAREDE - BANHEIRO - BANHO 2 - PREÇO'))} <br>
+      `
+    }
+
+    div.innerHTML += `
       <b>Ducha - Opção:</b> ${this.getValue(currentPersonalization, 'BANHO 2 - DUCHA')} - ${this.getValue(currentPersonalization, 'BANHO 2 - DUCHA - NOME DA OPÇÃO')} <br>
     `;
 

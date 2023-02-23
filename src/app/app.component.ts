@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import * as Papa from 'papaparse';
 import { ContractService } from './services/contract.service';
-import { Document, ImageRun, Packer, Paragraph, TextRun } from "docx";
+import { Document, Footer, HeaderFooterType, ImageRun, Packer, PageMargin, PageOrientation, Paragraph, SectionType, TextRun } from "docx";
 import { saveAs } from 'file-saver';
 import { ClientsService } from './services/clients.service';
 import { DefaultsService } from './services/defaults.service';
 import * as JSZip from 'jszip';
-import { updatePrefix } from 'typescript';
+
 
 declare const Office: any;
 @Component({
@@ -30,6 +30,11 @@ export class AppComponent {
     private defaultsService: DefaultsService
   ) {
 
+
+  }
+
+  async urlToBlob(url: any) {
+    return (await fetch(url)).blob();
   }
 
   handleFileSelect(event: any) {
@@ -69,108 +74,102 @@ export class AppComponent {
     for(let i=0; i<allClients.length; i++) {
       let personalization = allClients[i];
       // if(personalization['ENVIADO'] == true) {
-        let currentPersonalization = [];
-        for (let key in personalization) {
-          currentPersonalization.push({key: key, value: personalization[key]});
+      let currentPersonalization = [];
+      for (let key in personalization) {
+        currentPersonalization.push({key: key, value: personalization[key]});
+      }
+
+      const areaPriv = Number(this.getValue(currentPersonalization, 'ÁREA PRIV'));
+
+      let tipo = '';
+
+      this.submitted.push(
+        {
+          cpfCNPJ: this.getValue(currentPersonalization, 'CPF / CNPJ'),
+          apartamento: this.getValue(currentPersonalization, 'APARTAMENTO'),
+          client: this.getValue(currentPersonalization, 'NOME DO CLIENTE'),
+          area: this.getValue(currentPersonalization, 'ÁREA PRIV'),
+          tipo: this.getValue(currentPersonalization, 'TIPO') ? this.getValue(currentPersonalization, 'TIPO') : null,
+          personalized: personalization.personalized
         }
+      );
 
-        const areaPriv = Number(this.getValue(currentPersonalization, 'ÁREA PRIV'));
+      this.submitted = this.submitted.sort((a: any, b: any) => {
+        return a.apartamento - b.apartamento;
+      })
 
-        let tipo = '';
-
-        this.submitted.push(
-          {
-            cpfCNPJ: this.getValue(currentPersonalization, 'CPF / CNPJ'),
-            apartamento: this.getValue(currentPersonalization, 'APARTAMENTO'),
-            client: this.getValue(currentPersonalization, 'NOME DO CLIENTE'),
-            area: this.getValue(currentPersonalization, 'ÁREA PRIV'),
-            tipo: this.getValue(currentPersonalization, 'TIPO') ? this.getValue(currentPersonalization, 'TIPO') : null,
-            personalized: personalization.personalized
-          }
-        );
-
-        this.submitted = this.submitted.sort((a: any, b: any) => {
-          return a.apartamento - b.apartamento;
-        })
-
-        this.tempSubmitted = this.submitted;
+      this.tempSubmitted = this.submitted;
 
 
-        const div = document.createElement("div");
-        div.id = personalization['CPF / CNPJ'];
-        div.classList.add('box');
-        div.setAttribute('class', 'box');
+      const div = document.createElement("div");
+      div.id = personalization['CPF / CNPJ'];
+      div.classList.add('box');
+      div.setAttribute('class', 'box');
 
-        document.getElementById('content')?.appendChild(div);
+      document.getElementById('content')?.appendChild(div);
 
+      div.innerHTML += `
+        <b>CLIENTE:</b> ${this.getValue(currentPersonalization, 'NOME DO CLIENTE')} <br>
+        <b>CPF/CNPJ:</b> ${this.getValue(currentPersonalization, 'CPF / CNPJ')} <br>
+        <b>UNIDADE:</b> ${this.getValue(currentPersonalization, 'APARTAMENTO')} <br>
+        <b>ÁREA PRIVATIVA:</b> ${this.getValue(currentPersonalization, 'ÁREA PRIV')} M² <br>
+      `;
+
+      if(areaPriv >= 100) {
+
+        tipo = this.getValue(currentPersonalization, 'TIPO') == 'Tipo 1' ? 'TIPO 1' : 'TIPO 2';
+
+        div.innerHTML += `<b>TIPO:</b> ${tipo == 'TIPO 1' ? 'Tipo 1 - 2 Suítes e Living ampliado' : 'TIPO 2 - 3 Dorms. - sendo 1 Suíte'} <br>`
+      }
+
+      div.innerHTML += `<br><b>Definições de Acabamentos:</b>`
+
+      this.contractService.setPISOS(div, currentPersonalization);
+      this.contractService.setAreaServico(div, currentPersonalization);
+      this.contractService.setAreaServicoETerraco(div, currentPersonalization);
+
+      this.contractService.setTerraco(div, currentPersonalization);
+
+      this.contractService.setEstar(div, currentPersonalization);
+      if(Number(areaPriv) >= 100) {
+        this.contractService.setLavabo(div, currentPersonalization);
+      }
+
+
+      this.contractService.setSuite1(div, currentPersonalization);
+      this.contractService.setBanho1(div, currentPersonalization, areaPriv);
+
+      if(Number(areaPriv) >= 100 && tipo == 'TIPO 1') {
+        this.contractService.setSuite2(div, currentPersonalization);
+      }
+
+      if((Number(areaPriv) >= 100 && tipo == 'TIPO 2') || Number(areaPriv) < 100) {
+        this.contractService.setDorm1(div, currentPersonalization);
+      }
+
+      if(Number(areaPriv) >= 100 && tipo == 'TIPO 2') {
+        this.contractService.setDorm2(div, currentPersonalization);
+      }
+
+      this.contractService.setBanho2(div, currentPersonalization, areaPriv);
+
+      this.contractService.setLINHA(div, currentPersonalization);
+
+      div.innerHTML += `
+          <br>
+          <b>Total:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'TOTAL'))} <br>
+      `;
+
+      if(this.getValue(currentPersonalization, 'TOTAL') > 0) {
         div.innerHTML += `
-          <b>CLIENTE:</b> ${this.getValue(currentPersonalization, 'NOME DO CLIENTE')} <br>
-          <b>CPF/CNPJ:</b> ${this.getValue(currentPersonalization, 'CPF / CNPJ')} <br>
-          <b>UNIDADE:</b> ${this.getValue(currentPersonalization, 'APARTAMENTO')} <br>
-          <b>ÁREA PRIVATIVA:</b> ${this.getValue(currentPersonalization, 'ÁREA PRIV')} M² <br>
-        `;
-
-        if(areaPriv >= 100) {
-
-          tipo = this.getValue(currentPersonalization, 'TIPO') == 'Tipo 1' ? 'TIPO 1' : 'TIPO 2';
-
-          div.innerHTML += `<b>TIPO:</b> ${tipo == 'TIPO 1' ? 'Tipo 1 - 2 Suítes e Living ampliado' : 'TIPO 2 - 3 Dorms. - sendo 1 Suíte'} <br>`
-        }
-
-        this.addImageHTML(div, areaPriv, tipo);
-
-        div.innerHTML += `<b>Definições de Acabamentos:</b> <br>`
-
-        this.contractService.setPISOS(div, currentPersonalization);
-        this.contractService.setAreaServico(div, currentPersonalization);
-        this.contractService.setAreaServicoETerraco(div, currentPersonalization);
-
-        this.contractService.setTerraco(div, currentPersonalization);
-
-        this.contractService.setEstar(div, currentPersonalization);
-        if(Number(areaPriv) >= 100) {
-          this.contractService.setLavabo(div, currentPersonalization);
-        }
-
-
-        this.contractService.setSuite1(div, currentPersonalization);
-        this.contractService.setBanho1(div, currentPersonalization, areaPriv);
-
-        if(Number(areaPriv) >= 100 && tipo == 'TIPO 1') {
-          this.contractService.setSuite2(div, currentPersonalization);
-        }
-
-        if((Number(areaPriv) >= 100 && tipo == 'TIPO 2') || Number(areaPriv) < 100) {
-          this.contractService.setDorm1(div, currentPersonalization);
-        }
-
-        if(Number(areaPriv) >= 100 && tipo == 'TIPO 2') {
-          this.contractService.setDorm2(div, currentPersonalization);
-        }
-
-        this.contractService.setBanho2(div, currentPersonalization, areaPriv);
-
-        this.contractService.setLINHA(div, currentPersonalization);
-
+          <b>Forma de pagamento:</b> ${this.getValue(currentPersonalization, 'FORMA DE PAGAMENTO')} <br>
+        `
+      }
+      else {
         div.innerHTML += `
-            <br>
-            <b>Total:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'TOTAL'))} <br>
-        `;
-
-        if(this.getValue(currentPersonalization, 'TOTAL') > 0) {
-          div.innerHTML += `
-            <b>Forma de pagamento:</b> ${this.getValue(currentPersonalization, 'FORMA DE PAGAMENTO')} <br>
-          `
-        }
-        else {
-          div.innerHTML += `
-            <b>Forma de pagamento:</b> N/A <br>
-          `
-        }
-
-        this.addSignatureHTML(div);
-
-      // }
+          <b>Forma de pagamento:</b> N/A <br>
+        `
+      }
     }
 
     this.loading = false;
@@ -274,8 +273,6 @@ export class AppComponent {
   }
 
   async download(client: any, callback: (blob: Blob) => void) {
-    console.log("client", client);
-
     let title = client.apartamento + '_' + client.client;
     let fileName = title + ".docx";
     let element = document.getElementById(client.cpfCNPJ);
@@ -285,10 +282,7 @@ export class AppComponent {
       let children: any[] = [];
       for (const el of splitByBR) {
         if (el.trim().length > 0) {
-          if(el.includes('<img') && !el.includes('signature')) {
-            await this.addImage(children, client);
-          }
-          else if(el.includes('Definições de Acabamentos')) {
+          if(el.includes('Definições de Acabamentos')) {
             children.push(
               new Paragraph({
                 children: [
@@ -301,7 +295,7 @@ export class AppComponent {
             );
           }
           else {
-            const trimmedEl = el.split('\n')[1].trim();
+            const trimmedEl = el.trim();
 
             const bold = trimmedEl.match(/<b>(.*?)<\/b>/);
             const text = trimmedEl.match(/<\/b>(.*)/);
@@ -310,7 +304,7 @@ export class AppComponent {
                 new Paragraph({
                   children: [
                     new TextRun({
-                      text: `${bold[1]}\n`,
+                      text: `${bold[1]}`,
                       bold: true,
                     }),
                     new TextRun({
@@ -326,7 +320,7 @@ export class AppComponent {
         }
       };
 
-      await this.addSignature(children);
+      const plans = await this.addPlans(client);
 
       const doc = new (Document as any)({
         sections: [
@@ -334,6 +328,32 @@ export class AppComponent {
             properties: {},
             children: children,
           },
+          {
+            properties: {
+              type: SectionType.NEXT_PAGE,
+            },
+            children: [
+              new Paragraph({
+                children: [
+                  new ImageRun({
+                    data: plans,
+                    transformation: {
+                      width: (8.27 * 72 * 1.334),
+                      height: (11.69 * 72 * 1.334),
+                    },
+                    floating: {
+                      horizontalPosition: {
+                        offset: 0,
+                      },
+                      verticalPosition: {
+                        offset: 0,
+                      },
+                    },
+                  })
+                ],
+              })
+            ]
+          }
         ],
       });
 
@@ -352,18 +372,13 @@ export class AppComponent {
       let splitByBR = element.innerHTML.split('<br>');
       let children: any[] = [];
       for (const el of splitByBR) {
-
         if (el.trim().length > 0) {
-          if(el.includes('<img') && !el.includes('signature')) {
-            await this.addImage(children, client);
-          }
-          else if(el.includes('Definições de Acabamentos')) {
+          if(el.includes('Definições de Acabamentos')) {
             children.push(
               new Paragraph({
                 children: [
                   new TextRun({
                     text: `Definições de Acabamentos:\n`,
-
                     bold: true,
                   })
                 ],
@@ -371,7 +386,8 @@ export class AppComponent {
             );
           }
           else {
-            const trimmedEl = el.split('\n')[1].trim();
+            const trimmedEl = el.trim();
+
             const bold = trimmedEl.match(/<b>(.*?)<\/b>/);
             const text = trimmedEl.match(/<\/b>(.*)/);
             if (bold && text) {
@@ -385,6 +401,7 @@ export class AppComponent {
                     new TextRun({
                       text: `${text[1].replace(/&nbsp;/g, ' ')}`,
                     }),
+
                   ],
                 })
               );
@@ -396,7 +413,8 @@ export class AppComponent {
         }
       };
 
-      await this.addSignature(children);
+
+      const plans = await this.addPlans(client);
 
       const doc = new (Document as any)({
         sections: [
@@ -404,17 +422,33 @@ export class AppComponent {
             properties: {},
             children: children,
           },
-        ],
-        pageSize: {
-          width: 595,
-          height: 842,
-        },
-        margin: {
-          top: 36,
-          bottom: 36,
-          left: 36,
-          right: 36,
-        },
+          {
+            properties: {
+              type: SectionType.NEXT_PAGE,
+            },
+            children: [
+              new Paragraph({
+                children: [
+                  new ImageRun({
+                    data: plans,
+                    transformation: {
+                      width: (8.27 * 72 * 1.334),
+                      height: (11.69 * 72 * 1.334),
+                    },
+                    floating: {
+                      horizontalPosition: {
+                        offset: 0,
+                      },
+                      verticalPosition: {
+                        offset: 0,
+                      },
+                    },
+                  })
+                ],
+              })
+            ]
+          }
+        ]
       });
 
       Packer.toBlob(doc).then((blob) => {
@@ -423,121 +457,32 @@ export class AppComponent {
     }
   }
 
-  addImageHTML(div: any, area: any, tipo: any) {
+  async addPlans(client: any){
 
-    if(area == 100 && tipo == 'TIPO 1') {
-      div.innerHTML += `<img src='../assets/imgs/100_tipo1.jpg' width='50%'/> <br>`;
-    }
-    else if(area == 100 && tipo == 'TIPO 2') {
-      div.innerHTML += `<img src='../assets/imgs/100_tipo2.jpg' width='50%'/> <br>`;
-    }
-    else if(area == 124.21 && tipo == 'TIPO 1') {
-      div.innerHTML += `<img src='../assets/imgs/124_tipo1.jpg' width='50%'/> <br>`;
-    }
-    else if(area == 124.21 && tipo == 'TIPO 2') {
-      div.innerHTML += `<img src='../assets/imgs/124_tipo2.jpg' width='50%'/> <br>`;
-    }
-    else if(area == 85.83) {
-      div.innerHTML += `<img src='../assets/imgs/85.jpg' width='50%'/> <br>`;
-    }
-    else if(area == 70) {
-      div.innerHTML += `<img src='../assets/imgs/70.jpg' width='50%'/> <br>`;
-    }
-  }
+      let planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+      let planArrayBuffer = await planBlob.arrayBuffer();
 
-  async addImage(children: any, client: any): Promise<any> {
-    return new Promise(async (resolve, reject) => {
-      let img;
+      return planArrayBuffer;
 
       if(client.area == 100 && client.tipo == 'Tipo 1') {
-        img = await this.loadImage('../assets/imgs/100_tipo1.jpg');
+        // img = await this.loadImage('../assets/imgs/100_tipo1.jpg');
       }
       else if(client.area == 100 && client.tipo == 'Tipo 2') {
-        img = await this.loadImage('../assets/imgs/100_tipo2.jpg');
+        // img = await this.loadImage('../assets/imgs/100_tipo2.jpg');
       }
       else if(client.area == 124.21 && client.tipo == 'Tipo 1') {
-        img = await this.loadImage('../assets/imgs/124_tipo1.jpg');
+        // img = await this.loadImage('../assets/imgs/124_tipo1.jpg');
       }
       else if(client.area == 124.21 && client.tipo == 'Tipo 2') {
-        img = await this.loadImage('../assets/imgs/124_tipo2.jpg');
+        // img = await this.loadImage('../assets/imgs/124_tipo2.jpg');
       }
       else if(client.area == 85.83) {
-        img = await this.loadImage('../assets/imgs/85.jpg');
+        // img = await this.loadImage('../assets/imgs/85.jpg');
       }
       else if(client.area == 70) {
-        img = await this.loadImage('../assets/imgs/70.jpg');
+        // img = await this.loadImage('../assets/imgs/70.jpg');
       }
-
-      const canvas = document.createElement('canvas');
-      canvas.width = 600;
-      canvas.height = 600;
-      let ctx = canvas.getContext('2d');
-      if(ctx != null) {
-        ctx.drawImage(img as CanvasImageSource, 0, 0, 600, 600);
-        const imageData = canvas.toDataURL('image/jpg');
-        children.push(
-          new Paragraph({
-            children: [
-              new ImageRun({
-                data: imageData,
-                transformation: {
-                  height: 600,
-                  width: 600
-                }
-              })
-            ],
-          })
-        );
-
-        resolve(true);
-      }
-    })
-  }
-
-  addSignatureHTML(div: any) {
-    div.innerHTML += `<img src='../assets/imgs/signature.jpg' width='100%'/> <br>`;
-  }
-
-  async addSignature(children: any): Promise<any> {
-    return new Promise(async (resolve, reject) => {
-      const img = await this.loadImage('../assets/imgs/signature.jpg');
-
-      const imgWidth = 600;
-      const imgHeight = 100;
-
-      const canvas = document.createElement('canvas');
-      canvas.width = imgWidth;
-      canvas.height = imgHeight;
-      let ctx = canvas.getContext('2d');
-      if(ctx != null) {
-        ctx.drawImage(img as CanvasImageSource, 0, 0, imgWidth, imgHeight);
-        const imageData = canvas.toDataURL('image/jpg');
-        children.push(
-          new Paragraph({
-            children: [
-              new ImageRun({
-                data: imageData,
-                transformation: {
-                  height: imgHeight,
-                  width: imgWidth,
-                }
-              })
-            ],
-          })
-        );
-
-        resolve(true);
-      }
-    });
-  }
-
-  loadImage(src: any) {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = reject;
-      img.src = src;
-    });
+    // })
   }
 
   downloadAll() {
