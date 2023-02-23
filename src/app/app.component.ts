@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import * as Papa from 'papaparse';
 import { ContractService } from './services/contract.service';
-import { Document, Footer, HeaderFooterType, ImageRun, Packer, PageMargin, PageOrientation, Paragraph, SectionType, TextRun } from "docx";
+import { Document, ImageRun, Packer, Paragraph, SectionType, TextRun } from "docx";
 import { saveAs } from 'file-saver';
 import { ClientsService } from './services/clients.service';
 import { DefaultsService } from './services/defaults.service';
@@ -59,12 +59,14 @@ export class AppComponent {
 
   }
 
+  public parsedClients: any;
   async processJSON(importJSON: any) {
     // this.setClients(importJSON);
 
     this.submitted = [];
     this.tempSubmitted = [];
     let allClients: any = await this.parseAll(importJSON);
+    this.parsedClients = await this.parseAll(importJSON);
 
     const content = document.getElementById('content');
     if (content) {
@@ -458,31 +460,128 @@ export class AppComponent {
   }
 
   async addPlans(client: any){
+    console.log("client", client);
+    let planBlob: any;
 
-      let planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
-      let planArrayBuffer = await planBlob.arrayBuffer();
+    const aptEnding = client.apartamento.toString();
+    const lastChar = aptEnding.charAt(aptEnding.length - 1);
 
-      return planArrayBuffer;
+    // Not the first floor
+    if(client.apartamento > 19) {
+      if(lastChar == '1') {
+        // area: 100
+        if(client.tipo == 'Tipo 1') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+        else if(client.tipo == 'Tipo 2') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+      }
+      else if(lastChar == '2') {
+        // area: 100
+        if(client.tipo == 'Tipo 1') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+        else if(client.tipo == 'Tipo 2') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+      }
+      else if(lastChar == '3') {
+        // area: 70
+        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+      }
+      else if(lastChar == '4') {
+        // area: 70
+        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+      }
+      else if(lastChar == '5') {
+        // area: 70
+        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+      }
+      else if(lastChar == '6') {
+        // area: 70
+        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+      }
+      else if(lastChar == '7') {
+        // area: 100
+        if(client.tipo == 'Tipo 1') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+        else if(client.tipo == 'Tipo 2') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+      }
+      else if(lastChar == '8') {
+        // area: 100
+        if(client.tipo == 'Tipo 1') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+        else if(client.tipo == 'Tipo 2') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+      }
+    }
+    else {
+      if(lastChar == '1') {
+        // area: 128
+        if(client.tipo == 'Tipo 1') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+        else if(client.tipo == 'Tipo 2') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+      }
+      else if(lastChar == '2') {
+        // area: 128
+        if(client.tipo == 'Tipo 1') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+        else if(client.tipo == 'Tipo 2') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+      }
+      else if(lastChar == '3') {
+        // area: 85
+        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+      }
+      else if(lastChar == '4') {
+        // area: 85
+        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+      }
+      else if(lastChar == '5') {
+        // area: 85
+        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+      }
+      else if(lastChar == '6') {
+        // area: 85
+        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+      }
+      else if(lastChar == '7') {
+        // area: 128
+        if(client.tipo == 'Tipo 1') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+        else if(client.tipo == 'Tipo 2') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+      }
+      else if(lastChar == '8') {
+        // area: 128
+        if(client.tipo == 'Tipo 1') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+        else if(client.tipo == 'Tipo 2') {
+          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        }
+      }
+    }
 
-      if(client.area == 100 && client.tipo == 'Tipo 1') {
-        // img = await this.loadImage('../assets/imgs/100_tipo1.jpg');
-      }
-      else if(client.area == 100 && client.tipo == 'Tipo 2') {
-        // img = await this.loadImage('../assets/imgs/100_tipo2.jpg');
-      }
-      else if(client.area == 124.21 && client.tipo == 'Tipo 1') {
-        // img = await this.loadImage('../assets/imgs/124_tipo1.jpg');
-      }
-      else if(client.area == 124.21 && client.tipo == 'Tipo 2') {
-        // img = await this.loadImage('../assets/imgs/124_tipo2.jpg');
-      }
-      else if(client.area == 85.83) {
-        // img = await this.loadImage('../assets/imgs/85.jpg');
-      }
-      else if(client.area == 70) {
-        // img = await this.loadImage('../assets/imgs/70.jpg');
-      }
-    // })
+
+
+    let planArrayBuffer = await planBlob.arrayBuffer();
+
+    return planArrayBuffer;
+
   }
 
   downloadAll() {
@@ -522,7 +621,7 @@ export class AppComponent {
 
     if(event.target.value.length > 0) {
       this.submitted = this.tempSubmitted.filter((el: any) => {
-        return String(el.client).toLowerCase().indexOf(event.target.value) > -1 || String(el.cpfCNPJ).toLowerCase().indexOf(event.target.value) > -1;
+        return String(el.client).toLowerCase().indexOf(event.target.value) > -1 || String(el.cpfCNPJ).toLowerCase().indexOf(event.target.value) > -1 || String(el.apartamento).toLowerCase().indexOf(event.target.value) > -1;
       });
     }
     else {
@@ -571,6 +670,40 @@ export class AppComponent {
       document.getElementById('show_'+box.id)?.classList.remove('hidden');
       document.getElementById('hide_'+box.id)?.classList.add('hidden');
     })
+  }
+
+  generateCVS() {
+    console.log("generateCVS parsedClients", this.parsedClients);
+    for(let personalization of this.parsedClients) {
+
+      const pisosObj = this.setObjs("PISOS", personalization);
+      // console.log("pisosObj", pisosObj);
+
+      const paredeObj = this.setObjs("PAREDE", personalization);
+      // console.log("paredeObj", paredeObj);
+
+      const bagueteObj = this.setObjs("BAGUETE", personalization);
+      // console.log("bagueteObj", bagueteObj);
+    }
+  }
+
+  setObjs(type: any, personalization: any) {
+    let tempObj: any = {
+      "NOME DO CLIENTE": personalization['NOME DO CLIENTE'],
+      "CPF / CNPJ": personalization['CPF / CNPJ'],
+      "APARTAMENTO": personalization['APARTAMENTO']
+    };
+    for (let key in personalization) {
+      if(type == "PISOS" && key.includes(type) && key.includes("RODAPÉ") && !key.includes("RODAPÉ - PREÇO") ) {
+        tempObj[key] = personalization[key];
+      }
+
+      if(key.includes(type) && key.includes("NOME DA OPÇÃO")) {
+        tempObj[key.replace(" - NOME DA OPÇÃO", '')] = personalization[key];
+      }
+    }
+
+    return tempObj;
   }
 
   // parseDefault(arr: any) {
