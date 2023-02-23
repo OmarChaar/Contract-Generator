@@ -8,7 +8,6 @@ import { ClientsService } from './services/clients.service';
 import { DefaultsService } from './services/defaults.service';
 import * as JSZip from 'jszip';
 
-
 declare const Office: any;
 @Component({
   selector: 'app-root',
@@ -674,17 +673,30 @@ export class AppComponent {
 
   generateCVS() {
     console.log("generateCVS parsedClients", this.parsedClients);
+
+    let pisosArray = [];
+    let paredeArray = [];
+    let baguetesArray = [];
+
     for(let personalization of this.parsedClients) {
 
       const pisosObj = this.setObjs("PISOS", personalization);
+      pisosArray.push(pisosObj);
       // console.log("pisosObj", pisosObj);
 
       const paredeObj = this.setObjs("PAREDE", personalization);
+      paredeArray.push(paredeObj);
       // console.log("paredeObj", paredeObj);
 
       const bagueteObj = this.setObjs("BAGUETE", personalization);
+      baguetesArray.push(bagueteObj);
       // console.log("bagueteObj", bagueteObj);
     }
+
+    // console.log(pisosArray, paredeArray, baguetesArray);
+    this.exportToCsv(pisosArray, 'Pisos');
+    // this.exportToCsv(paredeArray, 'Parede');
+    // this.exportToCsv(baguetesArray, 'Baguete');
   }
 
   setObjs(type: any, personalization: any) {
@@ -704,6 +716,23 @@ export class AppComponent {
     }
 
     return tempObj;
+  }
+
+  exportToCsv(data: any, title: any) {
+    const csv = Papa.unparse(data);
+    const filename = title+'.csv';
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+
+    const link = document.createElement('a');
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', filename);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   }
 
   // parseDefault(arr: any) {

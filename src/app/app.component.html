@@ -12,6 +12,7 @@
     <div class="search">
       <input class="searchBox" type="text" placeholder="Procurar..." id="search" (keyup)="search($event)">
       <span class="downloadAll" id="downloadAll" (click)="downloadAll()">Download Todos</span>
+      <span class="downloadAll" id="downloadAll" (click)="generateCVS()">Generate</span>
     </div>
 
     <table id="table">
@@ -76,6 +77,4 @@
   </div>
 
   <div id="content"></div>
-
-  <img>
 </body>
