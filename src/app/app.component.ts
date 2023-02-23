@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import * as Papa from 'papaparse';
 import { ContractService } from './services/contract.service';
-import { Document, Packer, Paragraph, TextRun } from "docx";
+import { Document, ImageRun, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from 'file-saver';
 import { ClientsService } from './services/clients.service';
 import { DefaultsService } from './services/defaults.service';
 import * as JSZip from 'jszip';
+import { updatePrefix } from 'typescript';
 
 declare const Office: any;
 @Component({
@@ -82,6 +83,8 @@ export class AppComponent {
             cpfCNPJ: this.getValue(currentPersonalization, 'CPF / CNPJ'),
             apartamento: this.getValue(currentPersonalization, 'APARTAMENTO'),
             client: this.getValue(currentPersonalization, 'NOME DO CLIENTE'),
+            area: this.getValue(currentPersonalization, 'ÁREA PRIV'),
+            tipo: this.getValue(currentPersonalization, 'TIPO') ? this.getValue(currentPersonalization, 'TIPO') : null,
             personalized: personalization.personalized
           }
         );
@@ -113,6 +116,10 @@ export class AppComponent {
 
           div.innerHTML += `<b>TIPO:</b> ${tipo == 'TIPO 1' ? 'Tipo 1 - 2 Suítes e Living ampliado' : 'TIPO 2 - 3 Dorms. - sendo 1 Suíte'} <br>`
         }
+
+        this.addImageHTML(div, areaPriv, tipo);
+
+        div.innerHTML += `<b>Definições de Acabamentos:</b> <br>`
 
         this.contractService.setPISOS(div, currentPersonalization);
         this.contractService.setAreaServico(div, currentPersonalization);
@@ -160,6 +167,8 @@ export class AppComponent {
             <b>Forma de pagamento:</b> N/A <br>
           `
         }
+
+        this.addSignatureHTML(div);
 
       // }
     }
@@ -264,7 +273,9 @@ export class AppComponent {
     });
   }
 
-  download(client: any, callback: (blob: Blob) => void) {
+  async download(client: any, callback: (blob: Blob) => void) {
+    console.log("client", client);
+
     let title = client.apartamento + '_' + client.client;
     let fileName = title + ".docx";
     let element = document.getElementById(client.cpfCNPJ);
@@ -272,31 +283,50 @@ export class AppComponent {
       let splitByBR = element.innerHTML.split('<br>');
 
       let children: any[] = [];
-      splitByBR.forEach((el) => {
+      for (const el of splitByBR) {
         if (el.trim().length > 0) {
-          const trimmedEl = el.split('\n')[1].trim();
-
-          const bold = trimmedEl.match(/<b>(.*?)<\/b>/);
-          const text = trimmedEl.match(/<\/b>(.*)/);
-          if (bold && text) {
+          if(el.includes('<img') && !el.includes('signature')) {
+            await this.addImage(children, client);
+          }
+          else if(el.includes('Definições de Acabamentos')) {
             children.push(
               new Paragraph({
                 children: [
                   new TextRun({
-                    text: `${bold[1]}\n`,
+                    text: `Definições de Acabamentos:\n`,
                     bold: true,
-                  }),
-                  new TextRun({
-                    text: `${text[1].replace(/&nbsp;/g, ' ')}`,
-                  }),
+                  })
                 ],
               })
             );
           }
+          else {
+            const trimmedEl = el.split('\n')[1].trim();
+
+            const bold = trimmedEl.match(/<b>(.*?)<\/b>/);
+            const text = trimmedEl.match(/<\/b>(.*)/);
+            if (bold && text) {
+              children.push(
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: `${bold[1]}\n`,
+                      bold: true,
+                    }),
+                    new TextRun({
+                      text: `${text[1].replace(/&nbsp;/g, ' ')}`,
+                    })
+                  ],
+                })
+              );
+            }
+          }
         } else {
           children.push(new Paragraph({}));
         }
-      });
+      };
+
+      await this.addSignature(children);
 
       const doc = new (Document as any)({
         sections: [
@@ -313,39 +343,60 @@ export class AppComponent {
     }
   }
 
-  downloadSingle(client: any) {
+  async downloadSingle(client: any) {
+
     let title = client.apartamento + '_' + client.client;
     let fileName = title + ".docx";
     let element = document.getElementById(client.cpfCNPJ);
     if (element) {
       let splitByBR = element.innerHTML.split('<br>');
-
       let children: any[] = [];
-      splitByBR.forEach((el) => {
-        if (el.trim().length > 0) {
-          const trimmedEl = el.split('\n')[1].trim();
+      for (const el of splitByBR) {
 
-          const bold = trimmedEl.match(/<b>(.*?)<\/b>/);
-          const text = trimmedEl.match(/<\/b>(.*)/);
-          if (bold && text) {
+        if (el.trim().length > 0) {
+          if(el.includes('<img') && !el.includes('signature')) {
+            await this.addImage(children, client);
+          }
+          else if(el.includes('Definições de Acabamentos')) {
             children.push(
               new Paragraph({
                 children: [
                   new TextRun({
-                    text: `${bold[1]}\n`,
+                    text: `Definições de Acabamentos:\n`,
+
                     bold: true,
-                  }),
-                  new TextRun({
-                    text: `${text[1].replace(/&nbsp;/g, ' ')}`,
-                  }),
+                  })
                 ],
               })
             );
           }
+          else {
+            const trimmedEl = el.split('\n')[1].trim();
+            const bold = trimmedEl.match(/<b>(.*?)<\/b>/);
+            const text = trimmedEl.match(/<\/b>(.*)/);
+            if (bold && text) {
+              children.push(
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: `${bold[1]}`,
+                      bold: true,
+                    }),
+                    new TextRun({
+                      text: `${text[1].replace(/&nbsp;/g, ' ')}`,
+                    }),
+                  ],
+                })
+              );
+            }
+          }
+
         } else {
           children.push(new Paragraph({}));
         }
-      });
+      };
+
+      await this.addSignature(children);
 
       const doc = new (Document as any)({
         sections: [
@@ -354,12 +405,139 @@ export class AppComponent {
             children: children,
           },
         ],
+        pageSize: {
+          width: 595,
+          height: 842,
+        },
+        margin: {
+          top: 36,
+          bottom: 36,
+          left: 36,
+          right: 36,
+        },
       });
 
       Packer.toBlob(doc).then((blob) => {
         saveAs(blob, fileName);
       });
     }
+  }
+
+  addImageHTML(div: any, area: any, tipo: any) {
+
+    if(area == 100 && tipo == 'TIPO 1') {
+      div.innerHTML += `<img src='../assets/imgs/100_tipo1.jpg' width='50%'/> <br>`;
+    }
+    else if(area == 100 && tipo == 'TIPO 2') {
+      div.innerHTML += `<img src='../assets/imgs/100_tipo2.jpg' width='50%'/> <br>`;
+    }
+    else if(area == 124.21 && tipo == 'TIPO 1') {
+      div.innerHTML += `<img src='../assets/imgs/124_tipo1.jpg' width='50%'/> <br>`;
+    }
+    else if(area == 124.21 && tipo == 'TIPO 2') {
+      div.innerHTML += `<img src='../assets/imgs/124_tipo2.jpg' width='50%'/> <br>`;
+    }
+    else if(area == 85.83) {
+      div.innerHTML += `<img src='../assets/imgs/85.jpg' width='50%'/> <br>`;
+    }
+    else if(area == 70) {
+      div.innerHTML += `<img src='../assets/imgs/70.jpg' width='50%'/> <br>`;
+    }
+  }
+
+  async addImage(children: any, client: any): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      let img;
+
+      if(client.area == 100 && client.tipo == 'Tipo 1') {
+        img = await this.loadImage('../assets/imgs/100_tipo1.jpg');
+      }
+      else if(client.area == 100 && client.tipo == 'Tipo 2') {
+        img = await this.loadImage('../assets/imgs/100_tipo2.jpg');
+      }
+      else if(client.area == 124.21 && client.tipo == 'Tipo 1') {
+        img = await this.loadImage('../assets/imgs/124_tipo1.jpg');
+      }
+      else if(client.area == 124.21 && client.tipo == 'Tipo 2') {
+        img = await this.loadImage('../assets/imgs/124_tipo2.jpg');
+      }
+      else if(client.area == 85.83) {
+        img = await this.loadImage('../assets/imgs/85.jpg');
+      }
+      else if(client.area == 70) {
+        img = await this.loadImage('../assets/imgs/70.jpg');
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 600;
+      canvas.height = 600;
+      let ctx = canvas.getContext('2d');
+      if(ctx != null) {
+        ctx.drawImage(img as CanvasImageSource, 0, 0, 600, 600);
+        const imageData = canvas.toDataURL('image/jpg');
+        children.push(
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: imageData,
+                transformation: {
+                  height: 600,
+                  width: 600
+                }
+              })
+            ],
+          })
+        );
+
+        resolve(true);
+      }
+    })
+  }
+
+  addSignatureHTML(div: any) {
+    div.innerHTML += `<img src='../assets/imgs/signature.jpg' width='100%'/> <br>`;
+  }
+
+  async addSignature(children: any): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      const img = await this.loadImage('../assets/imgs/signature.jpg');
+
+      const imgWidth = 600;
+      const imgHeight = 100;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = imgWidth;
+      canvas.height = imgHeight;
+      let ctx = canvas.getContext('2d');
+      if(ctx != null) {
+        ctx.drawImage(img as CanvasImageSource, 0, 0, imgWidth, imgHeight);
+        const imageData = canvas.toDataURL('image/jpg');
+        children.push(
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: imageData,
+                transformation: {
+                  height: imgHeight,
+                  width: imgWidth,
+                }
+              })
+            ],
+          })
+        );
+
+        resolve(true);
+      }
+    });
+  }
+
+  loadImage(src: any) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
   }
 
   downloadAll() {

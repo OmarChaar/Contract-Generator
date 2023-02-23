@@ -11,6 +11,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^9.16.0",
+    "fs": "^0.0.1-security",
     "jszip": "^3.10.1",
     "tslib": "^2.3.0"
   },
