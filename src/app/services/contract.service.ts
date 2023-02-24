@@ -204,7 +204,7 @@ export class ContractService {
     const kitChurrasqueiraOpcao = Number(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO'))
 
     div.innerHTML += `
-      <b>TERRAÇO:</b><br>
+      <br><b>TERRAÇO:</b><br>
       <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - TERRAÇO')} - ${this.getValue(currentPersonalization, 'PISOS - TERRAÇO') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - TERRAÇO - NOME DA OPÇÃO')} cm <br>
       <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - TERRAÇO - PREÇO'))} <br>
       <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - TERRAÇO - RODAPÉ') == 'S' ? 'Sim' : 'Sem'} <br>
@@ -296,9 +296,21 @@ export class ContractService {
       <b>Pisos:</b> ${this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - ATIVADO') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
+    let pisosExtra = '';
+    if(this.getValue(currentPersonalization, 'PISOS - EXTRA') == 'NÃO (OP.1)') {
+      pisosExtra = 'Op. 1 - sem piso a mais';
+    }
+    else if(this.getValue(currentPersonalization, 'PISOS - EXTRA') == 'OP. 2') {
+      pisosExtra = 'Op. 2 - 2m² a mais';
+    }
+    else if(this.getValue(currentPersonalization, 'PISOS - EXTRA') == 'OP. 3') {
+      pisosExtra = 'Op. 3 - 4m² a mais';
+    }
+
     if(this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - ATIVADO') == 'S') {
       div.innerHTML += `
         <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC.')} - ${this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC.') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - NOME DA OPÇÃO')} cm <br>
+        <b>Pisos Extra - Opção:</b> ${pisosExtra} <br>
         <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - PREÇO'))} <br>
         <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - ESTAR / JANTAR / CIRC. - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
       `;

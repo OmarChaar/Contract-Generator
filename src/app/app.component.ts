@@ -27,10 +27,7 @@ export class AppComponent {
     public contractService: ContractService,
     private clientsService: ClientsService,
     private defaultsService: DefaultsService
-  ) {
-
-
-  }
+  ) {}
 
   async urlToBlob(url: any) {
     return (await fetch(url)).blob();
@@ -123,7 +120,7 @@ export class AppComponent {
         div.innerHTML += `<b>TIPO:</b> ${tipo == 'TIPO 1' ? 'Tipo 1 - 2 Suítes e Living ampliado' : 'TIPO 2 - 3 Dorms. - sendo 1 Suíte'} <br>`
       }
 
-      div.innerHTML += `<br><b>Definições de Acabamentos:</b>`
+      div.innerHTML += `<br><b>Definições de Acabamentos:</b><br>`
 
       this.contractService.setPISOS(div, currentPersonalization);
       this.contractService.setAreaServico(div, currentPersonalization);
@@ -695,24 +692,34 @@ export class AppComponent {
     }
 
     // console.log(pisosArray, paredeArray, baguetesArray);
-    await this.exportToCsv(pisosArray, 'Pisos');
-    await this.exportToCsv(paredeArray, 'Parede');
-    await this.exportToCsv(baguetesArray, 'Baguete');
+    await this.exportToCsv(this.sortByUnidade(pisosArray), 'Pisos');
+    await this.exportToCsv(this.sortByUnidade(paredeArray), 'Parede');
+    await this.exportToCsv(this.sortByUnidade(baguetesArray), 'Baguete');
 
     this.loading = false;
 
   }
 
+  sortByUnidade(arr: any) {
+    return arr.sort((a: any, b: any) => {
+      return (a['UNIDADE'] - b['UNIDADE']);
+    })
+  }
+
   setObjs(type: any, personalization: any): Promise<any> {
     return new Promise(async (resolve, reject) => {
       let tempObj: any = {
-        "NOME DO CLIENTE": personalization['NOME DO CLIENTE'],
-        "CPF / CNPJ": personalization['CPF / CNPJ'],
-        "APARTAMENTO": personalization['APARTAMENTO']
+        "UNIDADE": personalization['APARTAMENTO'],
+        "ÁREA PRIVATIVA": personalization['ÁREA PRIV'],
+        "TIPO": personalization['TIPO']
       };
       for (let key in personalization) {
         if(type == "PISOS" && key.includes(type) && key.includes("RODAPÉ") && !key.includes("RODAPÉ - PREÇO") ) {
           tempObj[key] = personalization[key];
+        }
+
+        if(type == "PISOS" && key.includes(type) && key.includes("PISOS - EXTRA")) {
+          tempObj['ESTAR / JANTAR / CIRC. - EXTRA'] = personalization[key];
         }
 
         if(key.includes(type) && key.includes("NOME DA OPÇÃO")) {
