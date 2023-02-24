@@ -1,5 +1,9 @@
 <body>
-  <h2 class="title">Bem-vindo</h2>
+  <div class="topPart">
+    <h2 class="title">Bem-vindo</h2>
+    <button *ngIf="tempSubmitted.length > 0" (click)="generateCVS()" class="generate">Generate CSV's</button>
+  </div>
+
   <form enctype="multipart/form-data">
     <input id="upload" type=file name="files[]" (change)="handleFileSelect($event)">
   </form>
@@ -12,7 +16,6 @@
     <div class="search">
       <input class="searchBox" type="text" placeholder="Procurar..." id="search" (keyup)="search($event)">
       <span class="downloadAll" id="downloadAll" (click)="downloadAll()">Download Todos</span>
-      <span class="downloadAll" id="downloadAll" (click)="generateCVS()">Generate</span>
     </div>
 
     <table id="table">

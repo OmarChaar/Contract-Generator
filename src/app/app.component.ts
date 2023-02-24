@@ -671,7 +671,8 @@ export class AppComponent {
     })
   }
 
-  generateCVS() {
+  async generateCVS() {
+    this.loading = true;
     console.log("generateCVS parsedClients", this.parsedClients);
 
     let pisosArray = [];
@@ -680,59 +681,71 @@ export class AppComponent {
 
     for(let personalization of this.parsedClients) {
 
-      const pisosObj = this.setObjs("PISOS", personalization);
+      const pisosObj = await this.setObjs("PISOS", personalization);
       pisosArray.push(pisosObj);
       // console.log("pisosObj", pisosObj);
 
-      const paredeObj = this.setObjs("PAREDE", personalization);
+      const paredeObj = await this.setObjs("PAREDE", personalization);
       paredeArray.push(paredeObj);
       // console.log("paredeObj", paredeObj);
 
-      const bagueteObj = this.setObjs("BAGUETE", personalization);
+      const bagueteObj = await this.setObjs("BAGUETE", personalization);
       baguetesArray.push(bagueteObj);
       // console.log("bagueteObj", bagueteObj);
     }
 
     // console.log(pisosArray, paredeArray, baguetesArray);
-    this.exportToCsv(pisosArray, 'Pisos');
-    // this.exportToCsv(paredeArray, 'Parede');
-    // this.exportToCsv(baguetesArray, 'Baguete');
+    await this.exportToCsv(pisosArray, 'Pisos');
+    await this.exportToCsv(paredeArray, 'Parede');
+    await this.exportToCsv(baguetesArray, 'Baguete');
+
+    this.loading = false;
+
   }
 
-  setObjs(type: any, personalization: any) {
-    let tempObj: any = {
-      "NOME DO CLIENTE": personalization['NOME DO CLIENTE'],
-      "CPF / CNPJ": personalization['CPF / CNPJ'],
-      "APARTAMENTO": personalization['APARTAMENTO']
-    };
-    for (let key in personalization) {
-      if(type == "PISOS" && key.includes(type) && key.includes("RODAPÉ") && !key.includes("RODAPÉ - PREÇO") ) {
-        tempObj[key] = personalization[key];
+  setObjs(type: any, personalization: any): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      let tempObj: any = {
+        "NOME DO CLIENTE": personalization['NOME DO CLIENTE'],
+        "CPF / CNPJ": personalization['CPF / CNPJ'],
+        "APARTAMENTO": personalization['APARTAMENTO']
+      };
+      for (let key in personalization) {
+        if(type == "PISOS" && key.includes(type) && key.includes("RODAPÉ") && !key.includes("RODAPÉ - PREÇO") ) {
+          tempObj[key] = personalization[key];
+        }
+
+        if(key.includes(type) && key.includes("NOME DA OPÇÃO")) {
+          tempObj[key.replace(" - NOME DA OPÇÃO", '')] = personalization[key];
+        }
       }
 
-      if(key.includes(type) && key.includes("NOME DA OPÇÃO")) {
-        tempObj[key.replace(" - NOME DA OPÇÃO", '')] = personalization[key];
-      }
-    }
-
-    return tempObj;
+      resolve(tempObj);
+    })
   }
 
-  exportToCsv(data: any, title: any) {
-    const csv = Papa.unparse(data);
-    const filename = title+'.csv';
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  exportToCsv(data: any, title: any): Promise<any> {
+    return new Promise(async (resolve, reject) => {
 
-    const link = document.createElement('a');
-    if (link.download !== undefined) {
-      const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', filename);
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
+      const csv = Papa.unparse(data);
+      const filename = title+'.csv';
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', filename);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(() => {
+          resolve(true);
+        }, 500);
+
+      }
+    })
   }
 
   // parseDefault(arr: any) {
