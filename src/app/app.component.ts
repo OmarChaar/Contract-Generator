@@ -181,6 +181,14 @@ export class AppComponent {
         parsed.push(this.checkClientSubmitted(client, importJSON));
       }
 
+      for(let parse of parsed) {
+        for(let key in parse) {
+          if(parse[key] == '') {
+            parse[key] = null
+          }
+        }
+      }
+
       resolve(parsed);
     })
   }
@@ -456,7 +464,7 @@ export class AppComponent {
   }
 
   async addPlans(client: any){
-    console.log("client", client);
+    // console.log("client", client);
     let planBlob: any;
 
     const aptEnding = client.apartamento.toString();
@@ -467,53 +475,53 @@ export class AppComponent {
       if(lastChar == '1') {
         // area: 100
         if(client.tipo == 'Tipo 1') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/100_tipo1_apt1.jpg');
         }
         else if(client.tipo == 'Tipo 2') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/100_tipo2_apt1.jpg');
         }
       }
       else if(lastChar == '2') {
         // area: 100
         if(client.tipo == 'Tipo 1') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/100_tipo1_apt2.jpg');
         }
         else if(client.tipo == 'Tipo 2') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/100_tipo2_apt2.jpg');
         }
       }
       else if(lastChar == '3') {
         // area: 70
-        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        planBlob = await this.urlToBlob('../assets/imgs/70_apt3.jpg');
       }
       else if(lastChar == '4') {
         // area: 70
-        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        planBlob = await this.urlToBlob('../assets/imgs/70_apt4.jpg');
       }
       else if(lastChar == '5') {
         // area: 70
-        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        planBlob = await this.urlToBlob('../assets/imgs/70_apt5.jpg');
       }
       else if(lastChar == '6') {
         // area: 70
-        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        planBlob = await this.urlToBlob('../assets/imgs/70_apt6.jpg');
       }
       else if(lastChar == '7') {
         // area: 100
         if(client.tipo == 'Tipo 1') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/100_tipo1_apt7.jpg');
         }
         else if(client.tipo == 'Tipo 2') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/100_tipo2_apt7.jpg');
         }
       }
       else if(lastChar == '8') {
         // area: 100
         if(client.tipo == 'Tipo 1') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/100_tipo1_apt8.jpg');
         }
         else if(client.tipo == 'Tipo 2') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/100_tipo2_apt8.jpg');
         }
       }
     }
@@ -521,53 +529,53 @@ export class AppComponent {
       if(lastChar == '1') {
         // area: 128
         if(client.tipo == 'Tipo 1') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/124_tipo1_apt1.jpg');
         }
         else if(client.tipo == 'Tipo 2') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/124_tipo2_apt1.jpg');
         }
       }
       else if(lastChar == '2') {
         // area: 128
         if(client.tipo == 'Tipo 1') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/124_tipo1_apt2.jpg');
         }
         else if(client.tipo == 'Tipo 2') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/124_tipo2_apt2.jpg');
         }
       }
       else if(lastChar == '3') {
         // area: 85
-        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        planBlob = await this.urlToBlob('../assets/imgs/85_apt3.jpg');
       }
       else if(lastChar == '4') {
         // area: 85
-        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        planBlob = await this.urlToBlob('../assets/imgs/85_apt4.jpg');
       }
       else if(lastChar == '5') {
         // area: 85
-        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        planBlob = await this.urlToBlob('../assets/imgs/85_apt5.jpg');
       }
       else if(lastChar == '6') {
         // area: 85
-        planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+        planBlob = await this.urlToBlob('../assets/imgs/85_apt6.jpg');
       }
       else if(lastChar == '7') {
         // area: 128
         if(client.tipo == 'Tipo 1') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/124_tipo1_apt7.jpg');
         }
         else if(client.tipo == 'Tipo 2') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/124_tipo2_apt7.jpg');
         }
       }
       else if(lastChar == '8') {
         // area: 128
         if(client.tipo == 'Tipo 1') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/124_tipo1_apt8.jpg');
         }
         else if(client.tipo == 'Tipo 2') {
-          planBlob = await this.urlToBlob('../assets/imgs/image.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/124_tipo2_apt8.jpg');
         }
       }
     }
@@ -670,31 +678,40 @@ export class AppComponent {
 
   async generateCVS() {
     this.loading = true;
-    console.log("generateCVS parsedClients", this.parsedClients);
 
     let pisosArray = [];
     let paredeArray = [];
     let baguetesArray = [];
+    let bancadasArray = [];
+    let metaisArray = [];
+    let cubasTanqueArray = [];
+    let linhaArray = [];
+    let vidroArray = [];
 
     for(let personalization of this.parsedClients) {
 
+      bancadasArray.push(this.setBancadas(personalization));
+      metaisArray.push(this.setMetais(personalization));
+      cubasTanqueArray.push(this.setCubas(personalization));
+      baguetesArray.push(this.setBaguete(personalization));
+      linhaArray.push(this.setLinha(personalization));
+      vidroArray.push(this.setVidro(personalization));
+
       const pisosObj = await this.setObjs("PISOS", personalization);
       pisosArray.push(pisosObj);
-      // console.log("pisosObj", pisosObj);
 
       const paredeObj = await this.setObjs("PAREDE", personalization);
       paredeArray.push(paredeObj);
-      // console.log("paredeObj", paredeObj);
-
-      const bagueteObj = await this.setObjs("BAGUETE", personalization);
-      baguetesArray.push(bagueteObj);
-      // console.log("bagueteObj", bagueteObj);
     }
 
-    // console.log(pisosArray, paredeArray, baguetesArray);
     await this.exportToCsv(this.sortByUnidade(pisosArray), 'Pisos');
     await this.exportToCsv(this.sortByUnidade(paredeArray), 'Parede');
+    await this.exportToCsv(this.sortByUnidade(bancadasArray), 'Bancadas');
+    await this.exportToCsv(this.sortByUnidade(metaisArray), 'Metais');
+    await this.exportToCsv(this.sortByUnidade(cubasTanqueArray), 'Cubas');
     await this.exportToCsv(this.sortByUnidade(baguetesArray), 'Baguete');
+    await this.exportToCsv(this.sortByUnidade(linhaArray), 'Linha');
+    await this.exportToCsv(this.sortByUnidade(vidroArray), 'Vidro');
 
     this.loading = false;
 
@@ -729,6 +746,122 @@ export class AppComponent {
 
       resolve(tempObj);
     })
+  }
+
+  setBancadas(personalization: any) {
+    let tempObj: any = {
+      "UNIDADE": personalization['APARTAMENTO'],
+      "ÁREA PRIVATIVA": personalization['ÁREA PRIV'],
+      "TIPO": personalization['TIPO']
+    };
+
+    tempObj['BANCADA TIPO - COZINHA'] = personalization['COZINHA - BANCADA TIPO - NOME DA OPÇÃO'];
+    tempObj['REVESTIMENTO BANCADA - COZINHA'] = personalization['COZINHA - REVESTIMENTO BANCADA - NOME DA OPÇÃO'];
+    tempObj['ÁREA DE SERVIÇO E TERRAÇO - TIPO'] = personalization['SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO - NOME DA OPÇÃO'] ? personalization['SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO - NOME DA OPÇÃO'] : personalization['NÃO KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO - NOME DA OPÇÃO'];
+    tempObj['REVESTIMENTO BANCADA ÁREA DE SERVIÇO'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'] ? personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'] : personalization['NÃO KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'];
+    tempObj['REVESTIMENTO BANCADA KIT CHURRASQUEIRA'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA KIT CHURRASQUEIRA - NOME DA OPÇÃO'];
+    tempObj['REVESTIMENTO BANCADA ÚNICA'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA - NOME DA OPÇÃO'];
+    tempObj['BANCADA TIPO - LAVABO'] = personalization['LAVABO - BANCADA TIPO - NOME DA OPÇÃO'];
+    tempObj['REVESTIMENTO BANCADA - LAVABO'] = personalization['LAVABO - REVESTIMENTO BANCADA - NOME DA OPÇÃO'];
+    tempObj['BANCADA TIPO - BANHO 1'] = personalization['BANHO 1 - BANCADA TIPO - NOME DA OPÇÃO'];
+    tempObj['REVESTIMENTO BANCADA - BANHO 1'] = personalization['BANHO 1 - REVESTIMENTO BANCADA - NOME DA OPÇÃO'];
+    tempObj['BANCADA TIPO - BANHO 2'] = personalization['BANHO 2 - BANCADA TIPO - NOME DA OPÇÃO'];
+    tempObj['REVESTIMENTO BANCADA - BANHO 2'] = personalization['BANHO 2 - REVESTIMENTO BANCADA - NOME DA OPÇÃO'];
+
+    // console.log("setBancadas tempObj", tempObj);
+
+    return tempObj;
+
+  }
+
+  setMetais(personalization: any) {
+    let tempObj: any = {
+      "UNIDADE": personalization['APARTAMENTO'],
+      "ÁREA PRIVATIVA": personalization['ÁREA PRIV'],
+      "TIPO": personalization['TIPO']
+    };
+
+    tempObj['TORNEIRA - COZINHA'] = personalization['COZINHA - TORNEIRA - NOME DA OPÇÃO'];
+    tempObj['TORNEIRA ÁREA DE SERVIÇO'] = personalization['SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO'] ? personalization['SIM KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - NOME DA OPÇÃO'] : personalization['NÃO KIT CHURRASQUEIRA - TORNEIRA ÁREA DE SERVIÇO - OPÇÃO - NOME DA OPÇÃO'];
+    tempObj['TORNEIRA KIT CHURRASQUEIRA'] = personalization['SIM KIT CHURRASQUEIRA - TORNEIRA KIT CHURRASQUEIRA - NOME DA OPÇÃO'];
+    tempObj['TORNEIRA - LAVABO'] = personalization['LAVABO - TORNEIRA - NOME DA OPÇÃO'];
+    tempObj['TORNEIRA - BANHO 1'] = personalization['BANHO 1 - TORNEIRA - NOME DA OPÇÃO'];
+    tempObj['TORNEIRA - BANHO 2 '] = personalization['BANHO 2 - TORNEIRA - NOME DA OPÇÃO'];
+    tempObj['BANHO 1 - DUCHA '] = personalization['BANHO 1 - DUCHA - NOME DA OPÇÃO'];
+    tempObj['BANHO 2 - DUCHA '] = personalization['BANHO 2 - DUCHA - NOME DA OPÇÃO'];
+
+    // console.log("setBancadas tempObj", tempObj);
+
+    return tempObj;
+
+  }
+
+  setCubas(personalization: any) {
+    let tempObj: any = {
+      "UNIDADE": personalization['APARTAMENTO'],
+      "ÁREA PRIVATIVA": personalization['ÁREA PRIV'],
+      "TIPO": personalization['TIPO']
+    };
+
+    tempObj['COZINHA - CUBA'] = personalization['COZINHA - CUBA - NOME DA OPÇÃO'];
+    tempObj['CUBA ÁREA DE SERVIÇO'] = personalization['NÃO KIT CHURRASQUEIRA - CUBA ÁREA DE SERVIÇO - NOME DA OPÇÃO'];
+    tempObj['CUBA KIT CHURRASQUEIRA'] = personalization['SIM KIT CHURRASQUEIRA - CUBA KIT CHURRASQUEIRA - NOME DA OPÇÃO'];
+    tempObj['TANQUE ÁREA DE SERVIÇO'] = personalization['SIM KIT CHURRASQUEIRA - TANQUE ÁREA DE SERVIÇO - NOME DA OPÇÃO'];
+
+    // console.log("setBancadas tempObj", tempObj);
+
+    return tempObj;
+
+  }
+
+  setBaguete(personalization: any) {
+    let tempObj: any = {
+      "UNIDADE": personalization['APARTAMENTO'],
+      "ÁREA PRIVATIVA": personalization['ÁREA PRIV'],
+      "TIPO": personalization['TIPO']
+    };
+
+    tempObj['BAGUETE - COZINHA / ÁREA DE SERVIÇO'] = personalization['BITBOX - COZINHA / ÁREA DE SERVIÇO - NOME DA OPÇÃO'];
+    tempObj['BAGUETE - ESTAR / TERRAÇO'] = personalization['BAGUETE - ESTAR / TERRAÇO - NOME DA OPÇÃO'];
+    tempObj['BAGUETE - LAVABO'] = personalization['BAGUETE - LAVABO - NOME DA OPÇÃO'];
+    tempObj['BAGUETE - BANHO 1'] = personalization['BAGUETE - BANHO 1 - NOME DA OPÇÃO'];
+    tempObj['BIT BOX - BANHO 1'] = personalization['BIT BOX - BANHO 1 - NOME DA OPÇÃO'];
+    tempObj['BAGUETE - BANHO 2'] = personalization['BAGUETE - BANHO 2 - NOME DA OPÇÃO'];
+    tempObj['BIT BOX - BANHO 2'] = personalization['BIT BOX - BANHO 2 - NOME DA OPÇÃO'];
+    tempObj['BAGUETE - DORM 1'] = personalization['BAGUETE - DORM 1 - NOME DA OPÇÃO'];
+    tempObj['BAGUETE - DORM 2'] = personalization['BAGUETE - DORM 2 - NOME DA OPÇÃO'];
+    tempObj['BAGUETE - SUÍTE 1'] = personalization['BAGUETE - SUÍTE 1 - NOME DA OPÇÃO'];
+
+    // console.log("setBancadas tempObj", tempObj);
+
+    return tempObj;
+
+  }
+
+  setLinha(personalization: any) {
+    let tempObj: any = {
+      "UNIDADE": personalization['APARTAMENTO'],
+      "ÁREA PRIVATIVA": personalization['ÁREA PRIV'],
+      "TIPO": personalization['TIPO']
+    };
+
+    tempObj['LINHA FRIGORÍGENA - OPÇÃO - NOME DA OPÇÃO'] = personalization['LINHA FRIGORÍGENA - OPÇÃO - NOME DA OPÇÃO'];
+
+
+    return tempObj;
+  }
+
+  setVidro(personalization: any) {
+    let tempObj: any = {
+      "UNIDADE": personalization['APARTAMENTO'],
+      "ÁREA PRIVATIVA": personalization['ÁREA PRIV'],
+      "TIPO": personalization['TIPO']
+    };
+
+    tempObj['BOX BANHO 1 - PERFIL DE ALUMÍNIO'] = personalization['BANHO 1 - PERFIL DE ALUMÍNIO - NOME DA OPÇÃO'];
+    tempObj['BOX BANHO 2 - PERFIL DE ALUMÍNIO'] = personalization['BANHO 2 - PERFIL DE ALUMÍNIO - NOME DA OPÇÃO'];
+
+    return tempObj;
   }
 
   exportToCsv(data: any, title: any): Promise<any> {
