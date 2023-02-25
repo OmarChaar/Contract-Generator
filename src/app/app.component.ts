@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import * as Papa from 'papaparse';
 import { ContractService } from './services/contract.service';
@@ -23,7 +22,6 @@ export class AppComponent {
   public loading = false;
 
   constructor(
-    private http: HttpClient,
     public contractService: ContractService,
     private clientsService: ClientsService,
     private defaultsService: DefaultsService
@@ -768,10 +766,7 @@ export class AppComponent {
     tempObj['BANCADA TIPO - BANHO 2'] = personalization['BANHO 2 - BANCADA TIPO - NOME DA OPÇÃO'];
     tempObj['REVESTIMENTO BANCADA - BANHO 2'] = personalization['BANHO 2 - REVESTIMENTO BANCADA - NOME DA OPÇÃO'];
 
-    // console.log("setBancadas tempObj", tempObj);
-
     return tempObj;
-
   }
 
   setMetais(personalization: any) {
@@ -790,10 +785,7 @@ export class AppComponent {
     tempObj['BANHO 1 - DUCHA '] = personalization['BANHO 1 - DUCHA - NOME DA OPÇÃO'];
     tempObj['BANHO 2 - DUCHA '] = personalization['BANHO 2 - DUCHA - NOME DA OPÇÃO'];
 
-    // console.log("setBancadas tempObj", tempObj);
-
     return tempObj;
-
   }
 
   setCubas(personalization: any) {
@@ -808,10 +800,7 @@ export class AppComponent {
     tempObj['CUBA KIT CHURRASQUEIRA'] = personalization['SIM KIT CHURRASQUEIRA - CUBA KIT CHURRASQUEIRA - NOME DA OPÇÃO'];
     tempObj['TANQUE ÁREA DE SERVIÇO'] = personalization['SIM KIT CHURRASQUEIRA - TANQUE ÁREA DE SERVIÇO - NOME DA OPÇÃO'];
 
-    // console.log("setBancadas tempObj", tempObj);
-
     return tempObj;
-
   }
 
   setBaguete(personalization: any) {
@@ -832,10 +821,7 @@ export class AppComponent {
     tempObj['BAGUETE - DORM 2'] = personalization['BAGUETE - DORM 2 - NOME DA OPÇÃO'];
     tempObj['BAGUETE - SUÍTE 1'] = personalization['BAGUETE - SUÍTE 1 - NOME DA OPÇÃO'];
 
-    // console.log("setBancadas tempObj", tempObj);
-
     return tempObj;
-
   }
 
   setLinha(personalization: any) {
@@ -846,7 +832,6 @@ export class AppComponent {
     };
 
     tempObj['LINHA FRIGORÍGENA - OPÇÃO - NOME DA OPÇÃO'] = personalization['LINHA FRIGORÍGENA - OPÇÃO - NOME DA OPÇÃO'];
-
 
     return tempObj;
   }
