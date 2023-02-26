@@ -687,7 +687,8 @@ export class AppComponent {
     let vidroArray = [];
 
     for(let personalization of this.parsedClients) {
-
+      pisosArray.push(this.setPISOS(personalization));
+      paredeArray.push(this.setParedes(personalization));
       bancadasArray.push(this.setBancadas(personalization));
       metaisArray.push(this.setMetais(personalization));
       cubasTanqueArray.push(this.setCubas(personalization));
@@ -695,11 +696,11 @@ export class AppComponent {
       linhaArray.push(this.setLinha(personalization));
       vidroArray.push(this.setVidro(personalization));
 
-      const pisosObj = await this.setObjs("PISOS", personalization);
-      pisosArray.push(pisosObj);
+      // const pisosObj = await this.setObjs("PISOS", personalization);
+      // pisosArray.push(pisosObj);
 
-      const paredeObj = await this.setObjs("PAREDE", personalization);
-      paredeArray.push(paredeObj);
+      // const paredeObj = await this.setObjs("PAREDE", personalization);
+      // paredeArray.push(paredeObj);
     }
 
     await this.exportToCsv(this.sortByUnidade(pisosArray), 'Pisos');
@@ -744,6 +745,60 @@ export class AppComponent {
 
       resolve(tempObj);
     })
+  }
+
+  setPISOS(personalization: any) {
+    let tempObj: any = {
+      "UNIDADE": personalization['APARTAMENTO'],
+      "ÁREA PRIVATIVA": personalization['ÁREA PRIV'],
+      "TIPO": personalization['TIPO']
+    };
+
+    tempObj['PISOS - COZINHA'] = personalization['PISOS - COZINHA - NOME DA OPÇÃO'];
+    tempObj['RODAPÉ - COZINHA'] = personalization['PISOS - COZINHA - RODAPÉ'];
+    tempObj['PISOS - ÁREA DE SERVIÇO'] = personalization['PISOS - ÁREA DE SERVIÇO - NOME DA OPÇÃO'];
+    tempObj['RODAPÉ - ÁREA DE SERVIÇO'] = personalization['PISOS - ÁREA DE SERVIÇO - RODAPÉ'];
+    tempObj['PISOS - TERRAÇO'] = personalization['PISOS - TERRAÇO - NOME DA OPÇÃO'];
+    tempObj['RODAPÉ - TERRAÇO'] = personalization['PISOS - TERRAÇO - RODAPÉ'];
+    tempObj['PISOS - EXTRA'] = personalization['PISOS - EXTRA'];
+    tempObj['PISOS - ESTAR / JANTAR / CIRC.'] = personalization['PISOS - ESTAR / JANTAR / CIRC. - NOME DA OPÇÃO'];
+    tempObj['RODAPE - ESTAR / JANTAR / CIRC.'] = personalization['PISOS - ESTAR / JANTAR / CIRC. - RODAPE'];
+    tempObj['PISOS - LAVABO'] = personalization['PISOS - LAVABO - NOME DA OPÇÃO'];
+    tempObj['RODAPÉ - LAVABO'] = personalization['PISOS - LAVABO - RODAPÉ'];
+    tempObj['PISOS - BANHO 1'] = personalization['PISOS - BANHO 1 - NOME DA OPÇÃO'];
+    tempObj['RODAPÉ - BANHO 1'] = personalization['PISOS - BANHO 1 - RODAPÉ'];
+    tempObj['PISOS - BOX BANHO 1'] = personalization['PISOS - BANHO 1 - BOX - NOME DA OPÇÃO'];
+    tempObj['RODAPÉ - BOX BANHO 1'] = personalization['PISOS - BANHO 1 - BOX - RODAPÉ'];
+    tempObj['PISOS - BANHO 2'] = personalization['PISOS - BANHO 2 - NOME DA OPÇÃO'];
+    tempObj['RODAPÉ - BANHO 2'] = personalization['PISOS - BANHO 2 - RODAPÉ'];
+    tempObj['PISOS BOX - BANHO 2'] = personalization['PISOS - BANHO 2 - BOX - NOME DA OPÇÃO'];
+    tempObj['RODAPÉ BOX - BANHO 2'] = personalization['PISOS - BANHO 2 - BOX - RODAPÉ'];
+    tempObj['PISOS - SUÍTE 1'] = personalization['PISOS - SUÍTE 1 - NOME DA OPÇÃO'];
+    tempObj['RODAPE - SUÍTE 1'] = personalization['PISOS - SUÍTE 1 - RODAPE'];
+    tempObj['PISOS - DORMITÓRIO 1'] = personalization['PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - NOME DA OPÇÃO'];
+    tempObj['RODAPE - DORMITÓRIO 1'] = personalization['PISOS - DORMITÓRIO 1 - RODAPE'];
+    tempObj['PISOS - DORMITÓRIO 2'] = personalization['PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - NOME DA OPÇÃO'];
+    tempObj['RODAPE - DORMITÓRIO 2'] = personalization['PISOS - DORMITÓRIO 2 - RODAPE'];
+
+    return tempObj;
+  }
+
+  setParedes(personalization: any) {
+    let tempObj: any = {
+      "UNIDADE": personalization['APARTAMENTO'],
+      "ÁREA PRIVATIVA": personalization['ÁREA PRIV'],
+      "TIPO": personalization['TIPO']
+    };
+
+    tempObj['PAREDE - COZINHA'] = personalization['PAREDE - COZINHA - NOME DA OPÇÃO'];
+    tempObj['PAREDE - ÁREA DE SERVIÇO'] = personalization['PAREDE - ÁREA DE SERVIÇO - NOME DA OPÇÃO'];
+    tempObj['PAREDE - TERRAÇO'] = personalization['PAREDE - TERRAÇO - NOME DA OPÇÃO'];
+    tempObj['PAREDE BOX - BANHO 1'] = personalization['PAREDE - BANHO 1 - BOX - NOME DA OPÇÃO'];
+    tempObj['PAREDE BANHEIRO - BANHO 1  '] = personalization['PAREDE - BANHEIRO - BANHO 1 - NOME DA OPÇÃO'];
+    tempObj['PAREDE BOX - BANHO 2'] = personalization['PAREDE - BANHO 2 - BOX - NOME DA OPÇÃO'];
+    tempObj['PAREDE BANHEIRO - BANHO 2  '] = personalization['PAREDE - BANHEIRO - BANHO 2 - NOME DA OPÇÃO'];
+
+    return tempObj;
   }
 
   setBancadas(personalization: any) {
