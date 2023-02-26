@@ -525,55 +525,42 @@ export class AppComponent {
     }
     else {
       if(lastChar == '1') {
-        // area: 128
-        if(client.tipo == 'Tipo 1') {
-          planBlob = await this.urlToBlob('../assets/imgs/124_tipo1_apt1.jpg');
-        }
-        else if(client.tipo == 'Tipo 2') {
-          planBlob = await this.urlToBlob('../assets/imgs/124_tipo2_apt1.jpg');
-        }
+        planBlob = await this.urlToBlob('../assets/imgs/und.11.jpg');
       }
       else if(lastChar == '2') {
-        // area: 128
-        if(client.tipo == 'Tipo 1') {
-          planBlob = await this.urlToBlob('../assets/imgs/124_tipo1_apt2.jpg');
-        }
-        else if(client.tipo == 'Tipo 2') {
-          planBlob = await this.urlToBlob('../assets/imgs/124_tipo2_apt2.jpg');
-        }
+        planBlob = await this.urlToBlob('../assets/imgs/und.12.jpg');
       }
       else if(lastChar == '3') {
-        // area: 85
-        planBlob = await this.urlToBlob('../assets/imgs/85_apt3.jpg');
+        planBlob = await this.urlToBlob('../assets/imgs/und.13.jpg');
       }
       else if(lastChar == '4') {
         // area: 85
-        planBlob = await this.urlToBlob('../assets/imgs/85_apt4.jpg');
+        planBlob = await this.urlToBlob('../assets/imgs/70_apt4.jpg');
       }
       else if(lastChar == '5') {
         // area: 85
-        planBlob = await this.urlToBlob('../assets/imgs/85_apt5.jpg');
+        planBlob = await this.urlToBlob('../assets/imgs/und.15.jpg');
       }
       else if(lastChar == '6') {
         // area: 85
-        planBlob = await this.urlToBlob('../assets/imgs/85_apt6.jpg');
+        planBlob = await this.urlToBlob('../assets/imgs/70_apt6.jpg');
       }
       else if(lastChar == '7') {
         // area: 128
         if(client.tipo == 'Tipo 1') {
-          planBlob = await this.urlToBlob('../assets/imgs/124_tipo1_apt7.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/100_tipo1_apt7.jpg');
         }
         else if(client.tipo == 'Tipo 2') {
-          planBlob = await this.urlToBlob('../assets/imgs/124_tipo2_apt7.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/100_tipo2_apt7.jpg');
         }
       }
       else if(lastChar == '8') {
         // area: 128
         if(client.tipo == 'Tipo 1') {
-          planBlob = await this.urlToBlob('../assets/imgs/124_tipo1_apt8.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/100_tipo1_apt8.jpg');
         }
         else if(client.tipo == 'Tipo 2') {
-          planBlob = await this.urlToBlob('../assets/imgs/124_tipo2_apt8.jpg');
+          planBlob = await this.urlToBlob('../assets/imgs/100_tipo2_apt8.jpg');
         }
       }
     }
