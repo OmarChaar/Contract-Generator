@@ -192,6 +192,7 @@ export class AppComponent {
   }
 
   checkClientSubmitted(client: any, importJSON: any) {
+    console.log("client", client);
     let tempClient = null;
 
     for(let i=0; i<importJSON.length; i++) {
@@ -245,6 +246,7 @@ export class AppComponent {
         temp['APARTAMENTO'] = client.apartamento;
         tempClient = temp;
       }
+
 
       tempClient['personalized'] = false;
 
@@ -915,46 +917,46 @@ export class AppComponent {
     })
   }
 
-  // parseDefault(arr: any) {
-  //   let temp = '';
-  //   for (let key in arr) {
-  //     let value: any;
-  //     if(typeof arr[key] === "boolean") {
-  //       value = arr[key];
-  //     }
-  //     else if(typeof arr[key] === "number") {
-  //       value = arr[key];
-  //     }
-  //     else if(typeof arr[key] === "string") {
-  //       value = `'${arr[key]}'`
-  //     }
-  //     else {
-  //       value = `''`;
-  //     }
-  //     temp += `'${key}': ${value},\n`
-  //   }
+  parseDefault(arr: any) {
+    let temp = '';
+    for (let key in arr) {
+      let value: any;
+      if(typeof arr[key] === "boolean") {
+        value = arr[key];
+      }
+      else if(typeof arr[key] === "number") {
+        value = arr[key];
+      }
+      else if(typeof arr[key] === "string") {
+        value = `'${arr[key]}'`
+      }
+      else {
+        value = `''`;
+      }
+      temp += `'${key}': ${value},\n`
+    }
 
-  //   console.log("temp", temp);
-  // }
+    console.log("temp", temp);
+  }
 
-  // setClients(importJSON: any) {
-  //   console.log("importJSON", importJSON);
-  //   let clients = [];
-  //   let cleintsSTR = '';
-  //   for(let client of importJSON) {
-  //     clients.push({
-  //       cpfCNPJ: client['CPF / CNPJ'],
-  //       apartamento: client['Unidade'],
-  //       client: client['Cliente'],
-  //       areaPriv: client['Área Priv.'],
-  //       tipo: client['Tipo'],
-  //     })
+  setClients(importJSON: any) {
+    console.log("importJSON", importJSON);
+    let clients = [];
+    let cleintsSTR = '';
+    for(let client of importJSON) {
+      clients.push({
+        cpfCNPJ: client['CPF / CNPJ'],
+        apartamento: client['Unidade'],
+        client: client['Cliente'],
+        areaPriv: client['Área Priv.'],
+        tipo: client['Tipo'],
+      })
 
-  //     cleintsSTR += `{\n\tcpfCNPJ: '${client['CPF / CNPJ']}',\n\tapartamento: ${client['Unidade']},\n\tclient: '${client['Cliente']}',\n\tareaPriv: ${client['Área Priv.']},\n\ttipo: '${client['Tipo']}',\n},\n`;
-  //   }
+      cleintsSTR += `{\n\tcpfCNPJ: '${client['CPF / CNPJ']}',\n\tapartamento: ${client['Unidade']},\n\tclient: '${client['Cliente']}',\n\tareaPriv: ${client['Área Priv.']},\n\ttipo: '${client['Tipo']}',\n},\n`;
+    }
 
-  //   // console.log("clients", (JSON.stringify(clients)));
+    // console.log("clients", (JSON.stringify(clients)));
 
-  //   console.log(cleintsSTR)
-  // }
+    console.log(cleintsSTR)
+  }
 }
