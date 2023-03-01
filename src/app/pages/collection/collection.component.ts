@@ -23,6 +23,14 @@ interface Question {
   enabled: any,
 }
 
+interface Options {
+  value: any,
+  label: any,
+  name: any,
+  price: any,
+  link: any
+}
+
 @Component({
   selector: 'app-collection',
   templateUrl: './collection.component.html',
@@ -94,8 +102,8 @@ export class CollectionComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe((result: any) => {
-      console.log(`Dialog result: ${(JSON.stringify(result))}`);
+    dialogRef.afterClosed().subscribe((result: Options[]) => {
+      console.log("result", result);
     });
   }
 

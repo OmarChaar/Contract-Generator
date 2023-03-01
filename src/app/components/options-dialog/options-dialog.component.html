@@ -8,15 +8,27 @@
         <th>Name</th>
         <th>Price</th>
         <th>Link</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let option of options">
-        <td>{{ option.value }}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let option of options; let i = index">
+        <td>{{ i+1 }}</td>
+        <td [ngClass]="(hasErrors && !(option.label?.trim().length > 0)) ? 'errorValidation' : ''">
+          <input class="inputLabel" placeholder="Enter Label" [(ngModel)]="option.label">
+        </td>
+        <td>
+          <input class="inputLabel" placeholder="Enter Label" [(ngModel)]="option.name">
+        </td>
+        <td [ngClass]="(hasErrors && (option.price == null || !(option.price >= 0))) ? 'errorValidation' : ''">
+          <input type="number" class="inputLabel" placeholder="Enter Price"  [(ngModel)]="option.price">
+        </td>
+        <td>
+          <input class="inputLabel" placeholder="Enter Label"  [(ngModel)]="option.link">
+        </td>
+        <td>
+          <i (click)="deleteOption(i)" class="bi bi-trash"></i>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -27,5 +39,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="options" cdkFocusInitial>Save</button>
+  <button mat-button (click)="save()" cdkFocusInitial>Save</button>
 </mat-dialog-actions>
+
+<!-- [mat-dialog-close]="options" cdkFocusInitial -->

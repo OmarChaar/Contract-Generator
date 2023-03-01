@@ -103,7 +103,7 @@ export class ContractGeneratorComponent implements OnInit {
 
 
       const div = document.createElement("div");
-      div.id = personalization['CPF / CNPJ'];
+      div.id = personalization['CPF / CNPJ']+'-'+personalization['APARTAMENTO'];
       div.classList.add('box');
       div.setAttribute('class', 'box');
 
@@ -379,7 +379,7 @@ export class ContractGeneratorComponent implements OnInit {
 
     let title = client.apartamento + '_' + client.client;
     let fileName = title + ".docx";
-    let element = document.getElementById(client.cpfCNPJ);
+    let element = document.getElementById(client.cpfCNPJ+'-'+client.apartamento);
     if (element) {
       let splitByBR = element.innerHTML.split('<br>');
       let children: any[] = [];

@@ -43,3 +43,20 @@ td input:focus {
   background: lightskyblue;
   color: black;
 }
+
+.inputLabel {
+  font-weight: bold;
+}
+
+.inputLabel::placeholder {
+  font-weight: 100;
+}
+
+i {
+  font-size: 1.5rem;
+}
+
+
+.errorValidation {
+  border: 2px solid red;
+}
