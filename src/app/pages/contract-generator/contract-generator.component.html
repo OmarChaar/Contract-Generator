@@ -1,0 +1,83 @@
+<body>
+  <div class="topPart">
+    <h2 class="title">Bem-vindo</h2>
+    <button *ngIf="tempSubmitted.length > 0" (click)="generateCVS()" class="generate">Generate CSV's</button>
+  </div>
+
+  <form enctype="multipart/form-data">
+    <input id="upload" type=file name="files[]" (change)="handleFileSelect($event)">
+  </form>
+
+  <div *ngIf="loading" class="loader">
+    <div class="spinner"></div>
+  </div>
+
+  <div *ngIf="tempSubmitted.length > 0">
+    <div class="search">
+      <input class="searchBox" type="text" placeholder="Procurar..." id="search" (keyup)="search($event)">
+      <span class="downloadAll" id="downloadAll" (click)="downloadAll()">Download Todos</span>
+    </div>
+
+    <table id="table">
+      <tr>
+        <th>
+          CLIENTE
+        </th>
+        <th>
+          CPF / CNPJ
+        </th>
+        <th>
+          APARTAMENTO
+        </th>
+        <th>
+          PERSONALIZADO
+        </th>
+        <th style="text-align: center; text-decoration: underline; white-space: nowrap;">
+          <span (click)="showAll()" id="showAll">SHOW ALL</span>
+          <span (click)="hideAll()" id="hideAll" class="hidden">HIDE ALL</span>
+        </th>
+        <th>DOWNLOAD</th>
+      </tr>
+      <tbody class="tbody" *ngIf="submitted.length > 0">
+        <tr *ngFor="let client of submitted">
+          <td>{{ client.client }}</td>
+          <td style="white-space: nowrap;">{{ client.cpfCNPJ }}</td>
+          <td>{{ client.apartamento }}</td>
+          <td class="preview">
+            <svg *ngIf="client.personalized == true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#008000" class="bi bi-check-lg" viewBox="0 0 16 16">
+              <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+            </svg>
+          </td>
+          <td class="preview">
+            <svg (click)="hide(client.cpfCNPJ)" [id]="'hide_'+client.cpfCNPJ" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#228b22" class="bi bi-eye-fill hidden" viewBox="0 0 16 16">
+              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+              <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+            </svg>
+
+            <svg (click)="show(client.cpfCNPJ)" [id]="'show_'+client.cpfCNPJ" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+              <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+              <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+              <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+            </svg>
+          </td>
+          <td class="download">
+            <svg (click)="downloadSingle(client)" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+            </svg>
+          </td>
+        </tr>
+      </tbody>
+
+      <tbody class="tbody" *ngIf="submitted.length == 0">
+        <tr>
+          <td colspan="100%" style="text-align: center;">
+            NENHUM RESULTADO ENCONTRADO
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="content"></div>
+</body>

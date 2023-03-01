@@ -1,6 +1,8 @@
-.title {
-  color: #474bff;
-}
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .box {
   border: 1px solid black;
@@ -20,118 +22,7 @@
   display: none;
 }
 
-/* #content {
-  width: 50%;
-  display: none;
-} */
 
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-th {
-  display: table-cell;
-}
-
-.ml {
-  margin-left: 5px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-
-tr:nth-child(even) td {
-  border-right-color: white;
-}
-
-.preview {
-  text-align: center;
-  cursor: pointer;
-}
-
-.download {
-  text-align: center;
-  cursor: pointer;
-  border-right-color: #dddddd !important;
-}
-
-.downloadAll {
-  float: right;
-  font-size: 1.1rem;
-  text-decoration: underline;
-  font-family: system-ui;
-  cursor: pointer;
-}
-
-.downloadAll:hover {
-  color: blue;
-}
-
-.search {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 1rem 0 1rem 0;
-}
-
-.searchBox {
-  border-radius: 5px;
-  border: 1px solid;
-  padding: 0.5rem;
-  width: 50%;
-}
-
-.loader {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: #00000052;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
-}
-
-.spinner {
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  padding: 1.1px;
-  background: conic-gradient(#0000 10%,#474bff) content-box;
-  -webkit-mask: repeating-conic-gradient(#0000 0deg,#000 1deg 20deg,#0000 21deg 36deg),
-       radial-gradient(farthest-side,#0000 calc(100% - 9px),#000 calc(100% - 9px));
-  -webkit-mask-composite: destination-in;
-  mask-composite: intersect;
-  animation: spinner-d55elj 1s infinite steps(10);
-}
-
-@keyframes spinner-d55elj {
-  to {
-     transform: rotate(1turn);
-  }
-}
-
-.topPart {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.generate {
-  padding: 0.75rem;
-  border-radius: 10px;
-  border: none;
-  background: #474bff;
-  color: white;
-  font-weight: bold;
+.cdk-overlay-pane {
+  min-width: 75vw;
 }

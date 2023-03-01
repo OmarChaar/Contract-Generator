@@ -169,14 +169,14 @@ export class ContractService {
     // `;
   }
 
-  setAreaServicoETerraco(div: any, currentPersonalization: any) {
+  setAreaServicoETerraco(div: any, currentPersonalization: any, area: any) {
     const kitChurrasqueiraOpcao = this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO');
 
 
     if((this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S' || this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') && kitChurrasqueiraOpcao == 5) {
       div.innerHTML += `
         <br>
-        <b>ÁREA DE SERVIÇO & TERRAÇO:</b><br>
+        <b>ÁREA DE SERVIÇO E TERRAÇO:</b><br>
       `;
 
       if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'S') {
@@ -187,7 +187,7 @@ export class ContractService {
       else if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') {
         div.innerHTML += `
           <b>Kit Churrasqueira – Opção:</b> Quero Comprar<br>
-          <b>Kit Churrasqueira – Preço:</b> ${this.convertPrice(8873.51)} <br>
+          <b>Kit Churrasqueira – Preço:</b> ${this.convertPrice(area >= 100 ? 8873.51 : 7430.46)} <br>
         `;
       }
 
@@ -199,7 +199,7 @@ export class ContractService {
     }
   }
 
-  setTerraco(div: any, currentPersonalization: any) {
+  setTerraco(div: any, currentPersonalization: any, area: any) {
 
     const kitChurrasqueiraOpcao = Number(this.getValue(currentPersonalization, 'SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO'))
 
@@ -239,9 +239,10 @@ export class ContractService {
           `;
         }
         else if(this.getValue(currentPersonalization, 'KIT CHURRASQUEIRA') == 'C') {
+
           div.innerHTML += `
             <b>Kit Churrasqueira – Opção:</b> Quero Comprar<br>
-            <b>Kit Churrasqueira – Preço:</b> ${this.convertPrice(8873.51)} <br>
+            <b>Kit Churrasqueira – Preço:</b> ${this.convertPrice(area >= 100 ? 8873.51 : 7430.46)} <br>
           `;
         }
         div.innerHTML += `
@@ -628,12 +629,12 @@ export class ContractService {
       div.innerHTML += `
         <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO')} - ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - NOME DA OPÇÃO')} cm <br>
         <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - PREÇO'))} <br>
-        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
+        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
       `;
 
-      if(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S') {
+      if(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - RODAPE') == 'S') {
         div.innerHTML += `
-          <b>Rodapé - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - RODAPE - PREÇO'))} <br>
+          <b>Rodapé - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - RODAPE - PREÇO'))} <br>
         `;
       }
     }
@@ -661,12 +662,12 @@ export class ContractService {
       div.innerHTML += `
         <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO')} - ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - NOME DA OPÇÃO')} cm  <br>
         <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - PREÇO'))} <br>
-        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
+        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
       `;
 
-      if(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S') {
+      if(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - RODAPE') == 'S') {
         div.innerHTML += `
-          <b>Rodapé - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - RODAPE - PREÇO'))} <br>
+          <b>Rodapé - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 2 - RODAPE - PREÇO'))} <br>
         `;
       }
     }
@@ -698,7 +699,7 @@ export class ContractService {
      else if(this.getValue(currentPersonalization, 'LINHA FRIGORÍGENA - OPÇÃO') == 2) {
         div.innerHTML += `
           <b>Opção:</b> Personalizado – Com linha frigorígena: instalações de tubulação e fiações para recebimento de ar condicionado (sem aparelho). Ambientes que vão receber a carga: Suíte 1 e Estar/jantar <br>
-          <b>Preço:</b> ${this.convertPrice(4998)} <br>
+          <b>Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'LINHA FRIGORÍGENA - OPÇÃO - PREÇO'))} <br>
         `;
      }
   }
