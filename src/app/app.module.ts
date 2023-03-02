@@ -28,6 +28,7 @@ import { OptionsDialogComponent } from './components/options-dialog/options-dial
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { PromptComponent } from './components/prompt/prompt.component';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 const firebaseConfig = {
@@ -71,7 +72,8 @@ const analytics = getAnalytics(app);
     MatSelectModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

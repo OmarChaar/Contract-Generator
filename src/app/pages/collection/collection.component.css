@@ -165,6 +165,12 @@ input:focus::placeholder {
   justify-content: flex-end;
 }
 
+.saveDiv {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
 /* .addQuestionDiv button {
   background: palegreen;
   color: black;
@@ -220,4 +226,18 @@ input {
 .hideTR {
   opacity: 0.5;
   /* pointer-events: none; */
+}
+
+.errorValidation {
+  border: 2px solid mediumvioletred;
+}
+
+.warningNote {
+  display: grid;
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+.saveDiv button {
+  width: 10rem;
 }

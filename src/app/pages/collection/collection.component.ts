@@ -198,8 +198,30 @@ export class CollectionComponent implements OnInit {
     });
   }
 
+  public hasErrors = false;
+
   save() {
     console.log("SAVE ", this.sections);
+    if(this.validateSections() == true) {
+      console.log("SAVING...s");
+    }
+    else {
+      this.hasErrors = true;
+    }
+  }
+
+  validateSections() {
+    for(let i=0; i<this.sections.length; i++) {
+      const tempSection = this.sections[i];
+      if(tempSection.label?.trim().length > 0) {
+
+      }
+      else {
+        return false;
+      }
+    }
+
+    return true;
   }
 
 }

@@ -5,7 +5,7 @@
       <tr>
         <th style="width: 0;">Value</th>
         <th>Label</th>
-        <th>Name</th>
+        <th>Option Name</th>
         <th>Price</th>
         <th>Link</th>
         <th></th>
@@ -34,6 +34,13 @@
   </table>
 
   <div class="addOptionsDiv">
+    <div>
+      <div *ngIf="hasErrors" class="warningNote">
+        <span><b>*Label</b> - Please make sure that the <u>label</u> field is not left empty.</span>
+        <span><b>*Price</b> - Please make sure to enter a non-negative number and ensure that the <u>price</u> field is not left empty.</span>
+      </div>
+
+    </div>
     <button mat-raised-button (click)="addOption()" [ngClass]="options.length == 10 ? 'locked' : ''">Add Option</button>
   </div>
 </mat-dialog-content>

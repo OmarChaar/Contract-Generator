@@ -1,9 +1,9 @@
 
 
 .addOptionsDiv {
-  padding: 1rem;
+  padding: 1rem 0;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 /* .addOptionsDiv button {
@@ -20,7 +20,7 @@
 }
 
 .errorValidation {
-  border: 2px solid red;
+  border: 2px solid mediumvioletred;
 }
 
 .deleteIcon {
@@ -39,4 +39,10 @@ thead tr {
 
 tbody tr:nth-child(even) {
   background-color: #faebd738;
+}
+
+.warningNote {
+  display: grid;
+  font-size: 0.75rem;
+  font-style: italic;
 }

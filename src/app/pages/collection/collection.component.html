@@ -15,15 +15,17 @@
 
       <div class="custom-placeholder" *cdkDragPlaceholder></div>
       <div class="accordion-item-header" cdkDragHandle>
-
         <table [ngClass]="accordionItem.expanded ? 'expandedSection' : ''">
           <thead>
             <tr>
               <th class="idHeader">
-                <span class="sectionID">{{ section.id }}</span>
+                <span #tooltip="matTooltip"
+                [matTooltip]="section.id"
+                [matTooltipPosition]="'above'"
+                matTooltipHideDelay="0" class="sectionID">{{ section.id }}</span>
               </th>
 
-              <th>
+              <th [ngClass]="(hasErrors && !(section.label && section.label.trim().length > 0)) ? 'errorValidation' : ''">
                 <input class="inputLabel" [(ngModel)]="section.label" placeholder="Enter Label">
               </th>
 
@@ -86,18 +88,21 @@
               <ng-container *ngFor="let question of section.questions; let i = index;">
                 <tr cdkDrag [ngClass]="question.show == false ? 'hideTR' : ''">
                   <td class="idHeader">
-                    <span class="sectionID">{{ question.id }}</span>
+                    <span #tooltip="matTooltip"
+                    [matTooltip]="question.id"
+                    [matTooltipPosition]="'above'"
+                    matTooltipHideDelay="0"class="sectionID">{{ question.id }}</span>
                   </td>
 
-                  <td>
+                  <td [ngClass]="(hasErrors && !(question.label && question.label.trim().length > 0)) ? 'errorValidation' : ''">
                     <input class="inputLabel" [(ngModel)]="question.label" placeholder="Enter Label">
                   </td>
 
-                  <td>
+                  <td [ngClass]="(hasErrors && !(question.displayLabel && question.displayLabel.trim().length > 0)) ? 'errorValidation' : ''">
                     <input class="inputLabel" [(ngModel)]="question.displayLabel" placeholder="Enter Display Label">
                   </td>
 
-                  <td class="questionType">
+                  <td class="questionType"  [ngClass]="(hasErrors && !question.type) ? 'errorValidation' : ''">
                     <!-- <mat-label>Select a type</mat-label> -->
                     <mat-select disableRipple [(value)]="question.type">
                       <mat-option value="multi">Multi options</mat-option>
@@ -105,22 +110,25 @@
                     </mat-select>
                   </td>
 
-                  <td class="questionRequired">
+                  <td class="questionRequired" [ngClass]="(hasErrors && !question.required) ? 'errorValidation' : ''">
                     <mat-select disableRipple [(value)]="question.required">
                       <mat-option value="true">True</mat-option>
                       <mat-option value="false">False</mat-option>
                     </mat-select>
                   </td>
 
-                  <td class="questionEnabled">
+                  <td class="questionEnabled" [ngClass]="(hasErrors && !question.enabled) ? 'errorValidation' : ''">
                     <mat-select disableRipple [(value)]="question.enabled">
                       <mat-option value="true">True</mat-option>
                       <mat-option value="false">False</mat-option>
                     </mat-select>
                   </td>
 
-                  <td class="questionOptions">
-                    <i (click)="openDialog(question)" class="bi bi-binoculars-fill"></i>
+                  <td class="questionOptions" [ngClass]="(hasErrors && !(question?.options?.length > 0)) ? 'errorValidation' : ''">
+                    <i #tooltip="matTooltip"
+                      matTooltip="Opens the options list of selected question."
+                      [matTooltipPosition]="'left'"
+                      matTooltipHideDelay="0" (click)="openDialog(question)" class="bi bi-binoculars-fill"></i>
                   </td>
 
                   <td class="questionOptions">
@@ -157,6 +165,10 @@
           </table>
 
           <div class="addQuestionDiv">
+            <div>
+
+
+            </div>
             <button (click)="addQuestion(section)" mat-raised-button>Add Question</button>
           </div>
         </div>
@@ -166,6 +178,16 @@
     </cdk-accordion-item>
   </cdk-accordion>
 
-  <button mat-raised-button (click)="save()">SAVE</button>
+  <div class="saveDiv">
+    <div>
+      <div *ngIf="hasErrors" class="warningNote">
+        <span><b>*Note</b> - Please make sure that all the highlighted fields are not left empty.</span>
+      </div>
+    </div>
+
+    <button mat-raised-button (click)="save()">SAVE</button>
+  </div>
+
+
 </div>
 
