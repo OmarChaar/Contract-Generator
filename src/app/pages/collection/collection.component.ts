@@ -183,8 +183,28 @@ export class CollectionComponent implements OnInit {
     section.questions.push(clonedQuestion);
   }
 
-  transferQuestion(section: Section, i: number, transferId: any) {
+  transferQuestion(section: Section, i: number, question: Question, transferId: any) {
+    if(section.questions.length > 1) {
+      let clonedQuestion: Question = JSON.parse(JSON.stringify(question));
+      const transferIndex = this.getSectionByID(transferId);
+      if(transferIndex > -1) {
+        this.sections[this.getSectionByID(transferId)].questions.push(clonedQuestion);
+        section.questions.splice(i, 1);
+      }
+    }
+    else {
+      this.openSnackBar('You have have at least 1 question per section', 'Warning');
+    }
 
+  }
+
+  getSectionByID(id: any) {
+    for(let i=0; i<this.sections.length; i++) {
+      if(this.sections[i].id == id) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   hideQuestion(question: Question) {

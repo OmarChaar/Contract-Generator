@@ -150,7 +150,7 @@
                       </button>
                       <mat-menu #transferSections="matMenu">
                         <ng-container *ngFor="let sec of sections; let secIndex = index">
-                          <button *ngIf="sec.id != section.id" mat-menu-item (click)="transferQuestion(section, i, sec.id)">{{sec.id}}</button>
+                          <button *ngIf="sec.id != section.id" mat-menu-item (click)="transferQuestion(section, i, question, sec.id)">{{sec.id}}</button>
                         </ng-container>
                       </mat-menu>
                       <button class="menuDelete" mat-menu-item (click)="deleteQuestion(section, i)">
