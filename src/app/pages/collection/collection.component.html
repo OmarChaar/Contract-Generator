@@ -1,5 +1,5 @@
 <div class="container">
-  <div>
+  <div class="headerDiv">
     <mat-form-field class="searchFeild">
       <mat-label>Search</mat-label>
       <input matInput type="text" (keyup)="search($event)" [(ngModel)]="searchValue">
@@ -8,6 +8,9 @@
       </button>
     </mat-form-field>
 
+    <button mat-raised-button (click)="isExpanding ? collapseAll() : expandAll()">
+      {{ isExpanding ? 'Collapse All' : 'Expand All' }}
+    </button>
   </div>
   <cdk-accordion class="accordion dropList" cdkDropList (cdkDropListDropped)="drop($event)">
     <!-- [expanded]="isSearching" -->
@@ -19,12 +22,12 @@
       tabindex="0"
       [ngClass]="section.show == false ? 'hideTR' : ''"
       [attr.id]="'accordion-header-' + index"
-      [attr.aria-expanded]="accordionItem.expanded"
+      [attr.aria-expanded]="section.expanded"
       [attr.aria-controls]="'accordion-body-' + index">
 
       <div class="custom-placeholder" *cdkDragPlaceholder></div>
       <div class="accordion-item-header" cdkDragHandle>
-        <table [ngClass]="accordionItem.expanded ? 'expandedSection' : ''">
+        <table [ngClass]="(section.expanded && !isExpanding) ? 'expandedSection' : ''">
           <thead>
             <tr>
               <th class="idHeader">
@@ -43,8 +46,8 @@
               </th>
 
               <th class="dropdownIcons">
-                <span class="accordion-item-description" (click)="accordionItem.toggle()">
-                  <i [class]="accordionItem.expanded ? 'bi bi-arrow-up-circle' : 'bi bi-arrow-down-circle-fill'"></i>
+                <span class="accordion-item-description" (click)="toggle(section.id)">
+                  <i [class]="section.expanded ? 'bi bi-arrow-up-circle' : 'bi bi-arrow-down-circle-fill'"></i>
                 </span>
               </th>
 
@@ -74,7 +77,7 @@
 
       <div class="accordion-item-body"
         role="region"
-        [style.display]="accordionItem.expanded ? '' : 'none'"
+        [style.display]="section.expanded ? '' : 'none'"
         [attr.id]="'accordion-body-' + index"
         [attr.aria-labelledby]="'accordion-header-' + index">
         <div class="questionsDiv">
@@ -111,7 +114,6 @@
                   </td>
 
                   <td class="questionType"  [ngClass]="(hasErrors && !question.type) ? 'errorValidation' : ''">
-                    <!-- <mat-label>Select a type</mat-label> -->
                     <mat-select disableRipple [(value)]="question.type">
                       <mat-option value="multi">Multi options</mat-option>
                       <mat-option value="truthy">True / False</mat-option>

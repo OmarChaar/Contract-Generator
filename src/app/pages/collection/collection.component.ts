@@ -1,11 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
-import { MatAccordion} from '@angular/material/expansion';
-import { FormControl, Validators } from '@angular/forms';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {MatDialog} from '@angular/material/dialog';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatDialog } from '@angular/material/dialog';
 import { OptionsDialogComponent } from 'src/app/components/options-dialog/options-dialog.component';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PromptComponent } from 'src/app/components/prompt/prompt.component';
 import { CdkAccordionItem } from '@angular/cdk/accordion';
 
@@ -14,7 +12,8 @@ interface Section {
   label: string;
   description: string;
   show: boolean;
-  questions: Question[]
+  questions: Question[],
+  expanded: boolean
 }
 
 interface Question {
@@ -63,9 +62,9 @@ export class CollectionComponent implements OnInit {
   };
 
   sections: Section[] = [
-    { id: uuidv4(), label: '', show: true, description: '', questions: [JSON.parse(JSON.stringify(this.emptyQuestion))] },
-    { id: uuidv4(), label: '', show: true, description: '', questions: [JSON.parse(JSON.stringify(this.emptyQuestion))]  },
-    { id: uuidv4(), label: '', show: true, description: '', questions: [JSON.parse(JSON.stringify(this.emptyQuestion))]  }
+    { id: uuidv4(), label: '', show: true, description: '', questions: [JSON.parse(JSON.stringify(this.emptyQuestion))], expanded: false },
+    { id: uuidv4(), label: '', show: true, description: '', questions: [JSON.parse(JSON.stringify(this.emptyQuestion))], expanded: false  },
+    { id: uuidv4(), label: '', show: true, description: '', questions: [JSON.parse(JSON.stringify(this.emptyQuestion))], expanded: false  }
   ];
 
   constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) { }
@@ -80,7 +79,8 @@ export class CollectionComponent implements OnInit {
       label: '',
       show: true,
       description: '',
-      questions: [this.emptyQuestion]
+      questions: [this.emptyQuestion],
+      expanded: false
     };
     this.sections.push(newRow);
   }
@@ -250,19 +250,27 @@ export class CollectionComponent implements OnInit {
     return true;
   }
 
+  toggle(id: string) {
+    for(let section of this.sections) {
+      if(section.id != id) {
+        section.expanded = false;
+      }
+      else {
+        section.expanded = !section.expanded;
+      }
+    }
+
+  }
+
   public isSearching = false;
 
   @ViewChildren(CdkAccordionItem) accordionItems: QueryList<CdkAccordionItem> | undefined;
 
   search(event: any) {
-    if( this.accordionItems) {
-      console.log("accordionItems", this.accordionItems);
-      this.accordionItems.forEach(item => {item.expanded = true; console.log("item", item);});
-    }
 
 
     this.isSearching = true;
-    // this.expandAll();
+    this.expandAll();
 
     console.log(event.target.value);
     if(event.target.value.length > 0) {
@@ -300,11 +308,19 @@ export class CollectionComponent implements OnInit {
     this.searchValue = '';
   }
 
+  public isExpanding = false;
+
   expandAll() {
-    this.expandedItems = this.sections.map(() => true);
+    this.isExpanding = true;
+    for(let section of this.sections) {
+      section.expanded = true;
+    }
   }
 
   collapseAll() {
-    this.expandedItems = this.sections.map(() => false);
+    this.isExpanding = false;
+    for(let section of this.sections) {
+      section.expanded = false;
+    }
   }
 }
