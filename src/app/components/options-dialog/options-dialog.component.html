@@ -15,16 +15,16 @@
       <tr *ngFor="let option of options; let i = index">
         <td class="textAlignCenter">{{ i+1 }}</td>
         <td [ngClass]="(hasErrors && !(option.label?.trim().length > 0)) ? 'errorValidation' : ''">
-          <input class="inputLabel" placeholder="Enter Label" [(ngModel)]="option.label">
+          <input class="inputLabel" placeholder="Enter Label*" [(ngModel)]="option.label">
         </td>
         <td>
-          <input class="inputLabel" placeholder="Enter Label" [(ngModel)]="option.name">
+          <input class="inputLabel" placeholder="Enter Name (optional)" [(ngModel)]="option.name">
         </td>
         <td [ngClass]="(hasErrors && (option.price == null || !(option.price >= 0))) ? 'errorValidation' : ''">
-          <input type="number" class="inputLabel" placeholder="Enter Price"  [(ngModel)]="option.price">
+          <input type="number" class="inputLabel" placeholder="Enter Price*"  [(ngModel)]="option.price">
         </td>
         <td>
-          <input class="inputLabel" placeholder="Enter Link"  [(ngModel)]="option.link">
+          <input class="inputLabel" placeholder="Enter Link (optional)"  [(ngModel)]="option.link">
         </td>
         <td class="deleteIcon">
           <i (click)="deleteOption(i)" class="bi bi-trash"></i>

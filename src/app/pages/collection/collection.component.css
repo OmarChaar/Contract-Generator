@@ -1,7 +1,7 @@
 .container {
   padding: 2rem;
   height: 100%;
-  background: lightgray;
+  background: gainsboro;
   box-sizing: border-box;
   overflow: scroll;
 }
@@ -165,6 +165,12 @@ input:focus::placeholder {
   justify-content: flex-end;
 }
 
+.addSectionDiv {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .saveDiv {
   padding: 1rem 0;
   display: flex;
@@ -229,7 +235,7 @@ input {
 }
 
 .errorValidation {
-  border: 2px solid mediumvioletred;
+  border: 1.5px solid mediumvioletred;
 }
 
 .warningNote {
@@ -240,4 +246,8 @@ input {
 
 .saveDiv button {
   width: 10rem;
+}
+
+.searchFeild {
+  width: 25%;
 }

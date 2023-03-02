@@ -1,6 +1,16 @@
 <div class="container">
-  <cdk-accordion class="accordion dropList" cdkDropList (cdkDropListDropped)="drop($event)">
+  <div>
+    <mat-form-field class="searchFeild">
+      <mat-label>Search</mat-label>
+      <input matInput type="text" (keyup)="search($event)" [(ngModel)]="searchValue">
+      <button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
 
+  </div>
+  <cdk-accordion class="accordion dropList" cdkDropList (cdkDropListDropped)="drop($event)">
+    <!-- [expanded]="isSearching" -->
     <cdk-accordion-item *ngFor="let section of sections; let index = index;"
       #accordionItem="cdkAccordionItem"
       class="accordion-item dropBox"
@@ -10,7 +20,6 @@
       [ngClass]="section.show == false ? 'hideTR' : ''"
       [attr.id]="'accordion-header-' + index"
       [attr.aria-expanded]="accordionItem.expanded"
-
       [attr.aria-controls]="'accordion-body-' + index">
 
       <div class="custom-placeholder" *cdkDragPlaceholder></div>
@@ -26,11 +35,11 @@
               </th>
 
               <th [ngClass]="(hasErrors && !(section.label && section.label.trim().length > 0)) ? 'errorValidation' : ''">
-                <input class="inputLabel" [(ngModel)]="section.label" placeholder="Enter Label">
+                <input class="inputLabel" [(ngModel)]="section.label" placeholder="Enter Label*">
               </th>
 
               <th>
-                <input [(ngModel)]="section.description" placeholder="Enter Description">
+                <input [(ngModel)]="section.description" placeholder="Enter Description (optional)">
               </th>
 
               <th class="dropdownIcons">
@@ -61,7 +70,6 @@
             </tr>
           </thead>
         </table>
-
       </div>
 
       <div class="accordion-item-body"
@@ -95,11 +103,11 @@
                   </td>
 
                   <td [ngClass]="(hasErrors && !(question.label && question.label.trim().length > 0)) ? 'errorValidation' : ''">
-                    <input class="inputLabel" [(ngModel)]="question.label" placeholder="Enter Label">
+                    <input class="inputLabel" [(ngModel)]="question.label" placeholder="Enter Label*">
                   </td>
 
                   <td [ngClass]="(hasErrors && !(question.displayLabel && question.displayLabel.trim().length > 0)) ? 'errorValidation' : ''">
-                    <input class="inputLabel" [(ngModel)]="question.displayLabel" placeholder="Enter Display Label">
+                    <input class="inputLabel" [(ngModel)]="question.displayLabel" placeholder="Enter Display Label*">
                   </td>
 
                   <td class="questionType"  [ngClass]="(hasErrors && !question.type) ? 'errorValidation' : ''">
@@ -165,10 +173,6 @@
           </table>
 
           <div class="addQuestionDiv">
-            <div>
-
-
-            </div>
             <button (click)="addQuestion(section)" mat-raised-button>Add Question</button>
           </div>
         </div>
@@ -176,6 +180,9 @@
 
       </div>
     </cdk-accordion-item>
+    <div class="addSectionDiv">
+      <button (click)="addSection()" mat-raised-button>Add Ssection</button>
+    </div>
   </cdk-accordion>
 
   <div class="saveDiv">

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { MatAccordion} from '@angular/material/expansion';
 import { FormControl, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { OptionsDialogComponent } from 'src/app/components/options-dialog/options-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { PromptComponent } from 'src/app/components/prompt/prompt.component';
+import { CdkAccordionItem } from '@angular/cdk/accordion';
 
 interface Section {
   id: string;
@@ -42,9 +43,13 @@ interface Options {
 })
 export class CollectionComponent implements OnInit {
 
+  searchValue: any;
+
   public optionsNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   expandedIndex = 0;
+
+  expandedItems: boolean[] = [];
 
   private emptyQuestion: Question = {
     id: uuidv4(),
@@ -58,14 +63,15 @@ export class CollectionComponent implements OnInit {
   };
 
   sections: Section[] = [
-    { id: uuidv4(), label: '', show: true, description: '', questions: [this.emptyQuestion] },
-    { id: uuidv4(), label: '', show: true, description: '', questions: [this.emptyQuestion]  },
-    { id: uuidv4(), label: '', show: true, description: '', questions: [this.emptyQuestion]  }
+    { id: uuidv4(), label: '', show: true, description: '', questions: [JSON.parse(JSON.stringify(this.emptyQuestion))] },
+    { id: uuidv4(), label: '', show: true, description: '', questions: [JSON.parse(JSON.stringify(this.emptyQuestion))]  },
+    { id: uuidv4(), label: '', show: true, description: '', questions: [JSON.parse(JSON.stringify(this.emptyQuestion))]  }
   ];
 
   constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.expandedItems = this.sections.map(() => false);
   }
 
   addSection() {
@@ -244,4 +250,61 @@ export class CollectionComponent implements OnInit {
     return true;
   }
 
+  public isSearching = false;
+
+  @ViewChildren(CdkAccordionItem) accordionItems: QueryList<CdkAccordionItem> | undefined;
+
+  search(event: any) {
+    if( this.accordionItems) {
+      console.log("accordionItems", this.accordionItems);
+      this.accordionItems.forEach(item => {item.expanded = true; console.log("item", item);});
+    }
+
+
+    this.isSearching = true;
+    // this.expandAll();
+
+    console.log(event.target.value);
+    if(event.target.value.length > 0) {
+      const searchBy: string = event.target.value;
+      let tempSearched: Section[] = [];
+      for(let section of this.sections) {
+        if(section.label.toLowerCase().includes(searchBy.toLowerCase())) {
+          tempSearched.push(section);
+        }
+        else {
+          let tempSection: Section = JSON.parse(JSON.stringify(section));
+          tempSection.questions = [];
+          let hasFound = false;
+          for(let question of section.questions) {
+            if(question.label?.toLowerCase().includes(searchBy.toLowerCase())) {
+              hasFound = true;
+              tempSection.questions.push(question);
+            }
+          }
+
+          if(hasFound) {
+            tempSearched.push(tempSection);
+          }
+        }
+      }
+
+      console.log("tempSearched", tempSearched);
+    }
+    else {
+
+    }
+  }
+
+  clearSearch() {
+    this.searchValue = '';
+  }
+
+  expandAll() {
+    this.expandedItems = this.sections.map(() => true);
+  }
+
+  collapseAll() {
+    this.expandedItems = this.sections.map(() => false);
+  }
 }
