@@ -25,6 +25,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import { OptionsDialogComponent } from './components/options-dialog/options-dialog.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { PromptComponent } from './components/prompt/prompt.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 const firebaseConfig = {
@@ -46,7 +49,8 @@ const analytics = getAnalytics(app);
     ContractGeneratorComponent,
     CollectionComponent,
     ClientsComponent,
-    OptionsDialogComponent
+    OptionsDialogComponent,
+    PromptComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +69,9 @@ const analytics = getAnalytics(app);
     MatTableModule,
     DragDropModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

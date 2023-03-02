@@ -5,11 +5,14 @@ import { FormControl, Validators } from '@angular/forms';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {MatDialog} from '@angular/material/dialog';
 import { OptionsDialogComponent } from 'src/app/components/options-dialog/options-dialog.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { PromptComponent } from 'src/app/components/prompt/prompt.component';
 
 interface Section {
   id: string;
   label: string;
   description: string;
+  show: boolean;
   questions: Question[]
 }
 
@@ -21,6 +24,7 @@ interface Question {
   options: any,
   required: any,
   enabled: any,
+  show: boolean
 }
 
 interface Options {
@@ -50,15 +54,16 @@ export class CollectionComponent implements OnInit {
     options: null,
     required: null,
     enabled: null,
+    show: true
   };
 
   sections: Section[] = [
-    { id: uuidv4(), label: '', description: '', questions: [this.emptyQuestion] },
-    { id: uuidv4(), label: '', description: '', questions: [this.emptyQuestion]  },
-    { id: uuidv4(), label: '', description: '', questions: [this.emptyQuestion]  }
+    { id: uuidv4(), label: '', show: true, description: '', questions: [this.emptyQuestion] },
+    { id: uuidv4(), label: '', show: true, description: '', questions: [this.emptyQuestion]  },
+    { id: uuidv4(), label: '', show: true, description: '', questions: [this.emptyQuestion]  }
   ];
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -67,6 +72,7 @@ export class CollectionComponent implements OnInit {
     const newRow: Section = {
       id: uuidv4(),
       label: '',
+      show: true,
       description: '',
       questions: [this.emptyQuestion]
     };
@@ -81,6 +87,26 @@ export class CollectionComponent implements OnInit {
     moveItemInArray(section.questions, event.previousIndex, event.currentIndex);
   }
 
+  openDialog(question: Question) {
+    const dialogRef = this.dialog.open(OptionsDialogComponent, {
+      data: {
+        question: question,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: Options[]) => {
+      console.log("result", result);
+      if(result) {
+        question.options = result;
+      }
+
+    });
+  }
+
+  openPrompt(message: string) {
+
+  }
+
   addQuestion(section: Section) {
     const emptyQuestion: Question = {
       id: uuidv4(),
@@ -89,22 +115,91 @@ export class CollectionComponent implements OnInit {
       type: null,
       options: null,
       required: null,
-      enabled: null
+      enabled: null,
+      show: true
     };
 
     section.questions.push(emptyQuestion);
   }
 
-  openDialog(section: Section, question: Question) {
-    const dialogRef = this.dialog.open(OptionsDialogComponent, {
-      data: {
-        question: question
-      }
-    });
+  deleteSection(i: number) {
+    if(this.sections.length > 1) {
+      const dialogRef = this.dialog.open(PromptComponent, {
+        data: {
+          message: 'Are you sure you want to delete this section?',
+          title: 'Deleting Section'
+        }
+      });
 
-    dialogRef.afterClosed().subscribe((result: Options[]) => {
-      console.log("result", result);
+      dialogRef.afterClosed().subscribe((result: any) => {
+        if(result == true) {
+          this.sections.splice(i, 1);
+        }
+
+      });
+    }
+    else {
+      this.openSnackBar('You have have at least 1 section', 'Warning');
+    }
+  }
+
+  cloneSection(section: Section) {
+    let clonedSecction: Section = JSON.parse(JSON.stringify(section));
+    clonedSecction.id = uuidv4();
+    clonedSecction.label = clonedSecction.label + ' - cloned'
+    this.sections.push(clonedSecction);
+  }
+
+  hideSection(i: number) {
+    this.sections[i].show = !this.sections[i].show
+  }
+
+
+  deleteQuestion(section: Section, i: number) {
+    if(section.questions.length > 1) {
+      const dialogRef = this.dialog.open(PromptComponent, {
+        data: {
+          message: 'Are you sure you want to delete this question?',
+          title: 'Deleting Question'
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((result: any) => {
+        if(result == true) {
+          section.questions.splice(i, 1);
+        }
+
+      });
+    }
+    else {
+      this.openSnackBar('You have have at least 1 question', 'Warning');
+    }
+  }
+
+  cloneQuestion(section: Section, question: Question) {
+    let clonedQuestion: Question = JSON.parse(JSON.stringify(question));
+    clonedQuestion.id = uuidv4();
+    clonedQuestion.label = clonedQuestion.label + ' - cloned'
+    section.questions.push(clonedQuestion);
+  }
+
+  transferQuestion(section: Section, i: number, transferId: any) {
+
+  }
+
+  hideQuestion(question: Question) {
+    question.show = !question.show;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
     });
+  }
+
+  save() {
+    console.log("SAVE ", this.sections);
   }
 
 }

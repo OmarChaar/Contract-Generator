@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 interface Options {
   value: any,
@@ -22,7 +23,8 @@ export class OptionsDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<OptionsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -38,13 +40,20 @@ export class OptionsDialogComponent implements OnInit {
   }
 
   addOption() {
-    this.options.push({
-      value: (this.options.length + 1), label: null, name: null, price: null, link: null
-    })
+    if(this.options.length < 10) {
+      this.options.push({
+        value: (this.options.length + 1), label: null, name: null, price: null, link: null
+      })
+    }
   }
 
   deleteOption(i: number) {
-    this.options.splice(i, 1);
+    if(this.options.length > 1) {
+      this.options.splice(i, 1);
+    }
+    else {
+      this.openSnackBar('You have have at least 1 option', 'Warning');
+    }
   }
 
   save() {
@@ -72,5 +81,12 @@ export class OptionsDialogComponent implements OnInit {
     }
 
     return true;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
   }
 }

@@ -7,8 +7,10 @@
       cdkDrag
       role="button"
       tabindex="0"
+      [ngClass]="section.show == false ? 'hideTR' : ''"
       [attr.id]="'accordion-header-' + index"
       [attr.aria-expanded]="accordionItem.expanded"
+
       [attr.aria-controls]="'accordion-body-' + index">
 
       <div class="custom-placeholder" *cdkDragPlaceholder></div>
@@ -22,17 +24,37 @@
               </th>
 
               <th>
-                <input class="inputLabel" placeholder="Enter Label">
+                <input class="inputLabel" [(ngModel)]="section.label" placeholder="Enter Label">
               </th>
 
               <th>
-                <input placeholder="Enter Description">
+                <input [(ngModel)]="section.description" placeholder="Enter Description">
               </th>
 
               <th class="dropdownIcons">
                 <span class="accordion-item-description" (click)="accordionItem.toggle()">
                   <i [class]="accordionItem.expanded ? 'bi bi-arrow-up-circle' : 'bi bi-arrow-down-circle-fill'"></i>
                 </span>
+              </th>
+
+              <th class="dropdownIcons">
+                <span class="accordion-item-description">
+                  <i [matMenuTriggerFor]="menuSection" class="bi bi-three-dots-vertical"></i>
+                </span>
+                <mat-menu #menuSection="matMenu">
+                  <button mat-menu-item (click)="cloneSection(section)">
+                    <i class="bi bi-files"></i>
+                    <span class="menuLabel">Clone</span>
+                  </button>
+                  <button mat-menu-item (click)="hideSection(index)">
+                    <i [class]="section.show ? 'bi-eye-slash' : 'bi-eye'"></i>
+                    <span class="menuLabel">{{section.show ? "Hide" : "Show"}}</span>
+                  </button>
+                  <button class="menuDelete" mat-menu-item (click)="deleteSection(index)">
+                    <i class="bi bi-trash"></i>
+                    <span class="menuLabel">Delete</span>
+                  </button>
+                </mat-menu>
               </th>
             </tr>
           </thead>
@@ -50,64 +72,87 @@
           <table>
             <thead>
               <tr>
-                <th>ID</th>
+                <th class="textAlignCenter">ID</th>
                 <th>Label</th>
                 <th>Display Label</th>
                 <th>Type</th>
                 <th>Required</th>
                 <th>Enabled</th>
-                <th>Options</th>
+                <th class="textAlignCenter">Options</th>
+                <th></th>
               </tr>
             </thead>
             <tbody class="questionDropList" cdkDropList (cdkDropListDropped)="dropQuestion($event, section)">
-              <tr *ngFor="let question of section.questions; let i = index;" cdkDrag>
-                <td class="idHeader">
-                  <span class="sectionID">{{ question.id }}</span>
-                </td>
+              <ng-container *ngFor="let question of section.questions; let i = index;">
+                <tr cdkDrag [ngClass]="question.show == false ? 'hideTR' : ''">
+                  <td class="idHeader">
+                    <span class="sectionID">{{ question.id }}</span>
+                  </td>
 
-                <td>
-                  <input class="inputLabel" [(ngModel)]="question.label" placeholder="Enter Label">
-                </td>
+                  <td>
+                    <input class="inputLabel" [(ngModel)]="question.label" placeholder="Enter Label">
+                  </td>
 
-                <td>
-                  <input class="inputLabel" [(ngModel)]="question.displayLabel" placeholder="Enter Display Label">
-                </td>
+                  <td>
+                    <input class="inputLabel" [(ngModel)]="question.displayLabel" placeholder="Enter Display Label">
+                  </td>
 
-                <td class="questionType">
-                  <!-- <mat-label>Select a type</mat-label> -->
-                  <mat-select disableRipple [(value)]="question.type">
-                    <mat-option value="multi">Multi options</mat-option>
-                    <mat-option value="truthy">True / False</mat-option>
-                  </mat-select>
-                </td>
-
-                <td class="questionRequired">
-                  <mat-select disableRipple [(value)]="question.required">
-                    <mat-option value="true">True</mat-option>
-                    <mat-option value="false">False</mat-option>
-                  </mat-select>
-                </td>
-
-                <td class="questionEnabled">
-                  <mat-select disableRipple [(value)]="question.enabled">
-                    <mat-option value="true">True</mat-option>
-                    <mat-option value="false">False</mat-option>
-                  </mat-select>
-                </td>
-
-                <td class="questionOptions">
-                  <i (click)="openDialog(section, question)" class="bi bi-binoculars-fill"></i>
-                  <!-- <ng-container *ngIf="question.type == 'multi'">
-                    <mat-select disableRipple [(value)]="question.options">
-                      <mat-option *ngFor="let i of optionsNumber" value="multi">{{ i }}</mat-option>
+                  <td class="questionType">
+                    <!-- <mat-label>Select a type</mat-label> -->
+                    <mat-select disableRipple [(value)]="question.type">
+                      <mat-option value="multi">Multi options</mat-option>
+                      <mat-option value="truthy">True / False</mat-option>
                     </mat-select>
-                  </ng-container>
+                  </td>
 
-                  <ng-container *ngIf="question.type == 'truthy'">
-                    2
-                  </ng-container> -->
-                </td>
-              </tr>
+                  <td class="questionRequired">
+                    <mat-select disableRipple [(value)]="question.required">
+                      <mat-option value="true">True</mat-option>
+                      <mat-option value="false">False</mat-option>
+                    </mat-select>
+                  </td>
+
+                  <td class="questionEnabled">
+                    <mat-select disableRipple [(value)]="question.enabled">
+                      <mat-option value="true">True</mat-option>
+                      <mat-option value="false">False</mat-option>
+                    </mat-select>
+                  </td>
+
+                  <td class="questionOptions">
+                    <i (click)="openDialog(question)" class="bi bi-binoculars-fill"></i>
+                  </td>
+
+                  <td class="questionOptions">
+                    <span class="accordion-item-description">
+                      <i [matMenuTriggerFor]="menuQuestion" class="bi bi-three-dots-vertical"></i>
+                    </span>
+                    <mat-menu #menuQuestion="matMenu">
+                      <button mat-menu-item (click)="cloneQuestion(section, question)">
+                        <i class="bi bi-files"></i>
+                        <span class="menuLabel">Clone</span>
+                      </button>
+                      <button mat-menu-item (click)="hideQuestion(question)">
+                        <i [class]="question.show ? 'bi-eye-slash' : 'bi-eye'"></i>
+                        <span class="menuLabel">{{ question.show ? "Hide" : "Show" }}</span>
+                      </button>
+                      <button mat-menu-item [matMenuTriggerFor]="transferSections">
+                        <i class="bi bi-file-earmark-arrow-up"></i>
+                        <span class="menuLabel">Transfer</span>
+                      </button>
+                      <mat-menu #transferSections="matMenu">
+                        <ng-container *ngFor="let sec of sections; let secIndex = index">
+                          <button *ngIf="sec.id != section.id" mat-menu-item (click)="transferQuestion(section, i, sec.id)">{{sec.id}}</button>
+                        </ng-container>
+                      </mat-menu>
+                      <button class="menuDelete" mat-menu-item (click)="deleteQuestion(section, i)">
+                        <i class="bi bi-trash"></i>
+                        <span class="menuLabel">Delete</span>
+                      </button>
+                    </mat-menu>
+                  </td>
+                </tr>
+              </ng-container>
             </tbody>
           </table>
 
@@ -120,5 +165,7 @@
       </div>
     </cdk-accordion-item>
   </cdk-accordion>
+
+  <button mat-raised-button (click)="save()">SAVE</button>
 </div>
 
