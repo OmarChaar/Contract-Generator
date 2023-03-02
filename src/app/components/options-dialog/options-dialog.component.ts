@@ -31,6 +31,9 @@ export class OptionsDialogComponent implements OnInit {
     console.log("DATYA", this.data);
     if(this.data?.question) {
       this.question = this.data.question;
+      if(this.question.options.length > 0) {
+        this.options = this.question.options;
+      }
     }
   }
 

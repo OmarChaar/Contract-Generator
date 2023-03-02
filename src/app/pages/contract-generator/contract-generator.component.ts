@@ -3,9 +3,9 @@ import * as Papa from 'papaparse';
 import { Document, ImageRun, Packer, Paragraph, SectionType, TextRun } from "docx";
 import { saveAs } from 'file-saver';
 import * as JSZip from 'jszip';
-import { ContractService } from '../../services/contract.service';
-import { ClientsService } from 'src/app/services/clients.service';
-import { DefaultsService } from 'src/app/services/defaults.service';
+import { ContractService } from 'src/app/services/contract/contract.service';
+import { ClientsService } from 'src/app/services/clients/clients.service';
+import { DefaultsService } from 'src/app/services/defaults/defaults.service';
 
 declare const Office: any;
 

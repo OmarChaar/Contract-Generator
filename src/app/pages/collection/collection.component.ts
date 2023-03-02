@@ -6,6 +6,7 @@ import { OptionsDialogComponent } from 'src/app/components/options-dialog/option
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PromptComponent } from 'src/app/components/prompt/prompt.component';
 import { CdkAccordionItem } from '@angular/cdk/accordion';
+import { SessionStorageService } from 'src/app/services/sessionStorage/session-storage.service';
 
 interface Section {
   id: string;
@@ -48,8 +49,6 @@ export class CollectionComponent implements OnInit {
 
   expandedIndex = 0;
 
-  expandedItems: boolean[] = [];
-
   private emptyQuestion: Question = {
     id: uuidv4(),
     label: null,
@@ -67,10 +66,18 @@ export class CollectionComponent implements OnInit {
     { id: uuidv4(), label: '', show: true, description: '', questions: [JSON.parse(JSON.stringify(this.emptyQuestion))], expanded: false  }
   ];
 
-  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) { }
+  constructor(
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
+    private sessionStorageService: SessionStorageService
+    ) { }
 
   ngOnInit(): void {
-    this.expandedItems = this.sections.map(() => false);
+    console.log((this.sessionStorageService.getSessionStorage('sections')))
+    if(this.sessionStorageService.getSessionStorage('sections') != null) {
+      this.sections = this.sessionStorageService.getSessionStorage('sections');
+      this.collapseAll();
+    }
   }
 
   addSection() {
@@ -94,6 +101,7 @@ export class CollectionComponent implements OnInit {
   }
 
   openDialog(question: Question) {
+    console.log("question", question);
     const dialogRef = this.dialog.open(OptionsDialogComponent, {
       data: {
         question: question,
@@ -230,8 +238,10 @@ export class CollectionComponent implements OnInit {
     console.log("SAVE ", this.sections);
     if(this.validateSections() == true) {
       console.log("SAVING...s");
+      this.sessionStorageService.setSessionStorage('sections', this.sections)
     }
     else {
+      this.expandAll();
       this.hasErrors = true;
     }
   }
@@ -240,7 +250,17 @@ export class CollectionComponent implements OnInit {
     for(let i=0; i<this.sections.length; i++) {
       const tempSection = this.sections[i];
       if(tempSection.label?.trim().length > 0) {
-
+        for(let x=0; x<tempSection.questions.length; x++) {
+          const tempQuestion = tempSection.questions[x];
+          console.log("tempQuestion", tempQuestion);
+          if(!(tempQuestion.label?.trim().length > 0 &&
+            tempQuestion.displayLabel?.trim().length > 0 &&
+            tempQuestion.options.length > 0 &&
+            tempQuestion.enabled != null &&
+            tempQuestion.required != null) ) {
+              return false;
+          }
+        }
       }
       else {
         return false;
