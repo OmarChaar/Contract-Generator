@@ -44,10 +44,11 @@ interface Options {
 export class CollectionComponent implements OnInit {
 
   searchValue: any;
+  public isSearching = false;
 
   public optionsNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  expandedIndex = 0;
+  public isExpanding = false;
 
   private emptyQuestion: Question = {
     id: uuidv4(),
@@ -73,7 +74,6 @@ export class CollectionComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    console.log((this.sessionStorageService.getSessionStorage('sections')))
     if(this.sessionStorageService.getSessionStorage('sections') != null) {
       this.sections = this.sessionStorageService.getSessionStorage('sections');
       this.collapseAll();
@@ -101,7 +101,6 @@ export class CollectionComponent implements OnInit {
   }
 
   openDialog(question: Question) {
-    console.log("question", question);
     const dialogRef = this.dialog.open(OptionsDialogComponent, {
       data: {
         question: question,
@@ -109,7 +108,6 @@ export class CollectionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: Options[]) => {
-      console.log("result", result);
       if(result) {
         question.options = result;
       }
@@ -235,9 +233,7 @@ export class CollectionComponent implements OnInit {
   public hasErrors = false;
 
   save() {
-    console.log("SAVE ", this.sections);
     if(this.validateSections() == true) {
-      console.log("SAVING...s");
       this.sessionStorageService.setSessionStorage('sections', this.sections)
     }
     else {
@@ -252,7 +248,7 @@ export class CollectionComponent implements OnInit {
       if(tempSection.label?.trim().length > 0) {
         for(let x=0; x<tempSection.questions.length; x++) {
           const tempQuestion = tempSection.questions[x];
-          console.log("tempQuestion", tempQuestion);
+
           if(!(tempQuestion.label?.trim().length > 0 &&
             tempQuestion.displayLabel?.trim().length > 0 &&
             tempQuestion.options.length > 0 &&
@@ -288,22 +284,17 @@ export class CollectionComponent implements OnInit {
 
   }
 
-  public isSearching = false;
-
-  @ViewChildren(CdkAccordionItem) accordionItems: QueryList<CdkAccordionItem> | undefined;
+  public searchResults: any;
 
   search(event: any) {
-
-
     this.isSearching = true;
     this.expandAll();
 
-    console.log(event.target.value);
     if(event.target.value.length > 0) {
       const searchBy: string = event.target.value;
       let tempSearched: Section[] = [];
       for(let section of this.sections) {
-        if(section.label.toLowerCase().includes(searchBy.toLowerCase())) {
+        if(section.label.toLowerCase().indexOf(searchBy.toLowerCase()) > -1) {
           tempSearched.push(section);
         }
         else {
@@ -311,7 +302,7 @@ export class CollectionComponent implements OnInit {
           tempSection.questions = [];
           let hasFound = false;
           for(let question of section.questions) {
-            if(question.label?.toLowerCase().includes(searchBy.toLowerCase())) {
+            if(question.label?.toLowerCase().indexOf(searchBy.toLowerCase()) > -1) {
               hasFound = true;
               tempSection.questions.push(question);
             }
@@ -322,19 +313,17 @@ export class CollectionComponent implements OnInit {
           }
         }
       }
-
-      console.log("tempSearched", tempSearched);
+      this.searchResults = tempSearched;
     }
     else {
-
+      this.isSearching = false;
     }
   }
 
   clearSearch() {
     this.searchValue = '';
+    this.isSearching = false;
   }
-
-  public isExpanding = false;
 
   expandAll() {
     this.isExpanding = true;

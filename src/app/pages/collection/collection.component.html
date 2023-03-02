@@ -14,7 +14,7 @@
   </div>
   <cdk-accordion class="accordion dropList" cdkDropList (cdkDropListDropped)="drop($event)">
     <!-- [expanded]="isSearching" -->
-    <cdk-accordion-item *ngFor="let section of sections; let index = index;"
+    <cdk-accordion-item *ngFor="let section of (!isSearching ? sections : searchResults); let index = index;"
       #accordionItem="cdkAccordionItem"
       class="accordion-item dropBox"
       cdkDrag
