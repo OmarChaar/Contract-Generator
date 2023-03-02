@@ -250,15 +250,21 @@ export class CollectionComponent implements OnInit {
     return true;
   }
 
-  toggle(id: string) {
-    for(let section of this.sections) {
-      if(section.id != id) {
-        section.expanded = false;
-      }
-      else {
-        section.expanded = !section.expanded;
+  toggle(id: string, currentSection: Section) {
+    if(this.isExpanding) {
+      currentSection.expanded = !currentSection.expanded;
+    }
+    else {
+      for(let section of this.sections) {
+        if(section.id != id) {
+          section.expanded = false;
+        }
+        else {
+          section.expanded = !section.expanded;
+        }
       }
     }
+
 
   }
 
