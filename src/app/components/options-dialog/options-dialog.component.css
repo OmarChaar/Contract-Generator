@@ -21,6 +21,7 @@
 
 .errorValidation {
   border: 1.5px solid mediumvioletred;
+  background: #c7158512;
 }
 
 .deleteIcon {
