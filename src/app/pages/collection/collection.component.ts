@@ -101,18 +101,25 @@ export class CollectionComponent implements OnInit {
   }
 
   openDialog(question: Question) {
-    const dialogRef = this.dialog.open(OptionsDialogComponent, {
-      data: {
-        question: question,
-      }
-    });
+    if(question.type != null) {
+      const dialogRef = this.dialog.open(OptionsDialogComponent, {
+        data: {
+          question: question,
+        }
+      });
 
-    dialogRef.afterClosed().subscribe((result: Options[]) => {
-      if(result) {
-        question.options = result;
-      }
+      dialogRef.afterClosed().subscribe((result: Options[]) => {
+        if(result) {
+          question.options = result;
+        }
 
-    });
+      });
+    }
+    else {
+      document.getElementById('type_'+question.id)?.classList.add('errorValidation');
+      this.openSnackBar('You have to select a type first', 'Warning');
+    }
+
   }
 
   openPrompt(message: string) {
@@ -338,4 +345,32 @@ export class CollectionComponent implements OnInit {
       section.expanded = false;
     }
   }
+
+  triggerType(event: any, id: string, question: Question, sectionIndex: number, index: number) {
+    if(this.selectedCurrentType != event) {
+      console.log("triggerType", event, question, this.selectedCurrentType);
+      const dialogRef = this.dialog.open(PromptComponent, {
+        data: {
+          message: 'Changing the type will remove all existing options. Are you sure you want to proceed?',
+          title: 'Changing Type'
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((result: any) => {
+        console.log("result", result);
+
+      });
+    }
+
+    document.getElementById('type_'+id)?.classList.remove('errorValidation');
+  }
+
+  private selectedCurrentType: string = '';
+
+  openType(question: Question) {
+    if(question.type) {
+      this.selectedCurrentType = question.type;
+    }
+  }
+
 }

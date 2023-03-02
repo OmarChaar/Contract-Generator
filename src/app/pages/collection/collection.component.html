@@ -119,8 +119,8 @@
                       <input class="inputLabel" [(ngModel)]="question.displayLabel" placeholder="Enter Display Label*">
                     </td>
 
-                    <td class="questionType"  [ngClass]="(hasErrors && !question.type) ? 'errorValidation' : ''">
-                      <mat-select disableRipple [(value)]="question.type">
+                    <td class="questionType" [ngClass]="(hasErrors && !question.type) ? 'errorValidation' : ''" [id]="'type_'+question.id">
+                      <mat-select disableRipple [(value)]="question.type" (openedChange)="openType(question)" (valueChange)="triggerType($event, question.id, question, index, i)">
                         <mat-option value="multi">Multi options</mat-option>
                         <mat-option value="truthy">True / False</mat-option>
                       </mat-select>
@@ -143,6 +143,7 @@
                     <td class="questionOptions" [ngClass]="(hasErrors && !(question?.options?.length > 0)) ? 'errorValidation' : ''">
                       <i #tooltip="matTooltip"
                         matTooltip="Opens the options list of selected question."
+                        [ngClass]="question.type ? '' : 'hideTR'"
                         [matTooltipPosition]="'left'"
                         matTooltipHideDelay="0" (click)="openDialog(question)" class="bi bi-binoculars-fill"></i>
                     </td>
