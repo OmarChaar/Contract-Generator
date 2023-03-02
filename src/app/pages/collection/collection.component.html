@@ -13,175 +13,182 @@
     </button>
   </div>
   <cdk-accordion class="accordion dropList" cdkDropList (cdkDropListDropped)="drop($event)">
-    <!-- [expanded]="isSearching" -->
-    <cdk-accordion-item *ngFor="let section of (!isSearching ? sections : searchResults); let index = index;"
-      #accordionItem="cdkAccordionItem"
-      class="accordion-item dropBox"
-      cdkDrag
-      role="button"
-      tabindex="0"
-      [ngClass]="section.show == false ? 'hideTR' : ''"
-      [attr.id]="'accordion-header-' + index"
-      [attr.aria-expanded]="section.expanded"
-      [attr.aria-controls]="'accordion-body-' + index">
-
-      <div class="custom-placeholder" *cdkDragPlaceholder></div>
-      <div class="accordion-item-header" cdkDragHandle>
-        <table [ngClass]="(section.expanded && !isExpanding) ? 'expandedSection' : ''">
-          <thead>
-            <tr>
-              <th class="idHeader">
-                <span #tooltip="matTooltip"
-                [matTooltip]="section.id"
-                [matTooltipPosition]="'above'"
-                matTooltipHideDelay="0" class="sectionID">{{ section.id }}</span>
-              </th>
-
-              <th [ngClass]="(hasErrors && !(section.label && section.label.trim().length > 0)) ? 'errorValidation' : ''">
-                <input class="inputLabel" [(ngModel)]="section.label" placeholder="Enter Label*">
-              </th>
-
-              <th>
-                <input [(ngModel)]="section.description" placeholder="Enter Description (optional)">
-              </th>
-
-              <th class="dropdownIcons">
-                <span class="accordion-item-description" (click)="toggle(section.id, section)">
-                  <i [class]="section.expanded ? 'bi bi-arrow-up-circle' : 'bi bi-arrow-down-circle-fill'"></i>
-                </span>
-              </th>
-
-              <th class="dropdownIcons">
-                <span class="accordion-item-description">
-                  <i [matMenuTriggerFor]="menuSection" class="bi bi-three-dots-vertical"></i>
-                </span>
-                <mat-menu #menuSection="matMenu">
-                  <button mat-menu-item (click)="cloneSection(section)">
-                    <i class="bi bi-files"></i>
-                    <span class="menuLabel">Clone</span>
-                  </button>
-                  <button mat-menu-item (click)="hideSection(index)">
-                    <i [class]="section.show ? 'bi-eye-slash' : 'bi-eye'"></i>
-                    <span class="menuLabel">{{section.show ? "Hide" : "Show"}}</span>
-                  </button>
-                  <button class="menuDelete" mat-menu-item (click)="deleteSection(index)">
-                    <i class="bi bi-trash"></i>
-                    <span class="menuLabel">Delete</span>
-                  </button>
-                </mat-menu>
-              </th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-
-      <div class="accordion-item-body"
-        role="region"
-        [style.display]="section.expanded ? '' : 'none'"
-        [attr.id]="'accordion-body-' + index"
-        [attr.aria-labelledby]="'accordion-header-' + index">
-        <div class="questionsDiv">
-
-          <table>
-            <thead>
-              <tr>
-                <th class="textAlignCenter">ID</th>
-                <th>Label</th>
-                <th>Display Label</th>
-                <th>Type</th>
-                <th>Required</th>
-                <th>Enabled</th>
-                <th class="textAlignCenter">Options</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody class="questionDropList" cdkDropList (cdkDropListDropped)="dropQuestion($event, section)">
-              <ng-container *ngFor="let question of section.questions; let i = index;">
-                <tr cdkDrag [ngClass]="question.show == false ? 'hideTR' : ''">
-                  <td class="idHeader">
-                    <span #tooltip="matTooltip"
-                    [matTooltip]="question.id"
-                    [matTooltipPosition]="'above'"
-                    matTooltipHideDelay="0"class="sectionID">{{ question.id }}</span>
-                  </td>
-
-                  <td [ngClass]="(hasErrors && !(question.label && question.label.trim().length > 0)) ? 'errorValidation' : ''">
-                    <input class="inputLabel" [(ngModel)]="question.label" placeholder="Enter Label*">
-                  </td>
-
-                  <td [ngClass]="(hasErrors && !(question.displayLabel && question.displayLabel.trim().length > 0)) ? 'errorValidation' : ''">
-                    <input class="inputLabel" [(ngModel)]="question.displayLabel" placeholder="Enter Display Label*">
-                  </td>
-
-                  <td class="questionType"  [ngClass]="(hasErrors && !question.type) ? 'errorValidation' : ''">
-                    <mat-select disableRipple [(value)]="question.type">
-                      <mat-option value="multi">Multi options</mat-option>
-                      <mat-option value="truthy">True / False</mat-option>
-                    </mat-select>
-                  </td>
-
-                  <td class="questionRequired" [ngClass]="(hasErrors && !question.required) ? 'errorValidation' : ''">
-                    <mat-select disableRipple [(value)]="question.required">
-                      <mat-option value="true">True</mat-option>
-                      <mat-option value="false">False</mat-option>
-                    </mat-select>
-                  </td>
-
-                  <td class="questionEnabled" [ngClass]="(hasErrors && !question.enabled) ? 'errorValidation' : ''">
-                    <mat-select disableRipple [(value)]="question.enabled">
-                      <mat-option value="true">True</mat-option>
-                      <mat-option value="false">False</mat-option>
-                    </mat-select>
-                  </td>
-
-                  <td class="questionOptions" [ngClass]="(hasErrors && !(question?.options?.length > 0)) ? 'errorValidation' : ''">
-                    <i #tooltip="matTooltip"
-                      matTooltip="Opens the options list of selected question."
-                      [matTooltipPosition]="'left'"
-                      matTooltipHideDelay="0" (click)="openDialog(question)" class="bi bi-binoculars-fill"></i>
-                  </td>
-
-                  <td class="questionOptions">
-                    <span class="accordion-item-description">
-                      <i [matMenuTriggerFor]="menuQuestion" class="bi bi-three-dots-vertical"></i>
-                    </span>
-                    <mat-menu #menuQuestion="matMenu">
-                      <button mat-menu-item (click)="cloneQuestion(section, question)">
-                        <i class="bi bi-files"></i>
-                        <span class="menuLabel">Clone</span>
-                      </button>
-                      <button mat-menu-item (click)="hideQuestion(question)">
-                        <i [class]="question.show ? 'bi-eye-slash' : 'bi-eye'"></i>
-                        <span class="menuLabel">{{ question.show ? "Hide" : "Show" }}</span>
-                      </button>
-                      <button mat-menu-item [matMenuTriggerFor]="transferSections">
-                        <i class="bi bi-file-earmark-arrow-up"></i>
-                        <span class="menuLabel">Transfer</span>
-                      </button>
-                      <mat-menu #transferSections="matMenu">
-                        <ng-container *ngFor="let sec of sections; let secIndex = index">
-                          <button *ngIf="sec.id != section.id" mat-menu-item (click)="transferQuestion(section, i, question, sec.id)">{{sec.id}}</button>
-                        </ng-container>
-                      </mat-menu>
-                      <button class="menuDelete" mat-menu-item (click)="deleteQuestion(section, i)">
-                        <i class="bi bi-trash"></i>
-                        <span class="menuLabel">Delete</span>
-                      </button>
-                    </mat-menu>
-                  </td>
-                </tr>
-              </ng-container>
-            </tbody>
-          </table>
-
-          <div class="addQuestionDiv">
-            <button (click)="addQuestion(section)" mat-raised-button>Add Question</button>
-          </div>
+    <ng-container *ngFor="let section of (!isSearching ? sections : searchResults); let index = index;">
+      <div class="isExpanded" *ngIf="(section.expanded && !isExpanding)">
+        <div class="isExpandedInner">
+          Activated
         </div>
 
-
       </div>
-    </cdk-accordion-item>
+      <cdk-accordion-item
+        #accordionItem="cdkAccordionItem"
+        class="accordion-item dropBox"
+        cdkDrag
+        role="button"
+        tabindex="0"
+        [ngClass]="section.show == false ? 'hideTR' : ''"
+        [attr.id]="'accordion-header-' + index"
+        [attr.aria-expanded]="section.expanded"
+        [attr.aria-controls]="'accordion-body-' + index">
+
+        <div class="custom-placeholder" *cdkDragPlaceholder></div>
+        <div class="accordion-item-header" cdkDragHandle>
+          <table [ngClass]="(section.expanded && !isExpanding) ? 'expandedSection' : ''">
+            <thead>
+              <tr>
+                <th class="idHeader">
+                  <span #tooltip="matTooltip"
+                  [matTooltip]="section.id"
+                  [matTooltipPosition]="'above'"
+                  matTooltipHideDelay="0" class="sectionID">{{ section.id }}</span>
+                </th>
+
+                <th [ngClass]="(hasErrors && !(section.label && section.label.trim().length > 0)) ? 'errorValidation' : ''">
+                  <input class="inputLabel" [(ngModel)]="section.label" placeholder="Enter Label*">
+                </th>
+
+                <th>
+                  <input [(ngModel)]="section.description" placeholder="Enter Description (optional)">
+                </th>
+
+                <th class="dropdownIcons">
+                  <span class="accordion-item-description" (click)="toggle(section.id, section)">
+                    <i [class]="section.expanded ? 'bi bi-arrow-up-circle' : 'bi bi-arrow-down-circle-fill'"></i>
+                  </span>
+                </th>
+
+                <th class="dropdownIcons">
+                  <span class="accordion-item-description">
+                    <i [matMenuTriggerFor]="menuSection" class="bi bi-three-dots-vertical"></i>
+                  </span>
+                  <mat-menu #menuSection="matMenu">
+                    <button mat-menu-item (click)="cloneSection(section)">
+                      <i class="bi bi-files"></i>
+                      <span class="menuLabel">Clone</span>
+                    </button>
+                    <button mat-menu-item (click)="hideSection(index)">
+                      <i [class]="section.show ? 'bi-eye-slash' : 'bi-eye'"></i>
+                      <span class="menuLabel">{{section.show ? "Hide" : "Show"}}</span>
+                    </button>
+                    <button class="menuDelete" mat-menu-item (click)="deleteSection(index)">
+                      <i class="bi bi-trash"></i>
+                      <span class="menuLabel">Delete</span>
+                    </button>
+                  </mat-menu>
+                </th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+
+        <div class="accordion-item-body"
+          role="region"
+          [style.display]="section.expanded ? '' : 'none'"
+          [attr.id]="'accordion-body-' + index"
+          [attr.aria-labelledby]="'accordion-header-' + index">
+          <div class="questionsDiv">
+
+            <table>
+              <thead>
+                <tr>
+                  <th class="textAlignCenter">ID</th>
+                  <th>Label</th>
+                  <th>Display Label</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Enabled</th>
+                  <th class="textAlignCenter">Options</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody class="questionDropList" cdkDropList (cdkDropListDropped)="dropQuestion($event, section)">
+                <ng-container *ngFor="let question of section.questions; let i = index;">
+                  <tr cdkDrag [ngClass]="question.show == false ? 'hideTR' : ''">
+                    <td class="idHeader">
+                      <span #tooltip="matTooltip"
+                      [matTooltip]="question.id"
+                      [matTooltipPosition]="'above'"
+                      matTooltipHideDelay="0"class="sectionID">{{ question.id }}</span>
+                    </td>
+
+                    <td [ngClass]="(hasErrors && !(question.label && question.label.trim().length > 0)) ? 'errorValidation' : ''">
+                      <input class="inputLabel" [(ngModel)]="question.label" placeholder="Enter Label*">
+                    </td>
+
+                    <td [ngClass]="(hasErrors && !(question.displayLabel && question.displayLabel.trim().length > 0)) ? 'errorValidation' : ''">
+                      <input class="inputLabel" [(ngModel)]="question.displayLabel" placeholder="Enter Display Label*">
+                    </td>
+
+                    <td class="questionType"  [ngClass]="(hasErrors && !question.type) ? 'errorValidation' : ''">
+                      <mat-select disableRipple [(value)]="question.type">
+                        <mat-option value="multi">Multi options</mat-option>
+                        <mat-option value="truthy">True / False</mat-option>
+                      </mat-select>
+                    </td>
+
+                    <td class="questionRequired" [ngClass]="(hasErrors && !question.required) ? 'errorValidation' : ''">
+                      <mat-select disableRipple [(value)]="question.required">
+                        <mat-option value="true">True</mat-option>
+                        <mat-option value="false">False</mat-option>
+                      </mat-select>
+                    </td>
+
+                    <td class="questionEnabled" [ngClass]="(hasErrors && !question.enabled) ? 'errorValidation' : ''">
+                      <mat-select disableRipple [(value)]="question.enabled">
+                        <mat-option value="true">True</mat-option>
+                        <mat-option value="false">False</mat-option>
+                      </mat-select>
+                    </td>
+
+                    <td class="questionOptions" [ngClass]="(hasErrors && !(question?.options?.length > 0)) ? 'errorValidation' : ''">
+                      <i #tooltip="matTooltip"
+                        matTooltip="Opens the options list of selected question."
+                        [matTooltipPosition]="'left'"
+                        matTooltipHideDelay="0" (click)="openDialog(question)" class="bi bi-binoculars-fill"></i>
+                    </td>
+
+                    <td class="questionOptions">
+                      <span class="accordion-item-description">
+                        <i [matMenuTriggerFor]="menuQuestion" class="bi bi-three-dots-vertical"></i>
+                      </span>
+                      <mat-menu #menuQuestion="matMenu">
+                        <button mat-menu-item (click)="cloneQuestion(section, question)">
+                          <i class="bi bi-files"></i>
+                          <span class="menuLabel">Clone</span>
+                        </button>
+                        <button mat-menu-item (click)="hideQuestion(question)">
+                          <i [class]="question.show ? 'bi-eye-slash' : 'bi-eye'"></i>
+                          <span class="menuLabel">{{ question.show ? "Hide" : "Show" }}</span>
+                        </button>
+                        <button mat-menu-item [matMenuTriggerFor]="transferSections">
+                          <i class="bi bi-file-earmark-arrow-up"></i>
+                          <span class="menuLabel">Transfer</span>
+                        </button>
+                        <mat-menu #transferSections="matMenu">
+                          <ng-container *ngFor="let sec of sections; let secIndex = index">
+                            <button *ngIf="sec.id != section.id" mat-menu-item (click)="transferQuestion(section, i, question, sec.id)">{{sec.id}}</button>
+                          </ng-container>
+                        </mat-menu>
+                        <button class="menuDelete" mat-menu-item (click)="deleteQuestion(section, i)">
+                          <i class="bi bi-trash"></i>
+                          <span class="menuLabel">Delete</span>
+                        </button>
+                      </mat-menu>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+
+            <div class="addQuestionDiv">
+              <button (click)="addQuestion(section)" mat-raised-button>Add Question</button>
+            </div>
+          </div>
+
+
+        </div>
+      </cdk-accordion-item>
+    </ng-container>
     <div class="addSectionDiv">
       <button (click)="addSection()" mat-raised-button>Add Ssection</button>
     </div>
