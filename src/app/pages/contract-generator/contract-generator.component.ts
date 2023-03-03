@@ -164,7 +164,7 @@ export class ContractGeneratorComponent implements OnInit {
       if(this.getValue(currentPersonalization, 'TOTAL') > 0) {
         div.innerHTML += `
           <b>Forma de pagamento:</b> ${this.getValue(currentPersonalization, 'FORMA DE PAGAMENTO')} <br>
-          <b>Data de Vencimento: </b> ${this.getValue(currentPersonalization, 'DATA DE VENCIMENTO')} <br>
+          <b>Data de Vencimento: </b> ${this.getValue(currentPersonalization, 'DATA DE VENCIMENTO') != null ? this.getValue(currentPersonalization, 'DATA DE VENCIMENTO') : '5'} <br>
         `
       }
       else {

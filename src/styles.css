@@ -58,6 +58,7 @@ td input {
   width: 100%;
   border: none;
   background: transparent;
+  font-family: sans-serif;
 }
 
 td input:focus {

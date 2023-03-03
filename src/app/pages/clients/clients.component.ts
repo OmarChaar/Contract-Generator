@@ -122,4 +122,78 @@ export class ClientsComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row `;
   }
 
+
+  cpfChange(event: any, row: Client) {
+    var numeric = event.target.value.replace(/[^0-9]+/g, '');
+    var cpfLength = numeric.length;
+
+    var partOne = numeric.slice(0, 3) + ".";
+    var partTwo = numeric.slice(3, 6) + ".";
+    var partThree = numeric.slice(6, 9) + "-";
+
+    var cpfInput = '';//$w('#cpf');
+
+    if (cpfLength < 4) {
+        cpfInput = numeric;
+    } else if (cpfLength >= 4 && cpfLength < 7) {
+        var formatCPF = partOne +
+		numeric.slice(3);
+        cpfInput = formatCPF;
+    } else if (cpfLength >= 7 && cpfLength < 10) {
+        var formatCPF = partOne +
+		partTwo +
+		numeric.slice(6);
+        cpfInput = formatCPF;
+    } else if (cpfLength >= 10 && cpfLength < 12) {
+        var formatCPF = partOne +
+		partTwo +
+		partThree +
+		numeric.slice(9);
+        cpfInput = formatCPF;
+    } else if (cpfLength >= 12) {
+        var formatCPF = partOne +
+		partTwo +
+		partThree +
+		numeric.slice(9, 11);
+        cpfInput = formatCPF;
+    }
+
+    console.log("cpfInput", cpfInput);
+    row.cpf_cnpj = cpfInput;
+}
+
+  cnpjChange(event: any, row: Client) {
+    var numeric = event.target.value.replace(/[^0-9]+/g, '');
+    var cpfLength = numeric.length;
+
+    var partOne = numeric.slice(0, 2) + ".";
+    var partTwo = numeric.slice(2, 5) + ".";
+    var partThree = numeric.slice(5, 8) + "/";
+    var partFour = numeric.slice(8, 12) + "-"
+
+    var cnpjInput = '';//document.getElementById('#cnpj');
+
+    if (cpfLength < 3) {
+      cnpjInput = numeric;
+    }
+    else if (cpfLength >= 3 && cpfLength < 6) {
+      var formatCPF = partOne + numeric.slice(2);
+      cnpjInput = formatCPF;
+    }
+    else if (cpfLength >= 6 && cpfLength < 9) {
+      var formatCPF = partOne + partTwo + numeric.slice(5);
+      cnpjInput = formatCPF;
+    }
+    else if (cpfLength >= 9 && cpfLength < 13) {
+      var formatCPF = partOne + partTwo + partThree + numeric.slice(8);
+      cnpjInput = formatCPF;
+    }
+    else if (cpfLength >= 13) {
+      var formatCPF = partOne + partTwo + partThree + partFour + numeric.slice(12, 14);
+      cnpjInput = formatCPF;
+    }
+
+    console.log("cnpjInput", cnpjInput);
+     row.cpf_cnpj = cnpjInput;
+  }
 }
