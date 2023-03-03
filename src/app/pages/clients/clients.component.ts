@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, Sort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatCell, MatTableDataSource} from '@angular/material/table';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { SelectionModel } from '@angular/cdk/collections';
 
@@ -44,11 +44,10 @@ export class ClientsComponent implements OnInit {
   ];
 
   constructor() {
-     // Create 100 users
-     const users = Array.from({length: 100}, (_, k) => this.createNewUser(k + 1));
-      console.log("users", users);
-     // Assign the data to the data source for the table to render
-     this.dataSource = new MatTableDataSource(users);
+
+    const users = Array.from({length: 100}, (_, k) => this.createNewUser(k + 1));
+
+    this.dataSource = new MatTableDataSource(users);
   }
 
   ngOnInit(): void {
@@ -200,5 +199,9 @@ export class ClientsComponent implements OnInit {
 
   focus(id: any) {
     this.focuedID = id;
+  }
+
+  onEnterPress(event: any, row: any, fieldName: any) {
+    document.getElementById(row.id + fieldName)?.focus();
   }
 }

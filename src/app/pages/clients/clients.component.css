@@ -105,7 +105,7 @@ div::-webkit-scrollbar {
 }
 
 .selectedFunctions button {
-  background: #126dff;
+  background: var(--active);
   color: white;
 }
 

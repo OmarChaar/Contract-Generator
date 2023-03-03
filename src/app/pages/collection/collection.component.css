@@ -183,7 +183,7 @@ input:focus::placeholder {
 } */
 
 .expandedSection {
-  background-color: burlywood;
+  background-color: var(--active-section);
 }
 
 
@@ -254,7 +254,7 @@ input {
 
 .isExpandedInner {
   padding: 0.5rem;
-  background: lightgreen;
+  background: var(--active);
   width: calc(100% / 3);
   text-align: center;
   font-size: 1rem;
