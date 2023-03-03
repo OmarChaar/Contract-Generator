@@ -54,7 +54,7 @@
   min-width: 10rem;
 }
 
-.tableBodyTR > .mat-column-cpf_cnpj,
+/* .tableBodyTR > .mat-column-cpf_cnpj,
 .tableBodyTR > .mat-column-apartment,
 .tableBodyTR > .mat-column-name,
 .tableBodyTR > .mat-column-area,
@@ -64,7 +64,7 @@
   cursor: pointer;
   padding: 0 !important;
   overflow: hidden;
-}
+} */
 
 div::-webkit-scrollbar {
   display: none;
@@ -87,7 +87,7 @@ div::-webkit-scrollbar {
 }
 
 .header mat-form-field {
-  width: 50%;
+  width: 25%;
 }
 
 .selectedFunctions {

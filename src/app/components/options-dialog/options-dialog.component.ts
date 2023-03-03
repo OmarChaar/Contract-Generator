@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 
 interface Options {
   value: any,
@@ -26,6 +26,8 @@ export class OptionsDialogComponent implements OnInit {
   public focuedValue = ''
 
   public options: Options[] = [{value: 1, label: null, name: null, price: null, link: null}];
+
+  @ViewChild(MatTable) table: MatTable<Options> | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<OptionsDialogComponent>,
@@ -57,14 +59,14 @@ export class OptionsDialogComponent implements OnInit {
       this.options.push({
         value: (this.options.length + 1), label: null, name: null, price: null, link: null
       })
-      this.dataSource = new MatTableDataSource(this.options);
+      this.renderTable();
     }
   }
 
   deleteOption(i: number) {
     if(this.options.length > 1) {
       this.options.splice(i, 1);
-      this.dataSource = new MatTableDataSource(this.options);
+      this.renderTable();
     }
     else {
       this.openSnackBar('You have have at least 1 option', 'Warning');
@@ -77,6 +79,12 @@ export class OptionsDialogComponent implements OnInit {
     }
     else {
       this.hasErrors = true;
+    }
+  }
+
+  renderTable() {
+    if(this.table) {
+      this.table.renderRows();
     }
   }
 

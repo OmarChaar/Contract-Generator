@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PromptComponent } from 'src/app/components/prompt/prompt.component';
 import { CdkAccordionItem } from '@angular/cdk/accordion';
 import { SessionStorageService } from 'src/app/services/sessionStorage/session-storage.service';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 
 interface Section {
   id: string;
@@ -43,6 +44,9 @@ interface Options {
 })
 export class CollectionComponent implements OnInit {
 
+  displayedColumns: string[] = ['id', 'label', 'displayLabel', 'type', 'required', 'enabled', 'options', 'edit'];
+  // dataSource: MatTableDataSource<Question>;
+
   searchValue: any;
   public isSearching = false;
 
@@ -61,6 +65,8 @@ export class CollectionComponent implements OnInit {
     show: true
   };
 
+  @ViewChildren(MatTable) tables: QueryList<MatTable<Question>> | undefined;
+
   sections: Section[] = [
     { id: uuidv4(), label: '', show: true, description: '', questions: [JSON.parse(JSON.stringify(this.emptyQuestion))], expanded: false },
     { id: uuidv4(), label: '', show: true, description: '', questions: [JSON.parse(JSON.stringify(this.emptyQuestion))], expanded: false  },
@@ -71,7 +77,13 @@ export class CollectionComponent implements OnInit {
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private sessionStorageService: SessionStorageService
-    ) { }
+    ) {
+      // this.dataSource = new MatTableDataSource([this.emptyQuestion]);
+      // for(let section of this.sections) {
+      //   section.questions = new MatTableDataSource([this.emptyQuestion]);
+      //   console.log("section", section);
+      // }
+     }
 
   ngOnInit(): void {
     if(this.sessionStorageService.getSessionStorage('sections') != null) {
@@ -98,6 +110,7 @@ export class CollectionComponent implements OnInit {
 
   dropQuestion(event: CdkDragDrop<string[]>, section: Section) {
     moveItemInArray(section.questions, event.previousIndex, event.currentIndex);
+    this.renderTables();
   }
 
   openDialog(question: Question) {
@@ -127,6 +140,7 @@ export class CollectionComponent implements OnInit {
   }
 
   addQuestion(section: Section) {
+    console.log(section);
     const emptyQuestion: Question = {
       id: uuidv4(),
       label: null,
@@ -139,6 +153,16 @@ export class CollectionComponent implements OnInit {
     };
 
     section.questions.push(emptyQuestion);
+
+    this.renderTables();
+  }
+
+  renderTables() {
+    if(this.tables) {
+      this.tables.forEach(table => {
+        table.renderRows();
+      });
+    }
   }
 
   deleteSection(i: number) {
@@ -173,7 +197,6 @@ export class CollectionComponent implements OnInit {
     this.sections[i].show = !this.sections[i].show
   }
 
-
   deleteQuestion(section: Section, i: number) {
     if(section.questions.length > 1) {
       const dialogRef = this.dialog.open(PromptComponent, {
@@ -186,6 +209,7 @@ export class CollectionComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result: any) => {
         if(result == true) {
           section.questions.splice(i, 1);
+          this.renderTables();
         }
 
       });
@@ -200,6 +224,7 @@ export class CollectionComponent implements OnInit {
     clonedQuestion.id = uuidv4();
     clonedQuestion.label = clonedQuestion.label + ' - cloned'
     section.questions.push(clonedQuestion);
+    this.renderTables();
   }
 
   transferQuestion(section: Section, i: number, question: Question, transferId: any) {
@@ -209,6 +234,7 @@ export class CollectionComponent implements OnInit {
       if(transferIndex > -1) {
         this.sections[this.getSectionByID(transferId)].questions.push(clonedQuestion);
         section.questions.splice(i, 1);
+        this.renderTables();
       }
     }
     else {
@@ -302,6 +328,7 @@ export class CollectionComponent implements OnInit {
       let tempSearched: Section[] = [];
       for(let section of this.sections) {
         if(section.label.toLowerCase().indexOf(searchBy.toLowerCase()) > -1) {
+          console.log("section", searchBy);
           tempSearched.push(section);
         }
         else {
@@ -310,6 +337,7 @@ export class CollectionComponent implements OnInit {
           let hasFound = false;
           for(let question of section.questions) {
             if(question.label?.toLowerCase().indexOf(searchBy.toLowerCase()) > -1) {
+              console.log("question", searchBy);
               hasFound = true;
               tempSection.questions.push(question);
             }
@@ -371,6 +399,12 @@ export class CollectionComponent implements OnInit {
     if(question.type) {
       this.selectedCurrentType = question.type;
     }
+  }
+
+  public focusedID = '';
+
+  focus(id: any) {
+    this.focusedID = id;
   }
 
 }

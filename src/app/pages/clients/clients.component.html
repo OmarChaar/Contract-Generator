@@ -1,8 +1,8 @@
 <div class="container">
   <div class="header">
     <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input>
     </mat-form-field>
 
     <div>
@@ -71,7 +71,7 @@
             <i class="bi bi-hash"></i>
             CPF / CNPJ
           </th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let row" class="noPadding">
             <input class="inputLabel" maxlength="18" (keyup)="row.cpf_cnpj.length < 15 ? cpfChange($event, row) : cnpjChange($event, row)" [(ngModel)]="row.cpf_cnpj" (focus)="focus(row.id)">
           </td>
         </ng-container>
@@ -82,7 +82,7 @@
             <i class="bi bi-fonts"></i>
             Apartment
           </th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let row" class="noPadding">
             <input class="inputLabel" [(ngModel)]="row.apartment"  (focus)="focus(row.id)">
           </td>
         </ng-container>
@@ -93,7 +93,7 @@
             <i class="bi bi-fonts"></i>
             Name
           </th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let row" class="noPadding">
             <input [(ngModel)]="row.name" (focus)="focus(row.id)">
           </td>
         </ng-container>
@@ -104,7 +104,7 @@
             <i class="bi bi-hash"></i>
             Area M<sup>2</sup>
           </th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let row" class="noPadding">
             <input [(ngModel)]="row.area" (focus)="focus(row.id)">
           </td>
         </ng-container>
@@ -115,7 +115,7 @@
             <i class="bi bi-fonts"></i>
             Type
           </th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let row" class="noPadding">
             <input [(ngModel)]="row.type" (focus)="focus(row.id)">
           </td>
         </ng-container>
@@ -126,7 +126,7 @@
             <i class="bi bi-at"></i>
             Email
           </th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let row" class="noPadding">
             <input [(ngModel)]="row.email" (focus)="focus(row.id)">
           </td>
         </ng-container>
@@ -136,7 +136,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag>
             <i class="bi bi-fonts"></i>Phone
           </th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let row" class="noPadding">
             <input [(ngModel)]="row.phone" (focus)="focus(row.id)" >
           </td>
         </ng-container>

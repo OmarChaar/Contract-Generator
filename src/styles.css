@@ -28,7 +28,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: #e7f0ff;
 }
 
-td.mat-cell {
+/* td.mat-cell {
+  padding: 0;
+} */
+
+.noPadding {
   padding: 0 !important;
 }
 
@@ -44,7 +48,8 @@ td.mat-cell:hover {
   background-color: #e7f0ff;
 }
 
-.mat-column-id:hover, .mat-column-value:hover, .mat-column-delete:hover  {
+.mat-column-id:hover, .mat-column-value:hover, .mat-column-delete:hover,
+.mat-column-options:hover, .mat-column-edit:hover {
   background-color: unset !important;
   cursor: default;
 }
@@ -183,4 +188,12 @@ i {
 .mat-checkbox-checked.mat-accent .mat-checkbox-background,
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
   background-color: #126dff;
+}
+
+.p-05 {
+  padding: 0.5rem !important;
+}
+
+.w-0 {
+   width: 0;
 }

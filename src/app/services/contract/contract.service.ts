@@ -341,12 +341,12 @@ export class ContractService {
       <b>LAVABO:</b><br>
       <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - LAVABO')} - ${this.getValue(currentPersonalization, 'PISOS - LAVABO') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - LAVABO - NOME DA OPÇÃO')} cm <br>
       <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - LAVABO - PREÇO'))} <br>
-      <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - LAVABO - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
+      <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - LAVABO - RODAPÉ') == 'S' ? 'Sim' : 'Sem'} <br>
     `;
 
-    if(this.getValue(currentPersonalization, 'PISOS - LAVABO - RODAPE') == 'S') {
+    if(this.getValue(currentPersonalization, 'PISOS - LAVABO - RODAPÉ') == 'S') {
       div.innerHTML += `
-        <b>Rodapé - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - LAVABO - RODAPE - PREÇO'))} <br>
+        <b>Rodapé - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - LAVABO - RODAPÉ - PREÇO'))} <br>
       `;
     }
 
@@ -410,12 +410,12 @@ export class ContractService {
       div.innerHTML += `
         <b>Pisos - Opção:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO')} - ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO') <= 3 ? 'Padrão -' : 'Personalizado -'} ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - NOME DA OPÇÃO')} cm <br>
         <b>Pisos - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - PREÇO'))} <br>
-        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
+        <b>Rodapé:</b> ${this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - RODAPE') == 'S' ? 'Sim' : 'Sem'} <br>
       `;
 
-      if(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - RODAPE') == 'S') {
+      if(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - RODAPE') == 'S') {
         div.innerHTML += `
-          <b>Rodapé - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - RODAPE - PREÇO'))} <br>
+          <b>Rodapé - Preço:</b> ${this.convertPrice(this.getValue(currentPersonalization, 'PISOS - DORMITÓRIO 1 - RODAPE - PREÇO'))} <br>
         `;
       }
     }
