@@ -200,4 +200,10 @@ export class ClientsComponent implements OnInit {
   publishChanges() {
     console.log("publishChanges", this.selection.selected)
   }
+
+  public focuedID = '';
+
+  focus(id: any) {
+    this.focuedID = id;
+  }
 }

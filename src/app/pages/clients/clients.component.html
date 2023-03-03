@@ -66,62 +66,82 @@
 
         <!-- CPF / CNPJ Column -->
         <ng-container matColumnDef="cpf_cnpj" >
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number"> CPF / CNPJ </th>
-          <td class="highlightFocus" mat-cell *matCellDef="let row">
-            <input class="inputLabel" maxlength="18" (keyup)="row.cpf_cnpj.length < 15 ? cpfChange($event, row) : cnpjChange($event, row)" [(ngModel)]="row.cpf_cnpj" >
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+            <i class="bi bi-hash"></i>
+            CPF / CNPJ
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <input class="inputLabel" maxlength="18" (keyup)="row.cpf_cnpj.length < 15 ? cpfChange($event, row) : cnpjChange($event, row)" [(ngModel)]="row.cpf_cnpj" (focus)="focus(row.id)">
           </td>
         </ng-container>
 
          <!-- Apartment Column -->
          <ng-container matColumnDef="apartment" >
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Apartment </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <i class="bi bi-fonts"></i>
+            Apartment
+          </th>
           <td mat-cell *matCellDef="let row">
-            <input class="inputLabel" [(ngModel)]="row.apartment" >
+            <input class="inputLabel" [(ngModel)]="row.apartment"  (focus)="focus(row.id)">
           </td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag> Name</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag>
+            <i class="bi bi-fonts"></i>
+            Name
+          </th>
           <td mat-cell *matCellDef="let row">
-            <input [(ngModel)]="row.name">
+            <input [(ngModel)]="row.name" (focus)="focus(row.id)">
           </td>
         </ng-container>
 
          <!-- Area M2 Column -->
          <ng-container matColumnDef="area">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag> Area M<sup>2</sup> </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag>
+            <i class="bi bi-hash"></i>
+            Area M<sup>2</sup>
+          </th>
           <td mat-cell *matCellDef="let row">
-            <input [(ngModel)]="row.area" >
+            <input [(ngModel)]="row.area" (focus)="focus(row.id)">
           </td>
         </ng-container>
 
         <!-- Type Column -->
         <ng-container matColumnDef="type">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag> Type </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag>
+            <i class="bi bi-fonts"></i>
+            Type
+          </th>
           <td mat-cell *matCellDef="let row">
-            <input [(ngModel)]="row.type" >
+            <input [(ngModel)]="row.type" (focus)="focus(row.id)">
           </td>
         </ng-container>
 
         <!-- Email Column -->
         <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag> Email </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag>
+            <i class="bi bi-at"></i>
+            Email
+          </th>
           <td mat-cell *matCellDef="let row">
-            <input [(ngModel)]="row.email" >
+            <input [(ngModel)]="row.email" (focus)="focus(row.id)">
           </td>
         </ng-container>
 
         <!-- Phone Column -->
         <ng-container matColumnDef="phone">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag> Phone </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag>
+            <i class="bi bi-fonts"></i>Phone
+          </th>
           <td mat-cell *matCellDef="let row">
-            <input [(ngModel)]="row.phone" >
+            <input [(ngModel)]="row.phone" (focus)="focus(row.id)" >
           </td>
         </ng-container>
 
         <tr class="tableHeader" mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr class="tableBodyTR" mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="selection.isSelected(row) ? 'selectedTR' : ''"></tr>
+        <tr class="tableBodyTR" mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="[selection.isSelected(row) ? 'selectedTR' : '', focuedID == row.id ? 'focusedRow' : '']"></tr>
 
 
         <!-- Row shown when there is no matching data. -->

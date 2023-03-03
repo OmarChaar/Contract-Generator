@@ -27,7 +27,7 @@
 }
 
 .tableBodyTR:nth-child(even) {
-  background-color: ghostwhite;
+  /* background-color: ghostwhite; */
 }
 
 /* .example-container {
@@ -43,7 +43,7 @@ table {
 
 /* Column Widths */
 .mat-column-select {
-  width: 20rem !important;
+  width: 0;;
 }
 
 .mat-column-id {
@@ -63,7 +63,7 @@ table {
 }
 
 .mat-column-area {
-  min-width: 5rem;
+  min-width: 6rem;
 }
 
 .mat-column-type {
@@ -95,7 +95,7 @@ div::-webkit-scrollbar {
 }
 
 .selectedTR {
-  background-color: #ff40814d !important;
+  background-color: #d6e5fe !important;
 }
 
 .tableContiner {
@@ -143,12 +143,16 @@ tr.mat-row, tr.mat-footer-row, tr.mat-header-row {
   height: 2.5rem;
 }
 
+.focusedRow {
+  background-color: #e7f0ff !important;
+}
+
 td.mat-cell:hover {
   background-color: #e7f0ff;
 
 }
 
-input:focus {
+table input:focus {
   background-color: #e7f0ff;
   border: 1px solid #126dff;
 }
@@ -162,3 +166,12 @@ input:focus {
   cursor: default;
 }
 
+.tableHeader i {
+  font-size: 1.2rem;
+  color: #000000a8;
+  margin-right: 0.25rem;
+}
+
+.mat-checkbox {
+  padding: 0 0.5rem;
+}
