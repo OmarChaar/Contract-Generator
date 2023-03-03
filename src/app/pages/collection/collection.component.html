@@ -108,7 +108,7 @@
                       <span #tooltip="matTooltip"
                       [matTooltip]="question.id"
                       [matTooltipPosition]="'above'"
-                      matTooltipHideDelay="0"class="sectionID">{{ question.id }}</span>
+                      matTooltipHideDelay="0" class="sectionID">{{ question.id }}</span>
                     </td>
 
                     <td [ngClass]="(hasErrors && !(question.label && question.label.trim().length > 0)) ? 'errorValidation' : ''">

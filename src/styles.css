@@ -36,10 +36,10 @@ table {
 }
 
 th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-  font-size: 1rem;
+  border: 1px solid #ddd !important;
+  padding: 8px !important;
+  text-align: left !important;
+  font-size: 1rem !important;
 }
 
 th input {
@@ -70,7 +70,7 @@ i {
 }
 
 .textAlignCenter {
-  text-align: center;
+  text-align: center !important;
 }
 
 .mat-dialog-container {
@@ -85,4 +85,28 @@ i {
   color: orangered;
   margin-top: 1rem;
   border-top: 2px solid lightgray !important;
+}
+
+.inputLabel {
+  font-weight: bold;
+}
+
+.inputLabel::placeholder {
+  font-weight: 100;
+}
+
+.idHeader {
+  width: 0;
+  font-size: 0.75rem;
+  font-weight: 100;
+  opacity: 0.5;
+}
+
+.clientID {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  width: 3rem;
 }

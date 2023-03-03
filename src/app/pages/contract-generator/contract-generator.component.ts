@@ -287,7 +287,7 @@ export class ContractGeneratorComponent implements OnInit {
   async download(client: any, callback: (blob: Blob) => void) {
     let title = client.apartamento + '_' + client.client;
     let fileName = title + ".docx";
-    let element = document.getElementById(client.cpfCNPJ);
+    let element = document.getElementById(client.cpfCNPJ+'-'+client.apartamento);
     if (element) {
       let splitByBR = element.innerHTML.split('<br>');
 

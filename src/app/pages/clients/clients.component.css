@@ -1,0 +1,22 @@
+.container {
+  padding: 2rem;
+  background: rebeccapurple;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.clientID {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  width: 3rem;
+}
+
+tr {
+  height: 48px;
+}
