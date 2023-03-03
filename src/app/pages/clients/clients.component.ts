@@ -220,6 +220,10 @@ export class ClientsComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource(this.clients);
 
+    if(this.sort) {
+      this.dataSource.sort = this.sort;
+    }
+
     setTimeout(() => {
       document.getElementById(newClient.id)?.scrollIntoView();
     }, 250);
@@ -238,5 +242,8 @@ export class ClientsComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource(this.clients);
     this.selection.clear();
+    if(this.sort) {
+      this.dataSource.sort = this.sort;
+    }
   }
 }
