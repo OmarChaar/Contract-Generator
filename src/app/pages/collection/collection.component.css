@@ -234,10 +234,6 @@ input {
   /* pointer-events: none; */
 }
 
-.errorValidation {
-  border: 1.5px solid mediumvioletred;
-  background: #c7158512;
-}
 
 .warningNote {
   display: grid;
@@ -275,4 +271,9 @@ input {
   margin: 0 auto;
   color: white;
   font-weight: bold;
+}
+
+.mat-column-id:hover {
+  background-color: unset !important;
+  cursor: default;
 }

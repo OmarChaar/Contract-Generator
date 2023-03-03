@@ -17,30 +17,6 @@
   padding: 0 0.5rem;
 }
 
-/* tr {
-  height: 48px;
-} */
-
-
-.tableHeader {
-  background-color: #e7f0ff;
-}
-
-.tableBodyTR:nth-child(even) {
-  /* background-color: ghostwhite; */
-}
-
-/* .example-container {
-  height: 400px;
-  width: 550px;
-  max-width: 100%;
-  overflow: auto;
-}
-
-table {
-  width: 800px;
-} */
-
 /* Column Widths */
 .mat-column-select {
   width: 0;;
@@ -94,9 +70,6 @@ div::-webkit-scrollbar {
   display: none;
 }
 
-.selectedTR {
-  background-color: #d6e5fe !important;
-}
 
 .tableContiner {
   overflow: auto;
@@ -105,9 +78,6 @@ div::-webkit-scrollbar {
   box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
 }
 
-input {
-  font-weight: 300;
-}
 
 .header {
   display: flex;
@@ -135,43 +105,11 @@ input {
 }
 
 .selectedFunctions button {
-  background: #ff4081;
+  background: #126dff;
   color: white;
-}
-
-tr.mat-row, tr.mat-footer-row, tr.mat-header-row {
-  height: 2.5rem;
-}
-
-.focusedRow {
-  background-color: #e7f0ff !important;
-}
-
-td.mat-cell:hover {
-  background-color: #e7f0ff;
-
-}
-
-table input:focus {
-  background-color: #e7f0ff;
-  border: 1px solid #126dff;
-}
-
-.mat-column-id td.mat-cell {
-  background-color: yellow !important;
-}
-
-.mat-column-id:hover {
-  background-color: unset !important;
-  cursor: default;
-}
-
-.tableHeader i {
-  font-size: 1.2rem;
-  color: #000000a8;
-  margin-right: 0.25rem;
 }
 
 .mat-checkbox {
   padding: 0 0.5rem;
 }
+

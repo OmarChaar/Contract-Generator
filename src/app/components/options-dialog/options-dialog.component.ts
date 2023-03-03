@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 
 interface Options {
   value: any,
@@ -17,22 +18,31 @@ interface Options {
 })
 export class OptionsDialogComponent implements OnInit {
 
+  displayedColumns: string[] = ['value', 'label', 'name', 'price', 'link', 'delete'];
+  dataSource: MatTableDataSource<Options>;
+
   public question: any;
 
-  public options: Options[] = [{value: null, label: null, name: null, price: null, link: null}];
+  public focuedValue = ''
+
+  public options: Options[] = [{value: 1, label: null, name: null, price: null, link: null}];
 
   constructor(
     public dialogRef: MatDialogRef<OptionsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _snackBar: MatSnackBar
-  ) { }
+  ) {
+    this.dataSource = new MatTableDataSource(this.options);
+  }
 
   ngOnInit(): void {
-    console.log("DATYA", this.data);
+    // console.log("DATYA", this.data);
     if(this.data?.question) {
       this.question = this.data.question;
-      if(this.question.options.length > 0) {
+      console.log("this.question", this.question);
+      if(this.question?.options && this.question?.options.length > 0) {
         this.options = this.question.options;
+        this.dataSource = new MatTableDataSource(this.options);
       }
     }
   }
@@ -47,12 +57,14 @@ export class OptionsDialogComponent implements OnInit {
       this.options.push({
         value: (this.options.length + 1), label: null, name: null, price: null, link: null
       })
+      this.dataSource = new MatTableDataSource(this.options);
     }
   }
 
   deleteOption(i: number) {
     if(this.options.length > 1) {
       this.options.splice(i, 1);
+      this.dataSource = new MatTableDataSource(this.options);
     }
     else {
       this.openSnackBar('You have have at least 1 option', 'Warning');
@@ -91,5 +103,9 @@ export class OptionsDialogComponent implements OnInit {
       horizontalPosition: 'center',
       verticalPosition: 'bottom'
     });
+  }
+
+  focus(value: any) {
+    this.focuedValue = value;
   }
 }

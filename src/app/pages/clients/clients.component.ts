@@ -27,7 +27,6 @@ export class ClientsComponent implements OnInit {
   displayedColumns: string[] = ['select', 'id', 'cpf_cnpj', 'apartment', 'name', 'area', 'type', 'email', 'phone'];
   dataSource: MatTableDataSource<Client>;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
 
 
@@ -56,13 +55,9 @@ export class ClientsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    if(this.paginator) {
-      this.dataSource.paginator = this.paginator
-    };
     if(this.sort) {
       this.dataSource.sort = this.sort;
     }
-
   }
 
   applyFilter(event: Event) {

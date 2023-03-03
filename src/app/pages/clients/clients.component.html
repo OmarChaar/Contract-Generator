@@ -44,8 +44,9 @@
               [aria-label]="checkboxLabel()">
             </mat-checkbox>
           </th>
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let row" style="padding: 0 0.5rem !important">
             <mat-checkbox (click)="$event.stopPropagation()"
+
               (change)="$event ? selection.toggle(row) : null"
               [checked]="selection.isSelected(row)"
               [aria-label]="checkboxLabel(row)">

@@ -22,12 +22,55 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   display: none;
 }
 
+/* CUSTOM TABLE */
 
-/* .cdk-overlay-pane {
-  min-width: 75vw;
-  display: flex;
-  justify-content: center;
-} */
+.tableHeader {
+  background-color: #e7f0ff;
+}
+
+td.mat-cell {
+  padding: 0 !important;
+}
+
+tr.mat-row, tr.mat-footer-row, tr.mat-header-row {
+  height: 2.5rem !important;
+}
+
+.focusedRow {
+  background-color: #f5f7ff !important;
+}
+
+td.mat-cell:hover {
+  background-color: #e7f0ff;
+}
+
+.mat-column-id:hover, .mat-column-value:hover, .mat-column-delete:hover  {
+  background-color: unset !important;
+  cursor: default;
+}
+
+
+table input:focus {
+  background-color: #e7f0ff;
+  border: 1px solid #126dff;
+}
+
+
+
+.tableHeader i {
+  font-size: 1.2rem;
+  color: #000000a8;
+  margin-right: 0.25rem;
+}
+
+.selectedTR {
+  background-color: #d6e5fe !important;
+}
+
+table input {
+  font-weight: 300;
+}
+
 
 table {
   border-collapse: collapse;
@@ -67,6 +110,15 @@ td input {
 td input:focus {
   outline: none;
 }
+
+.errorValidation {
+  border: 1.5px solid mediumvioletred !important;
+  background: #c7158512;
+}
+
+/* ------------- */
+
+
 
 i {
   font-size: 1.5rem;
@@ -126,4 +178,9 @@ i {
   font-weight: 400;
   font-family: sans-serif;
   color: black;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: #126dff;
 }

@@ -1,38 +1,68 @@
 <h2 mat-dialog-title>{{ question.label }}</h2>
 <mat-dialog-content class="mat-typography">
-  <table>
-    <thead>
-      <tr>
-        <th style="width: 0;">Value</th>
-        <th>Label</th>
-        <th>Option Name</th>
-        <th>Price</th>
-        <th>Link</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let option of options; let i = index">
-        <td class="textAlignCenter">{{ i+1 }}</td>
-        <td [ngClass]="(hasErrors && !(option.label?.trim().length > 0)) ? 'errorValidation' : ''">
-          <input class="inputLabel" placeholder="Enter Label*" [(ngModel)]="option.label">
+  <section>
+    <table mat-table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="value" >
+        <th  mat-header-cell *matHeaderCellDef class="textAlignCenter">Value</th>
+        <td mat-cell *matCellDef="let row" class="textAlignCenter">
+          {{row.value}}
         </td>
-        <td>
-          <input class="inputLabel" placeholder="Enter Name (optional)" [(ngModel)]="option.name">
+      </ng-container>
+
+      <ng-container matColumnDef="label" >
+        <th mat-header-cell *matHeaderCellDef>
+          <i class="bi bi-fonts"></i>
+          Label
+        </th>
+        <td mat-cell *matCellDef="let row" [ngClass]="(hasErrors && !(row.label?.trim().length > 0)) ? 'errorValidation' : ''">
+          <input class="inputLabel" placeholder="Enter Label*" [(ngModel)]="row.label" (focus)="focus(row.value)">
         </td>
-        <td [ngClass]="(hasErrors && (option.price == null || !(option.price >= 0))) ? 'errorValidation' : ''">
-          <input type="number" class="inputLabel" placeholder="Enter Price*"  [(ngModel)]="option.price">
+      </ng-container>
+
+      <ng-container matColumnDef="name" >
+        <th mat-header-cell *matHeaderCellDef>
+          <i class="bi bi-fonts"></i>
+          Option Name
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <input class="inputLabel" placeholder="Enter Label*" [(ngModel)]="row.name" (focus)="focus(row.value)">
         </td>
-        <td>
-          <input class="inputLabel" placeholder="Enter Link (optional)"  [(ngModel)]="option.link">
+      </ng-container>
+
+      <ng-container matColumnDef="price" >
+        <th mat-header-cell *matHeaderCellDef>
+          <i class="bi bi-hash"></i>
+          Price
+        </th>
+        <td mat-cell *matCellDef="let row" [ngClass]="(hasErrors && (row.price == null || !(row.price >= 0))) ? 'errorValidation' : ''">
+          <input type="number" class="inputLabel" placeholder="Enter Price*"  [(ngModel)]="row.price" (focus)="focus(row.value)">
         </td>
-        <td class="deleteIcon">
+      </ng-container>
+
+      <ng-container matColumnDef="link" >
+        <th mat-header-cell *matHeaderCellDef>
+          <i class="bi bi-link-45deg"></i>
+          Link
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <input class="inputLabel" placeholder="Enter Link (optional)"  [(ngModel)]="row.link" (focus)="focus(row.value)">
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete" >
+        <th mat-header-cell *matHeaderCellDef>
+        </th>
+        <td mat-cell *matCellDef="let row; let i = index">
           <i (click)="deleteOption(i)" class="bi bi-trash"></i>
         </td>
-      </tr>
-    </tbody>
-  </table>
+      </ng-container>
 
+      <tr class="tableHeader" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="tableBodyTR" mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="focuedValue == row.value ? 'focusedRow' : ''"></tr>
+
+    </table>
+  </section>
   <div class="addOptionsDiv">
     <div>
       <div *ngIf="hasErrors" class="warningNote">
@@ -50,3 +80,37 @@
 </mat-dialog-actions>
 
 <!-- [mat-dialog-close]="options" cdkFocusInitial -->
+
+
+<!-- <table>
+  <thead>
+    <tr>
+      <th style="width: 0;">Value</th>
+      <th>Label</th>
+      <th>Option Name</th>
+      <th>Price</th>
+      <th>Link</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let option of options; let i = index">
+      <td class="textAlignCenter">{{ i+1 }}</td>
+      <td [ngClass]="(hasErrors && !(option.label?.trim().length > 0)) ? 'errorValidation' : ''">
+        <input class="inputLabel" placeholder="Enter Label*" [(ngModel)]="option.label">
+      </td>
+      <td>
+        <input class="inputLabel" placeholder="Enter Name (optional)" [(ngModel)]="option.name">
+      </td>
+      <td [ngClass]="(hasErrors && (option.price == null || !(option.price >= 0))) ? 'errorValidation' : ''">
+        <input type="number" class="inputLabel" placeholder="Enter Price*"  [(ngModel)]="option.price">
+      </td>
+      <td>
+        <input class="inputLabel" placeholder="Enter Link (optional)"  [(ngModel)]="option.link">
+      </td>
+      <td class="deleteIcon">
+        <i (click)="deleteOption(i)" class="bi bi-trash"></i>
+      </td>
+    </tr>
+  </tbody>
+</table> -->
