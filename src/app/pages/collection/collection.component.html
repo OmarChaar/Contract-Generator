@@ -122,10 +122,9 @@
 
               <ng-container matColumnDef="type" >
                 <th mat-header-cell *matHeaderCellDef>
-                  <i class="bi bi-fonts"></i>
                   Type
                 </th>
-                <td mat-cell *matCellDef="let row; let i = index" [ngClass]="(hasErrors && !row.type) ? 'errorValidation' : ''" [id]="'type_'+row.id">
+                <td mat-cell *matCellDef="let row; let i = index" class="questionType" [ngClass]="(hasErrors && !row.type) ? 'errorValidation' : ''" [id]="'type_'+row.id">
                   <mat-select disableRipple [(value)]="row.type" (openedChange)="openType(row)" (valueChange)="triggerType($event, row.id, row, index, i)">
                     <mat-option value="multi">Multi options</mat-option>
                     <mat-option value="truthy">True / False</mat-option>
@@ -135,10 +134,9 @@
 
               <ng-container matColumnDef="required" >
                 <th mat-header-cell *matHeaderCellDef>
-                  <i class="bi bi-fonts"></i>
                   Required
                 </th>
-                <td mat-cell *matCellDef="let row; let i = index" [ngClass]="(hasErrors && !row.required) ? 'errorValidation' : ''">
+                <td mat-cell *matCellDef="let row; let i = index" class="questionRequired" [ngClass]="(hasErrors && !row.required) ? 'errorValidation' : ''">
                   <mat-select disableRipple [(value)]="row.required">
                     <mat-option value="true">True</mat-option>
                     <mat-option value="false">False</mat-option>
@@ -148,10 +146,9 @@
 
               <ng-container matColumnDef="enabled" >
                 <th mat-header-cell *matHeaderCellDef>
-                  <i class="bi bi-fonts"></i>
                   Enabled
                 </th>
-                <td mat-cell *matCellDef="let row; let i = index"  [ngClass]="(hasErrors && !row.enabled) ? 'errorValidation' : ''">
+                <td mat-cell *matCellDef="let row; let i = index" class="questionEnabled"  [ngClass]="(hasErrors && !row.enabled) ? 'errorValidation' : ''">
                   <mat-select disableRipple [(value)]="row.enabled">
                     <mat-option value="true">True</mat-option>
                     <mat-option value="false">False</mat-option>

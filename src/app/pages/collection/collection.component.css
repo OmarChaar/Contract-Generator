@@ -213,14 +213,6 @@ input:focus::placeholder {
   opacity: 0.5;
 }
 
-.questionsDiv thead tr {
-  background-color: antiquewhite;
-}
-
-.questionsDiv tbody tr:nth-child(even) {
-  background-color: #faebd738;
-}
-
 input {
   cursor: pointer;
 }
