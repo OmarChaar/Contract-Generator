@@ -1,8 +1,17 @@
 <div class="container">
-  <mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-  </mat-form-field>
+  <div class="header">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+    </mat-form-field>
+
+    <div>
+      <button mat-raised-button>
+        Publish Changes
+      </button>
+    </div>
+  </div>
+
   <div class="tableContiner">
     <section>
       <table mat-table [dataSource]="dataSource" matSort cdkDropList
@@ -59,7 +68,7 @@
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag> Name</th>
           <td mat-cell *matCellDef="let row">
-            <input class="inputLabel" [(ngModel)]="row.name">
+            <input [(ngModel)]="row.name">
           </td>
         </ng-container>
 
@@ -67,7 +76,7 @@
          <ng-container matColumnDef="area">
           <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag> Area m2 </th>
           <td mat-cell *matCellDef="let row">
-            <input class="inputLabel" [(ngModel)]="row.area" >
+            <input [(ngModel)]="row.area" >
           </td>
         </ng-container>
 
@@ -75,7 +84,7 @@
         <ng-container matColumnDef="type">
           <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag> Type </th>
           <td mat-cell *matCellDef="let row">
-            <input class="inputLabel" [(ngModel)]="row.type" >
+            <input [(ngModel)]="row.type" >
           </td>
         </ng-container>
 
@@ -83,7 +92,7 @@
         <ng-container matColumnDef="email">
           <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag> Email </th>
           <td mat-cell *matCellDef="let row">
-            <input class="inputLabel" [(ngModel)]="row.email" >
+            <input [(ngModel)]="row.email" >
           </td>
         </ng-container>
 
@@ -91,7 +100,7 @@
         <ng-container matColumnDef="phone">
           <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag> Phone </th>
           <td mat-cell *matCellDef="let row">
-            <input class="inputLabel" [(ngModel)]="row.phone" >
+            <input [(ngModel)]="row.phone" >
           </td>
         </ng-container>
 

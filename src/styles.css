@@ -89,7 +89,7 @@ i {
 }
 
 .inputLabel {
-  font-weight: bold;
+  font-weight: bold !important;
 }
 
 .inputLabel::placeholder {
