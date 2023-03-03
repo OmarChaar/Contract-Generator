@@ -54,13 +54,22 @@ export class ClientsComponent implements OnInit {
     }
   }
 
+  public searchValue = '';
+
   applyFilter(event: Event) {
+
     const filterValue = (event.target as HTMLInputElement).value;
+    this.searchValue = filterValue;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  clearSearch() {
+    this.dataSource.filter = '';
+    this.searchValue = '';
   }
 
   /** Builds and returns a new User. */
@@ -80,7 +89,7 @@ export class ClientsComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.displayedColumns, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.displayedColumns, (event.previousIndex+4), (event.currentIndex+4));
   }
 
   selection = new SelectionModel<Client>(true, []);

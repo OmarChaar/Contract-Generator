@@ -2,7 +2,10 @@
   <div class="header">
     <mat-form-field>
       <mat-label>Search</mat-label>
-      <input matInput (keyup)="applyFilter($event)" #input>
+      <input matInput (keyup)="applyFilter($event)" #input [(ngModel)]="searchValue">
+      <button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-form-field>
 
     <div>
@@ -157,14 +160,12 @@
         <tr class="tableHeader" mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr class="tableBodyTR" [id]="row.id" mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="[selection.isSelected(row) ? 'selectedTR' : '', focuedID == row.id ? 'focusedRow' : '']"></tr>
 
-
         <!-- Row shown when there is no matching data. -->
         <tr class="mat-row" *matNoDataRow>
           <td class="mat-cell" colspan="9">No data matching the filter "{{input.value}}"</td>
         </tr>
       </table>
 
-      <!-- <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator> -->
     </section>
   </div>
 

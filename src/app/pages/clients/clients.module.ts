@@ -12,6 +12,7 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   {
@@ -34,7 +35,8 @@ const routes: Routes = [
     MatSortModule,
     MatCheckboxModule,
     DragDropModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class ClientsModule { }
