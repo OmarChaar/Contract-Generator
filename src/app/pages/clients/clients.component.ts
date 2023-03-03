@@ -5,6 +5,7 @@ import {MatSort, Sort} from '@angular/material/sort';
 import {MatCell, MatTableDataSource} from '@angular/material/table';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { SelectionModel } from '@angular/cdk/collections';
+import { SessionStorageService } from 'src/app/services/sessionStorage/session-storage.service';
 
 export interface Client {
   id: string;
@@ -30,27 +31,21 @@ export class ClientsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort | undefined;
 
 
-  public clients: Client[] = [
-    {
-      id: uuidv4(),
-      cpf_cnpj: null,
-      name: null,
-      apartment: null,
-      area: null,
-      type: null,
-      email: null,
-      phone: null,
-    }
-  ];
+  public clients: Client[] = [];
 
-  constructor() {
+  constructor(  private sessionStorageService: SessionStorageService) {
 
-    const users = Array.from({length: 100}, (_, k) => this.createNewUser(k + 1));
+    const users = Array.from({length: 15}, (_, k) => this.createNewUser(k + 1));
+    this.clients = users;
 
-    this.dataSource = new MatTableDataSource(users);
+    this.dataSource = new MatTableDataSource(this.clients);
   }
 
   ngOnInit(): void {
+    if(this.sessionStorageService.getSessionStorage('clients') != null) {
+      this.clients = this.sessionStorageService.getSessionStorage('clients');
+      this.dataSource = new MatTableDataSource(this.clients);
+    }
   }
 
   ngAfterViewInit() {
@@ -85,9 +80,7 @@ export class ClientsComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    console.log("event", event, this.displayedColumns);
     moveItemInArray(this.displayedColumns, event.previousIndex, event.currentIndex);
-    console.log("NEW this.displayedColumns", this.displayedColumns);
   }
 
   selection = new SelectionModel<Client>(true, []);
@@ -152,7 +145,6 @@ export class ClientsComponent implements OnInit {
         cpfInput = formatCPF;
     }
 
-    console.log("cpfInput", cpfInput);
     row.cpf_cnpj = cpfInput;
 }
 
@@ -187,12 +179,12 @@ export class ClientsComponent implements OnInit {
       cnpjInput = formatCPF;
     }
 
-    console.log("cnpjInput", cnpjInput);
-     row.cpf_cnpj = cnpjInput;
+    row.cpf_cnpj = cnpjInput;
   }
 
   publishChanges() {
-    console.log("publishChanges", this.selection.selected)
+    console.log("publishChanges", this.clients);
+    this.sessionStorageService.setSessionStorage('clients', this.clients)
   }
 
   public focuedID = '';
@@ -203,5 +195,48 @@ export class ClientsComponent implements OnInit {
 
   onEnterPress(event: any, row: any, fieldName: any) {
     document.getElementById(row.id + fieldName)?.focus();
+  }
+
+
+  public hasErrors = false;
+
+  isValidated() {
+    // for(let i=0; i<this.clients)
+  }
+
+  addClient() {
+    const newClient = {
+      id: uuidv4(),
+      cpf_cnpj: null,
+      name: null,
+      apartment: null,
+      area: null,
+      type: null,
+      email: null,
+      phone: null,
+    };
+
+    this.clients.push(newClient);
+
+    this.dataSource = new MatTableDataSource(this.clients);
+
+    setTimeout(() => {
+      document.getElementById(newClient.id)?.scrollIntoView();
+    }, 250);
+
+
+  }
+
+  deletedSelected() {
+
+    let tempSelected: any[] = [];
+    for(let selected of this.selection.selected) {
+      tempSelected.push(selected.id);
+    }
+
+    this.clients = this.clients.filter((obj: any) => !tempSelected.includes(obj.id));
+
+    this.dataSource = new MatTableDataSource(this.clients);
+    this.selection.clear();
   }
 }

@@ -113,3 +113,8 @@ div::-webkit-scrollbar {
   padding: 0 0.5rem;
 }
 
+.addClient {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: flex-end;
+}
