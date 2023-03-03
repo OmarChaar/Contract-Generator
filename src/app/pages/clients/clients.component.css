@@ -14,15 +14,16 @@
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   width: 3rem;
+  padding: 0 0.5rem;
 }
 
-tr {
+/* tr {
   height: 48px;
-}
+} */
 
 
 .tableHeader {
-  background-color: bisque;
+  background-color: #e7f0ff;
 }
 
 .tableBodyTR:nth-child(even) {
@@ -42,7 +43,7 @@ table {
 
 /* Column Widths */
 .mat-column-select {
-  width: 0;
+  width: 20rem !important;
 }
 
 .mat-column-id {
@@ -77,6 +78,18 @@ table {
   min-width: 10rem;
 }
 
+.tableBodyTR > .mat-column-cpf_cnpj,
+.tableBodyTR > .mat-column-apartment,
+.tableBodyTR > .mat-column-name,
+.tableBodyTR > .mat-column-area,
+.tableBodyTR > .mat-column-type,
+.tableBodyTR > .mat-column-email,
+.tableBodyTR > .mat-column-phone {
+  cursor: pointer;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
 div::-webkit-scrollbar {
   display: none;
 }
@@ -106,3 +119,46 @@ input {
 .header mat-form-field {
   width: 50%;
 }
+
+.selectedFunctions {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.selectedFunctions i {
+  font-size: 1rem;;
+}
+
+.selectedFunctions button span {
+  font-weight: 100;
+}
+
+.selectedFunctions button {
+  background: #ff4081;
+  color: white;
+}
+
+tr.mat-row, tr.mat-footer-row, tr.mat-header-row {
+  height: 2.5rem;
+}
+
+td.mat-cell:hover {
+  background-color: #e7f0ff;
+
+}
+
+input:focus {
+  background-color: #e7f0ff;
+  border: 1px solid #126dff;
+}
+
+.mat-column-id td.mat-cell {
+  background-color: yellow !important;
+}
+
+.mat-column-id:hover {
+  background-color: unset !important;
+  cursor: default;
+}
+

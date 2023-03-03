@@ -6,10 +6,27 @@
     </mat-form-field>
 
     <div>
-      <button mat-raised-button>
+      <button mat-raised-button (click)="publishChanges()">
         Publish Changes
       </button>
     </div>
+  </div>
+
+  <div *ngIf="selection.selected.length > 0" class="selectedFunctions">
+    <button mat-raised-button (click)="publishChanges()" >
+      <i class="bi bi-trash"></i>
+      Delete Selected <span>({{selection.selected.length}})</span>
+    </button>
+
+    <button mat-raised-button (click)="publishChanges()">
+      <i class="bi bi-person-lock"></i>
+      Disable Selected <span>({{selection.selected.length}})</span>
+    </button>
+
+    <button mat-raised-button (click)="publishChanges()">
+      <i class="bi bi-envelope"></i>
+      Email Selected <span>({{selection.selected.length}})</span>
+    </button>
   </div>
 
   <div class="tableContiner">
@@ -50,9 +67,8 @@
         <!-- CPF / CNPJ Column -->
         <ng-container matColumnDef="cpf_cnpj" >
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number"> CPF / CNPJ </th>
-          <td mat-cell *matCellDef="let row">
+          <td class="highlightFocus" mat-cell *matCellDef="let row">
             <input class="inputLabel" maxlength="18" (keyup)="row.cpf_cnpj.length < 15 ? cpfChange($event, row) : cnpjChange($event, row)" [(ngModel)]="row.cpf_cnpj" >
-            <!-- [(ngModel)]="row.cpf_cnpj" -->
           </td>
         </ng-container>
 
@@ -74,7 +90,7 @@
 
          <!-- Area M2 Column -->
          <ng-container matColumnDef="area">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag> Area m2 </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag> Area M<sup>2</sup> </th>
           <td mat-cell *matCellDef="let row">
             <input [(ngModel)]="row.area" >
           </td>

@@ -196,4 +196,8 @@ export class ClientsComponent implements OnInit {
     console.log("cnpjInput", cnpjInput);
      row.cpf_cnpj = cnpjInput;
   }
+
+  publishChanges() {
+    console.log("publishChanges", this.selection.selected)
+  }
 }
