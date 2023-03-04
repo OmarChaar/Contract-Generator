@@ -349,12 +349,14 @@ export class CollectionComponent implements OnInit {
     }
     else {
       this.isSearching = false;
+      this.collapseAll();
     }
   }
 
   clearSearch() {
     this.searchValue = '';
     this.isSearching = false;
+    this.collapseAll();
   }
 
   expandAll() {
