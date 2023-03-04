@@ -1,4 +1,14 @@
 <div class="container">
+  <div class="saveDiv">
+    <div>
+      <div *ngIf="hasErrors" class="warningNote">
+        <span><b>*Note</b> - Please make sure that all the highlighted fields are not left empty.</span>
+      </div>
+    </div>
+
+    <button mat-raised-button (click)="save()">SAVE</button>
+  </div>
+
   <div class="headerDiv">
     <mat-form-field class="searchFeild">
       <mat-label>Search</mat-label>
@@ -210,7 +220,7 @@
               </ng-container>
 
               <tr class="tableHeader" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr class="tableBodyTR" cdkDrag mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="[focusedID == row.id ? 'focusedRow' : '', row.show == false ? 'hideTR' : '']"></tr>
+              <tr class="tableBodyTR" [id]="row.id" cdkDrag mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="[focusedID == row.id ? 'focusedRow' : '', row.show == false ? 'hideTR' : '']"></tr>
 
             </table>
 
@@ -233,15 +243,7 @@
     </div>
   </cdk-accordion>
 
-  <div class="saveDiv">
-    <div>
-      <div *ngIf="hasErrors" class="warningNote">
-        <span><b>*Note</b> - Please make sure that all the highlighted fields are not left empty.</span>
-      </div>
-    </div>
 
-    <button mat-raised-button (click)="save()">SAVE</button>
-  </div>
 
 
 </div>

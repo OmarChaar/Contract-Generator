@@ -55,8 +55,8 @@ td.mat-cell:hover {
   background-color: var(--table-header);
 }
 
-.mat-column-id:hover, .mat-column-value:hover, .mat-column-delete:hover,
-.mat-column-options:hover, .mat-column-edit:hover {
+.mat-column-select:hover, .mat-column-id:hover, .mat-column-value:hover,
+.mat-column-delete:hover, .mat-column-options:hover, .mat-column-edit:hover {
   background-color: unset !important;
   cursor: default;
 }

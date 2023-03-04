@@ -42,6 +42,7 @@ export class ClientsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.sessionStorageService.getSessionStorage('clients') )
     if(this.sessionStorageService.getSessionStorage('clients') != null) {
       this.clients = this.sessionStorageService.getSessionStorage('clients');
       this.dataSource = new MatTableDataSource(this.clients);
@@ -193,7 +194,12 @@ export class ClientsComponent implements OnInit {
 
   publishChanges() {
     console.log("publishChanges", this.clients);
-    this.sessionStorageService.setSessionStorage('clients', this.clients)
+    if(this.validateClients() == true) {
+      this.sessionStorageService.setSessionStorage('clients', this.clients)
+    }
+    else {
+      this.hasErrors = true;
+    }
   }
 
   public focuedID = '';
@@ -209,8 +215,18 @@ export class ClientsComponent implements OnInit {
 
   public hasErrors = false;
 
-  isValidated() {
-    // for(let i=0; i<this.clients)
+  validateClients() {
+    for(let i=0; i<this.clients.length; i++) {
+      const tempClient = this.clients[i];
+
+      if(!((tempClient?.cpf_cnpj?.length == 14 || tempClient?.cpf_cnpj?.length == 18) && tempClient?.apartment?.trim().length > 0 && tempClient?.area > 0)) {
+        setTimeout(() => {
+          document.getElementById(tempClient.id)?.scrollIntoView({behavior: 'smooth'});
+        }, 500);
+        return false;
+      }
+    }
+    return true;
   }
 
   addClient() {
@@ -234,7 +250,7 @@ export class ClientsComponent implements OnInit {
     }
 
     setTimeout(() => {
-      document.getElementById(newClient.id)?.scrollIntoView();
+      document.getElementById(newClient.id)?.scrollIntoView({behavior: 'smooth'});
     }, 250);
 
 

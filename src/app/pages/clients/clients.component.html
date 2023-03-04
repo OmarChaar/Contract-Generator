@@ -74,7 +74,7 @@
             <i class="bi bi-hash"></i>
             CPF / CNPJ
           </th>
-          <td mat-cell *matCellDef="let row" class="noPadding">
+          <td mat-cell *matCellDef="let row" class="noPadding" [ngClass]="(hasErrors && !(row.cpf_cnpj?.length == 14 || row.cpf_cnpj?.length == 18)) ? 'errorValidation' : ''">
             <input [id]="row.id+'cpf_cnpj'" class="inputLabel" maxlength="18"
               (keyup)="row.cpf_cnpj?.length < 15 ? cpfChange($event, row) : cnpjChange($event, row)"
               [(ngModel)]="row.cpf_cnpj" (focus)="focus(row.id)" (keyup.enter)="onEnterPress($event, row, 'apartment')"
@@ -88,7 +88,7 @@
             <i class="bi bi-fonts"></i>
             Apartment
           </th>
-          <td mat-cell *matCellDef="let row" class="noPadding">
+          <td mat-cell *matCellDef="let row" class="noPadding" [ngClass]="(hasErrors && !(row.apartment?.trim().length > 0)) ? 'errorValidation' : ''">
             <input [id]="row.id+'apartment'" class="inputLabel"
               [(ngModel)]="row.apartment" (focus)="focus(row.id)" (keyup.enter)="onEnterPress($event, row, 'name')"
             >
@@ -114,7 +114,7 @@
             <i class="bi bi-hash"></i>
             Area M<sup>2</sup>
           </th>
-          <td mat-cell *matCellDef="let row" class="noPadding">
+          <td mat-cell *matCellDef="let row" class="noPadding" [ngClass]="(hasErrors && !(row.area > 0)) ? 'errorValidation' : ''">
             <input [id]="row.id+'area'" [(ngModel)]="row.area"
               (focus)="focus(row.id)" (keyup.enter)="onEnterPress($event, row, 'type')"
             >

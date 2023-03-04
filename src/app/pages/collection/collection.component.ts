@@ -286,6 +286,10 @@ export class CollectionComponent implements OnInit {
             tempQuestion.options.length > 0 &&
             tempQuestion.enabled != null &&
             tempQuestion.required != null) ) {
+              setTimeout(() => {
+                document.getElementById(tempQuestion.id)?.scrollIntoView({behavior: 'smooth'});
+              }, 500);
+
               return false;
           }
         }
