@@ -90,6 +90,7 @@
 
             <table [id]="'table_'+section.id" mat-table [dataSource]="section.questions" cdkDropList (cdkDropListDropped)="dropQuestion($event, section)">
 
+              <!-- ID -->
               <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef class="textAlignCenter w-0">ID</th>
                 <td mat-cell *matCellDef="let row" class="textAlignCenter">
@@ -100,6 +101,7 @@
                 </td>
               </ng-container>
 
+              <!-- LBAEL -->
               <ng-container matColumnDef="label" >
                 <th mat-header-cell *matHeaderCellDef>
                   <i class="bi bi-fonts"></i>
@@ -110,6 +112,7 @@
                 </td>
               </ng-container>
 
+              <!-- DISPLAY LABEL -->
               <ng-container matColumnDef="displayLabel" >
                 <th mat-header-cell *matHeaderCellDef>
                   <i class="bi bi-fonts"></i>
@@ -120,18 +123,20 @@
                 </td>
               </ng-container>
 
+              <!-- TYPE -->
               <ng-container matColumnDef="type" >
                 <th mat-header-cell *matHeaderCellDef>
                   Type
                 </th>
                 <td mat-cell *matCellDef="let row; let i = index" class="questionType" [ngClass]="(hasErrors && !row.type) ? 'errorValidation' : ''" [id]="'type_'+row.id">
-                  <mat-select disableRipple [(value)]="row.type" (openedChange)="openType(row)" (valueChange)="triggerType($event, row.id, row, index, i)">
+                  <mat-select disableRipple [(value)]="row.type" (openedChange)="openType(row)" >
                     <mat-option value="multi">Multi options</mat-option>
                     <mat-option value="truthy">True / False</mat-option>
                   </mat-select>
                 </td>
               </ng-container>
 
+              <!-- REQUIRED -->
               <ng-container matColumnDef="required" >
                 <th mat-header-cell *matHeaderCellDef>
                   Required
@@ -144,6 +149,7 @@
                 </td>
               </ng-container>
 
+              <!-- ENABLED -->
               <ng-container matColumnDef="enabled" >
                 <th mat-header-cell *matHeaderCellDef>
                   Enabled
@@ -156,6 +162,7 @@
                 </td>
               </ng-container>
 
+              <!-- OPTIONS -->
               <ng-container matColumnDef="options" >
                 <th mat-header-cell *matHeaderCellDef class="textAlignCenter">
                   Options
@@ -169,6 +176,7 @@
                 </td>
               </ng-container>
 
+              <!-- EDIT -->
               <ng-container matColumnDef="edit" >
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let row; let i = index">

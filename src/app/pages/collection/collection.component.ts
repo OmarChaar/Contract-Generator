@@ -140,7 +140,6 @@ export class CollectionComponent implements OnInit {
   }
 
   addQuestion(section: Section) {
-    console.log(section);
     const emptyQuestion: Question = {
       id: uuidv4(),
       label: null,
@@ -328,7 +327,6 @@ export class CollectionComponent implements OnInit {
       let tempSearched: Section[] = [];
       for(let section of this.sections) {
         if(section.label.toLowerCase().indexOf(searchBy.toLowerCase()) > -1) {
-          console.log("section", searchBy);
           tempSearched.push(section);
         }
         else {
@@ -337,7 +335,6 @@ export class CollectionComponent implements OnInit {
           let hasFound = false;
           for(let question of section.questions) {
             if(question.label?.toLowerCase().indexOf(searchBy.toLowerCase()) > -1) {
-              console.log("question", searchBy);
               hasFound = true;
               tempSection.questions.push(question);
             }
@@ -374,9 +371,17 @@ export class CollectionComponent implements OnInit {
     }
   }
 
-  triggerType(event: any, id: string, question: Question, sectionIndex: number, index: number) {
-    if(this.selectedCurrentType != event) {
-      console.log("triggerType", event, question, this.selectedCurrentType);
+  private selectedCurrentType: any;
+
+  openType(question: Question) {
+    if(!this.selectedCurrentType) {
+      if(question.type) {
+        this.selectedCurrentType = question.type;
+      }
+    }
+
+
+    if(this.selectedCurrentType != question.type) {
       const dialogRef = this.dialog.open(PromptComponent, {
         data: {
           message: 'Changing the type will remove all existing options. Are you sure you want to proceed?',
@@ -385,20 +390,21 @@ export class CollectionComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((result: any) => {
-        console.log("result", result);
-
+        if(result == true) {
+          this.selectedCurrentType = question.type;
+        }
+        else {
+          question.type = this.selectedCurrentType;
+        }
       });
     }
+    else {
 
-    document.getElementById('type_'+id)?.classList.remove('errorValidation');
-  }
-
-  private selectedCurrentType: string = '';
-
-  openType(question: Question) {
-    if(question.type) {
-      this.selectedCurrentType = question.type;
     }
+
+
+
+
   }
 
   public focusedID = '';
