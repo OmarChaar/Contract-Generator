@@ -8,10 +8,22 @@
       </button>
     </mat-form-field>
 
-    <div>
+    <div class="clientFunction">
       <button mat-raised-button (click)="publishChanges()">
         Publish Changes
       </button>
+
+      <i [matMenuTriggerFor]="menuQuestion" class="bi bi-three-dots-vertical"></i>
+      <mat-menu #menuQuestion="matMenu" class="clientsFunc">
+        <button mat-menu-item>
+          <i class="bi bi-download"></i>
+          <span class="menuLabel">Export Clients</span>
+        </button>
+        <button mat-menu-item>
+          <i class="bi bi-upload"></i>
+          <span class="menuLabel">Import Clients</span>
+        </button>
+      </mat-menu>
     </div>
   </div>
 
