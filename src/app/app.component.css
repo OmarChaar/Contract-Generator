@@ -1,0 +1,66 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.layoutHeader {
+  height: 4rem;
+  background-color: var(--active);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  color: white;
+}
+
+.layoutBody {
+  flex: 1;
+  overflow: hidden;
+  padding: 2rem;
+  height: 100%;
+  background: gainsboro;
+  box-sizing: border-box;
+}
+
+.mat-drawer-container {
+  height: 100%;
+}
+
+label {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.sidebar {
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.navButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  margin-top: 0.5rem;
+}
+
+.navButtons button {
+  padding: 1.5rem;
+  background: var(--table-header);
+  border: none;
+}
+
+.navSelected {
+  background: var(--active) !important;
+  color: white;
+}
+
+.powerdBy {
+  font-size: 0.875rem;
+  padding: 1rem;
+  text-align: center;
+}
+

@@ -1,7 +1,7 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
-html, body { height: 100%; }
+html, body { height: 100%; overflow: hidden; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :root {
@@ -20,6 +20,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
   display: none;
 }
+
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 
 .show {
   display: block !important;

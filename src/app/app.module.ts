@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCq44TtfAq6DE1Alp4qojB6z5WwWHCvpbc",
@@ -34,6 +35,7 @@ const analytics = getAnalytics(app);
     RouterModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]

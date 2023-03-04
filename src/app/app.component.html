@@ -1,1 +1,30 @@
-<router-outlet></router-outlet>
+<div class="layout">
+  <div class="layoutHeader">
+    <i (click)="drawer.toggle()" [class]="drawer ? 'bi bi-list' : ''"></i>
+
+    <label>{{ title }}</label>
+
+    <div>
+      <i class="bi bi-globe"></i>
+    </div>
+  </div>
+  <mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'">
+      <div class="sidebar">
+        <div class="navButtons">
+          <button [ngClass]="currentURL == '/clients' ? 'navSelected' : ''" (click)="navigateTo('clients')">CLIENTS</button>
+          <button [ngClass]="currentURL == '/collection' ? 'navSelected' : ''" (click)="navigateTo('collection')">COLLECTION</button>
+          <button [ngClass]="currentURL == '/' ? 'navSelected' : ''" (click)="navigateTo('')">CONTRACT GENERATOR</button>
+        </div>
+
+        <label class="powerdBy">Powered by OC Tech Solutions</label>
+
+      </div>
+    </mat-drawer>
+
+    <div class="layoutBody">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-container>
+</div>
+
