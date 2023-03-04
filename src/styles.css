@@ -212,3 +212,7 @@ i {
 .w-0 {
    width: 0;
 }
+
+.searchFeild.mat-form-field.mat-focused .mat-form-field-underline {
+  background-color: red;
+}

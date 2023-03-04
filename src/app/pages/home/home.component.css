@@ -1,0 +1,31 @@
+.card {
+  padding: 0;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.card:hover {
+  background: var(--active-section);
+}
+
+.card-image {
+  aspect-ratio: 5/1;
+  width: 100%;
+  margin: 0;
+}
+
+.girdView {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  width: 80%;
+  margin: 0 auto;
+}
+
+.mat-card-title {
+  margin-bottom: 1rem !important;
+  font-size: 1.25rem;
+}
+
+.mat-card-content {
+  padding: 1rem;
+}

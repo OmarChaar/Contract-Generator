@@ -1,6 +1,6 @@
 <div class="layout">
   <div class="layoutHeader">
-    <i (click)="drawer.toggle()" [class]="drawer ? 'bi bi-list' : ''"></i>
+    <i (click)="drawer.toggle()" [class]="drawer.opened == false ? 'bi bi-list' : 'bi bi-x-lg'"></i>
 
     <label>{{ title }}</label>
 
@@ -9,12 +9,25 @@
     </div>
   </div>
   <mat-drawer-container [hasBackdrop]="true">
-    <mat-drawer #drawer [mode]="'over'">
+    <mat-drawer #drawer [mode]="'over'" autoFocus="false">
       <div class="sidebar">
         <div class="navButtons">
-          <button [ngClass]="currentURL == '/clients' ? 'navSelected' : ''" (click)="navigateTo('clients')">CLIENTS</button>
-          <button [ngClass]="currentURL == '/collection' ? 'navSelected' : ''" (click)="navigateTo('collection')">COLLECTION</button>
-          <button [ngClass]="currentURL == '/' ? 'navSelected' : ''" (click)="navigateTo('')">CONTRACT GENERATOR</button>
+          <button mat-raised-button [ngClass]="currentURL == '/home' ? 'navSelected' : ''" (click)="navigateTo('home')">
+            <i class="bi bi-grid"></i>
+            DASHBOARD
+          </button>
+          <button mat-raised-button [ngClass]="currentURL == '/clients' ? 'navSelected' : ''" (click)="navigateTo('clients')">
+            <i class="bi bi-people"></i>
+            CLIENTS
+          </button>
+          <button mat-raised-button [ngClass]="currentURL == '/collection' ? 'navSelected' : ''" (click)="navigateTo('collection')">
+            <i class="bi bi-database"></i>
+            COLLECTION
+          </button>
+          <button mat-raised-button [ngClass]="currentURL == '/' ? 'navSelected' : ''" (click)="navigateTo('')">
+            <i class="bi bi-filetype-docx"></i>
+            CONTRACT GENERATOR
+          </button>
         </div>
 
         <label class="powerdBy">Powered by OC Tech Solutions</label>
