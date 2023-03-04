@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
+import { DashboardComponent } from './dashboard.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: DashboardComponent
   }
 ];
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [DashboardComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -21,4 +21,4 @@ const routes: Routes = [
     MatCardModule
   ]
 })
-export class HomeModule { }
+export class DashboardModule { }

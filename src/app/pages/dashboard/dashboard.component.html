@@ -1,0 +1,64 @@
+<div class="container">
+  <mat-grid-list cols="4"  rowHeight="20%">
+    <mat-grid-tile colspan="3" rowspan="2" class="one">
+      x
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="1" rowspan="1" class="five">
+      x
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="1" rowspan="2" class="three">
+      x
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="3" rowspan="3" class="two">
+      <div class="girdView">
+        <!-- <mat-grid-tile> -->
+        <mat-card class="card" (click)="navigateTo('clients')">
+          <img mat-card-image class="card-image" src="../../../assets/imgs/table.scene.png" alt="Photo of a Shiba Inu">
+          <mat-card-content>
+            <mat-card-title>Clients</mat-card-title>
+            <mat-card-subtitle>Facilitate website access to clients through user accounts, enabling them to personalize their apartment.</mat-card-subtitle>
+          </mat-card-content>
+        </mat-card>
+
+
+        <mat-card class="card" (click)="navigateTo('collection')">
+          <img mat-card-image class="card-image" src="../../../assets/imgs/table.scene.png" alt="Photo of a Shiba Inu">
+          <mat-card-content>
+            <mat-card-title>Collection</mat-card-title>
+            <mat-card-subtitle>Personalize the sections, questions, and options presented to clients during apartment customization.</mat-card-subtitle>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="card" (click)="navigateTo('')">
+          <img mat-card-image class="card-image" src="../../../assets/imgs/table.scene.png" alt="Photo of a Shiba Inu">
+          <mat-card-content>
+            <mat-card-title>Contract Generator</mat-card-title>
+            <mat-card-subtitle>Automate contract generation based on the personalized apartment features selected by the client on the website.</mat-card-subtitle>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="card">
+          <img mat-card-image class="card-image" src="../../../assets/imgs/table.scene.png" alt="Photo of a Shiba Inu">
+          <mat-card-content>
+            <mat-card-title>Inventory Generator</mat-card-title>
+            <mat-card-subtitle>Automatically generate an inventory based on the personalized features selected by the user.</mat-card-subtitle>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+    </mat-grid-tile>
+
+
+
+    <mat-grid-tile colspan="1" rowspan="2" class="four">
+      x
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</div>
+
+
+<!-- Customize and manage sections, questions, and options that appear when clients personalize their apartment features. -->

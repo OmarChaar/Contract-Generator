@@ -12,7 +12,7 @@
     <mat-drawer #drawer [mode]="'over'" autoFocus="false">
       <div class="sidebar">
         <div class="navButtons">
-          <button mat-raised-button [ngClass]="currentURL == '/home' ? 'navSelected' : ''" (click)="navigateTo('home')">
+          <button mat-raised-button [ngClass]="currentURL == '/dashboard' ? 'navSelected' : ''" (click)="navigateTo('dashboard')">
             <i class="bi bi-grid"></i>
             DASHBOARD
           </button>
@@ -27,6 +27,11 @@
           <button mat-raised-button [ngClass]="currentURL == '/' ? 'navSelected' : ''" (click)="navigateTo('')">
             <i class="bi bi-filetype-docx"></i>
             CONTRACT GENERATOR
+          </button>
+
+          <button mat-raised-button [ngClass]="currentURL == '/' ? 'navSelected' : ''" (click)="navigateTo('')">
+            <i class="bi bi-filetype-docx"></i>
+            INVENTORY GENERATOR
           </button>
         </div>
 

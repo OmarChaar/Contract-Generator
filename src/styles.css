@@ -21,6 +21,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   display: none;
 }
 
+.black {
+  color: black !important;
+}
+
 
 .container {
   height: 100%;
