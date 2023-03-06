@@ -1567,6 +1567,13 @@ export class ClientsService {
       areaPriv: 100,
       tipo: 'Tipo 2',
     },
+    {
+      cpfCNPJ: '100.100.100-00',
+      apartamento: 1001,
+      client: 'OMAR',
+      areaPriv: 100,
+      tipo: 'Tipo 1',
+    },
   ]
 
   constructor() { }

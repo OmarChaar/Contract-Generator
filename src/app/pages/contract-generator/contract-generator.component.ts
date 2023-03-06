@@ -80,6 +80,8 @@ export class ContractGeneratorComponent implements OnInit {
         currentPersonalization.push({key: key, value: personalization[key]});
       }
 
+      // console.log("currentPersonalization", currentPersonalization);
+
       const areaPriv = Number(this.getValue(currentPersonalization, 'ÁREA PRIV'));
 
       let tipo = '';
@@ -125,36 +127,38 @@ export class ContractGeneratorComponent implements OnInit {
 
       div.innerHTML += `<br><b>Definições de Acabamentos:</b><br>`
 
-      this.contractService.setPISOS(div, currentPersonalization);
-      this.contractService.setAreaServico(div, currentPersonalization);
-      this.contractService.setAreaServicoETerraco(div, currentPersonalization, areaPriv);
+      const total = this.getValue(currentPersonalization, 'TOTAL') > 0 ? this.getValue(currentPersonalization, 'TOTAL') : 0;
 
-      this.contractService.setTerraco(div, currentPersonalization, areaPriv);
+      this.contractService.setPISOS(div, currentPersonalization, total);
+      this.contractService.setAreaServico(div, currentPersonalization, total);
+      this.contractService.setAreaServicoETerraco(div, currentPersonalization, areaPriv, total);
 
-      this.contractService.setEstar(div, currentPersonalization);
+      this.contractService.setTerraco(div, currentPersonalization, areaPriv, total);
+
+      this.contractService.setEstar(div, currentPersonalization, total);
       if(Number(areaPriv) >= 100) {
-        this.contractService.setLavabo(div, currentPersonalization);
+        this.contractService.setLavabo(div, currentPersonalization, total);
       }
 
 
-      this.contractService.setSuite1(div, currentPersonalization);
-      this.contractService.setBanho1(div, currentPersonalization, areaPriv);
+      this.contractService.setSuite1(div, currentPersonalization, total);
+      this.contractService.setBanho1(div, currentPersonalization, areaPriv, total);
 
       if(Number(areaPriv) >= 100 && tipo == 'TIPO 1') {
-        this.contractService.setSuite2(div, currentPersonalization);
+        this.contractService.setSuite2(div, currentPersonalization, total);
       }
 
       if((Number(areaPriv) >= 100 && tipo == 'TIPO 2') || Number(areaPriv) < 100) {
-        this.contractService.setDorm1(div, currentPersonalization);
+        this.contractService.setDorm1(div, currentPersonalization, total);
       }
 
       if(Number(areaPriv) >= 100 && tipo == 'TIPO 2') {
-        this.contractService.setDorm2(div, currentPersonalization);
+        this.contractService.setDorm2(div, currentPersonalization, total);
       }
 
-      this.contractService.setBanho2(div, currentPersonalization, areaPriv);
+      this.contractService.setBanho2(div, currentPersonalization, areaPriv, total);
 
-      this.contractService.setLINHA(div, currentPersonalization);
+      this.contractService.setLINHA(div, currentPersonalization, total);
 
       div.innerHTML += `
           <br>
@@ -170,6 +174,7 @@ export class ContractGeneratorComponent implements OnInit {
       else {
         div.innerHTML += `
           <b>Forma de pagamento:</b> N/A <br>
+          <b>Data de Vencimento: </b> 5 <br>
         `
       }
     }
