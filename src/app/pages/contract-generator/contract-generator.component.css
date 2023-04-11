@@ -117,3 +117,7 @@ tr:nth-child(even) td {
   color: white;
   font-weight: bold;
 }
+
+body {
+  padding: 1rem;
+}

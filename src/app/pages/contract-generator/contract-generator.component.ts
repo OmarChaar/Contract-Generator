@@ -825,17 +825,93 @@ export class ContractGeneratorComponent implements OnInit {
       "TIPO": personalization['TIPO']
     };
 
-    tempObj['BANCADA TIPO - COZINHA'] = personalization['COZINHA - BANCADA TIPO - NOME DA OPÇÃO'];
-    tempObj['REVESTIMENTO BANCADA - COZINHA'] = personalization['COZINHA - REVESTIMENTO BANCADA - NOME DA OPÇÃO'];
-    tempObj['ÁREA DE SERVIÇO E TERRAÇO - TIPO'] = personalization['SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO - NOME DA OPÇÃO'] ? personalization['SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO - NOME DA OPÇÃO'] : personalization['NÃO KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO - NOME DA OPÇÃO'];
-    tempObj['REVESTIMENTO BANCADA ÁREA DE SERVIÇO'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'] ? personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'] : personalization['NÃO KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'];
-    tempObj['REVESTIMENTO BANCADA KIT CHURRASQUEIRA'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA KIT CHURRASQUEIRA - NOME DA OPÇÃO'];
-    tempObj['REVESTIMENTO BANCADA ÚNICA'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA - NOME DA OPÇÃO'];
+    tempObj['BANCADA TIPO - COZINHA'] = personalization['COZINHA - BANCADA TIPO - NOME DA OPÇÃO'].toUpperCase();
+    let fu = personalization['COZINHA - REVESTIMENTO BANCADA - NOME DA OPÇÃO'].replace(/118x60/, '').replace(/180x60/, '');
+    tempObj['REVESTIMENTO BANCADA - COZINHA'] = fu;
+
+    let areaTipo = '';
+    if(personalization['NÃO KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO'] == 1) {
+      tempObj['ÁREA DE SERVIÇO E TERRAÇO - TIPO'] = 'PADRÃO';
+      tempObj['ÁREA DE SERVIÇO E TERRAÇO - ESPECIFICAÇÃO'] = 'Área de Serviço com Tanque 18L - Deca (Terraço sem bancada)';
+      tempObj['REVESTIMENTO BANCADA ÁREA DE SERVIÇO'] = 'N/A';
+      tempObj['REVESTIMENTO BANCADA KIT CHURRASQUEIRA'] = 'N/A';
+      tempObj['REVESTIMENTO BANCADA ÚNICA'] = 'N/A'
+    }
+    else if(personalization['NÃO KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO'] == 2) {
+      tempObj['ÁREA DE SERVIÇO E TERRAÇO - TIPO'] = 'PERSONALIZADO';
+      tempObj['ÁREA DE SERVIÇO E TERRAÇO - ESPECIFICAÇÃO'] = 'Bancada Área de Serviço 180x60 cm, Saia 0,04cm, Frontão 0,07cm (Terraço sem bancada)';
+      tempObj['REVESTIMENTO BANCADA ÁREA DE SERVIÇO'] = personalization['NÃO KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'];
+      tempObj['REVESTIMENTO BANCADA KIT CHURRASQUEIRA'] = 'N/A';
+      tempObj['REVESTIMENTO BANCADA ÚNICA'] = 'N/A'
+    }
+    else if(personalization['SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO'] == 3) {
+      tempObj['ÁREA DE SERVIÇO E TERRAÇO - TIPO'] = 'PERSONALIZADO';
+      if(personalization['ÁREA PRIV'] >= 100) {
+        tempObj['ÁREA DE SERVIÇO E TERRAÇO - ESPECIFICAÇÃO'] = 'Área de Serviço com Tanque 18L - Deca Bancada Kit Churrasqueira 210 x 60cm';
+      }
+      else {
+        tempObj['ÁREA DE SERVIÇO E TERRAÇO - ESPECIFICAÇÃO'] = 'Área de Serviço com Tanque 18L - Deca / Terraço Bancada Kit Churrasqueira 190 x 60cm';
+      }
+
+      tempObj['REVESTIMENTO BANCADA ÁREA DE SERVIÇO'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'] ?  personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'] : 'N/A';
+      tempObj['REVESTIMENTO BANCADA KIT CHURRASQUEIRA'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA KIT CHURRASQUEIRA - NOME DA OPÇÃO'] ? personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA KIT CHURRASQUEIRA - NOME DA OPÇÃO'] : 'N/A';
+      tempObj['REVESTIMENTO BANCADA ÚNICA'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA - NOME DA OPÇÃO'] ? personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA - NOME DA OPÇÃO'] : 'N/A'
+    }
+    else if(personalization['SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO'] == 4) {
+      tempObj['ÁREA DE SERVIÇO E TERRAÇO - TIPO'] = 'PERSONALIZADO';
+      if(personalization['ÁREA PRIV'] >= 100) {
+        tempObj['ÁREA DE SERVIÇO E TERRAÇO - ESPECIFICAÇÃO'] = 'Bancada Área de Serviço 180x60 cm, Saia 0,04cm, Frontão 0,07cm Bancada Kit Churrasqueira 210 x 60cm ';
+      }
+      else {
+        tempObj['ÁREA DE SERVIÇO E TERRAÇO - ESPECIFICAÇÃO'] = 'Bancada Área de Serviço 180x60 cm, Saia 0,04cm, Frontão 0,07cm / Terraço Bancada Kit Churrasqueira 190 x 60cm ';
+      }
+      tempObj['REVESTIMENTO BANCADA ÁREA DE SERVIÇO'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'] ? personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'] : 'N/A';
+      tempObj['REVESTIMENTO BANCADA KIT CHURRASQUEIRA'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA KIT CHURRASQUEIRA - NOME DA OPÇÃO'] ? personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA KIT CHURRASQUEIRA - NOME DA OPÇÃO'] : 'N/A';
+      tempObj['REVESTIMENTO BANCADA ÚNICA'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA - NOME DA OPÇÃO'] ? personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA - NOME DA OPÇÃO'] : 'N/A'
+    }
+    else if(personalization['SIM KIT CHURRASQUEIRA - ÁREA DE SERVIÇO E TERRAÇO - OPÇÃO'] == 5) {
+      tempObj['ÁREA DE SERVIÇO E TERRAÇO - TIPO'] = 'PERSONALIZADO';
+      tempObj['ÁREA DE SERVIÇO E TERRAÇO - ESPECIFICAÇÃO'] = 'Bancada única com Tanque e Kit Churrasqueira 472 x 60cm';
+      tempObj['REVESTIMENTO BANCADA ÁREA DE SERVIÇO'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'] ? personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÁREA DE SERVIÇO - NOME DA OPÇÃO'] : 'N/A';
+      tempObj['REVESTIMENTO BANCADA KIT CHURRASQUEIRA'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA KIT CHURRASQUEIRA - NOME DA OPÇÃO']? personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA KIT CHURRASQUEIRA - NOME DA OPÇÃO'] : 'N/A';
+      tempObj['REVESTIMENTO BANCADA ÚNICA'] = personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA - NOME DA OPÇÃO'] ? personalization['SIM KIT CHURRASQUEIRA - REVESTIMENTO BANCADA ÚNICA - NOME DA OPÇÃO'] : 'N/A'
+    }
+
     tempObj['BANCADA TIPO - LAVABO'] = personalization['LAVABO - BANCADA TIPO - NOME DA OPÇÃO'];
     tempObj['REVESTIMENTO BANCADA - LAVABO'] = personalization['LAVABO - REVESTIMENTO BANCADA - NOME DA OPÇÃO'];
-    tempObj['BANCADA TIPO - BANHO 1'] = personalization['BANHO 1 - BANCADA TIPO - NOME DA OPÇÃO'];
+
+    let banho1 = ''
+    if(personalization['BANHO 1 - BANCADA TIPO - NOME DA OPÇÃO'] == 'PADRÃO 70x50') {
+      banho1 = 'Padrão 70x51cm, Saia 4cm, Frontão 7cm';
+    }
+    else if(personalization['BANHO 1 - BANCADA TIPO - NOME DA OPÇÃO'] == 'Padrão 100x30' ||
+            personalization['BANHO 1 - BANCADA TIPO - NOME DA OPÇÃO'] == 'PADRÃO 100x30' ||
+            personalization['BANHO 1 - BANCADA TIPO - NOME DA OPÇÃO'] == 'PADRÃO 100 X 30' ||
+            personalization['BANHO 1 - BANCADA TIPO - NOME DA OPÇÃO'] == 'Modelo Padrão 100x30') {
+      banho1 = 'Padrão 100x30cm, Saia 4cm, Frontão 7cm';
+    }
+    else {
+      banho1 = personalization['BANHO 1 - BANCADA TIPO - NOME DA OPÇÃO']
+    }
+
+
+    tempObj['BANCADA TIPO - BANHO 1'] = banho1
+
     tempObj['REVESTIMENTO BANCADA - BANHO 1'] = personalization['BANHO 1 - REVESTIMENTO BANCADA - NOME DA OPÇÃO'];
-    tempObj['BANCADA TIPO - BANHO 2'] = personalization['BANHO 2 - BANCADA TIPO - NOME DA OPÇÃO'];
+
+    let banho2 = ''
+   if(personalization['BANHO 2 - BANCADA TIPO - NOME DA OPÇÃO'] == 'Padrão 100x50' ||
+      personalization['BANHO 2 - BANCADA TIPO - NOME DA OPÇÃO'] == 'Padrão  100x50' ||
+      personalization['BANHO 2 - BANCADA TIPO - NOME DA OPÇÃO'] == 'PADRÃO 100x50' ||
+      personalization['BANHO 2 - BANCADA TIPO - NOME DA OPÇÃO'] == 'Modelo Padrão100x50' ||
+      personalization['BANHO 2 - BANCADA TIPO - NOME DA OPÇÃO'] == 'PADRÃO 100 X 50') {
+      banho2 = 'Padrão 100x50cm, Saia 4cm, Frontão 7cm';
+    }
+    else {
+      banho2 = personalization['BANHO 2 - BANCADA TIPO - NOME DA OPÇÃO']
+    }
+
+    tempObj['BANCADA TIPO - BANHO 2'] = banho2;
     tempObj['REVESTIMENTO BANCADA - BANHO 2'] = personalization['BANHO 2 - REVESTIMENTO BANCADA - NOME DA OPÇÃO'];
 
     return tempObj;

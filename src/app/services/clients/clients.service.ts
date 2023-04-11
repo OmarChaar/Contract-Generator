@@ -1225,11 +1225,11 @@ export class ClientsService {
       tipo: 'null',
     },
     {
-      cpfCNPJ: 'DISPONÍVEL-201',
-      apartamento: 201,
+      cpfCNPJ: 'DISPONÍVEL-61',
+      apartamento: 61,
       client: 'DISPONÍVEL',
       areaPriv: 100,
-      tipo: 'Tipo 2',
+      tipo: 'Tipo 1',
     },
     {
       cpfCNPJ: '073.675.008-80',
@@ -1442,9 +1442,9 @@ export class ClientsService {
       tipo: 'Tipo 2',
     },
     {
-      cpfCNPJ: 'DISPONÍVEL-187',
+      cpfCNPJ: '315.578.028-23',
       apartamento: 187,
-      client: 'DISPONÍVEL',
+      client: 'RAPHAEL SILVA DANTAS',
       areaPriv: 100,
       tipo: 'Tipo 2',
     },
@@ -1464,7 +1464,7 @@ export class ClientsService {
     },
     {
       cpfCNPJ: '136.587.828-70',
-      apartamento: 61,
+      apartamento: 201,
       client: 'MARCOS MASCAGNI',
       areaPriv: 100,
       tipo: 'Tipo 1',
@@ -1566,13 +1566,6 @@ export class ClientsService {
       client: 'DISPONÍVEL',
       areaPriv: 100,
       tipo: 'Tipo 2',
-    },
-    {
-      cpfCNPJ: '100.100.100-00',
-      apartamento: 1001,
-      client: 'OMAR',
-      areaPriv: 100,
-      tipo: 'Tipo 1',
     },
   ]
 
