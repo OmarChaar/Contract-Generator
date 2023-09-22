@@ -868,6 +868,13 @@ export class ClientsService {
       tipo: 'Tipo 2',
     },
     {
+      cpfCNPJ: 'PERMUTA-165',
+      apartamento: 165,
+      client: 'PERMUTA',
+      areaPriv: 70,
+      tipo: 'null',
+    },
+    {
       cpfCNPJ: 'PERMUTA-136',
       apartamento: 136,
       client: 'PERMUTA',
@@ -1176,9 +1183,9 @@ export class ClientsService {
       tipo: 'Tipo 2',
     },
     {
-      cpfCNPJ: 'DISPONÍVEL-221',
+      cpfCNPJ: '359.465.678-02',
       apartamento: 221,
-      client: 'DISPONÍVEL',
+      client: 'DOUGLAS DE FIGUEIREDO',
       areaPriv: 100,
       tipo: 'Tipo 2',
     },
@@ -1456,9 +1463,9 @@ export class ClientsService {
       tipo: 'null',
     },
     {
-      cpfCNPJ: '07.038.189/0001-50',
+      cpfCNPJ: '129.234.968-92',
       apartamento: 224,
-      client: 'STOP AKI PARK SERVIÇOS DE ESTACIONAMENTO LTDA',
+      client: 'JOSE LUIZ ZAPPIA',
       areaPriv: 70,
       tipo: 'null',
     },
