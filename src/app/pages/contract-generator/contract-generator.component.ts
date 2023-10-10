@@ -759,11 +759,11 @@ export class ContractGeneratorComponent implements OnInit {
       "TIPO": personalization['TIPO']
     };
 
-    tempObj['PISOS - COZINHA'] = personalization['PISOS - COZINHA - NOME DA OPÇÃO'];
+    tempObj['PISOS - COZINHA'] = personalization['PISOS - COZINHA - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
     tempObj['RODAPÉ - COZINHA'] = personalization['PISOS - COZINHA - RODAPÉ'];
-    tempObj['PISOS - ÁREA DE SERVIÇO'] = personalization['PISOS - ÁREA DE SERVIÇO - NOME DA OPÇÃO'];
+    tempObj['PISOS - ÁREA DE SERVIÇO'] = personalization['PISOS - ÁREA DE SERVIÇO - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
     tempObj['RODAPÉ - ÁREA DE SERVIÇO'] = personalization['PISOS - ÁREA DE SERVIÇO - RODAPÉ'];
-    tempObj['PISOS - TERRAÇO'] = personalization['PISOS - TERRAÇO - NOME DA OPÇÃO'];
+    tempObj['PISOS - TERRAÇO'] = personalization['PISOS - TERRAÇO - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
     tempObj['RODAPÉ - TERRAÇO'] = personalization['PISOS - TERRAÇO - RODAPÉ'];
 
     let pisosExtra = '';
@@ -778,23 +778,23 @@ export class ContractGeneratorComponent implements OnInit {
     }
 
     tempObj['PISOS - EXTRA'] = pisosExtra; //personalization['PISOS - EXTRA'];
-    tempObj['PISOS - ESTAR / JANTAR / CIRC.'] = personalization['PISOS - ESTAR / JANTAR / CIRC. - NOME DA OPÇÃO'];
+    tempObj['PISOS - ESTAR / JANTAR / CIRC.'] = personalization['PISOS - ESTAR / JANTAR / CIRC. - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
     tempObj['RODAPE - ESTAR / JANTAR / CIRC.'] = personalization['PISOS - ESTAR / JANTAR / CIRC. - RODAPE'];
-    tempObj['PISOS - LAVABO'] = personalization['PISOS - LAVABO - NOME DA OPÇÃO'];
+    tempObj['PISOS - LAVABO'] = personalization['PISOS - LAVABO - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
     tempObj['RODAPÉ - LAVABO'] = personalization['PISOS - LAVABO - RODAPÉ'];
-    tempObj['PISOS - BANHO 1'] = personalization['PISOS - BANHO 1 - NOME DA OPÇÃO'];
+    tempObj['PISOS - BANHO 1'] = personalization['PISOS - BANHO 1 - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
     tempObj['RODAPÉ - BANHO 1'] = personalization['PISOS - BANHO 1 - RODAPÉ'];
-    tempObj['PISOS - BOX BANHO 1'] = personalization['PISOS - BANHO 1 - BOX - NOME DA OPÇÃO'];
+    tempObj['PISOS - BOX BANHO 1'] = personalization['PISOS - BANHO 1 - BOX - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
     tempObj['RODAPÉ - BOX BANHO 1'] = personalization['PISOS - BANHO 1 - BOX - RODAPÉ'];
-    tempObj['PISOS - BANHO 2'] = personalization['PISOS - BANHO 2 - NOME DA OPÇÃO'];
+    tempObj['PISOS - BANHO 2'] = personalization['PISOS - BANHO 2 - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
     tempObj['RODAPÉ - BANHO 2'] = personalization['PISOS - BANHO 2 - RODAPÉ'];
-    tempObj['PISOS BOX - BANHO 2'] = personalization['PISOS - BANHO 2 - BOX - NOME DA OPÇÃO'];
+    tempObj['PISOS BOX - BANHO 2'] = personalization['PISOS - BANHO 2 - BOX - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
     tempObj['RODAPÉ BOX - BANHO 2'] = personalization['PISOS - BANHO 2 - BOX - RODAPÉ'];
-    tempObj['PISOS - SUÍTE 1'] = personalization['PISOS - SUÍTE 1 - NOME DA OPÇÃO'];
+    tempObj['PISOS - SUÍTE 1'] = personalization['PISOS - SUÍTE 1 - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
     tempObj['RODAPE - SUÍTE 1'] = personalization['PISOS - SUÍTE 1 - RODAPE'];
-    tempObj['PISOS - DORMITÓRIO 1'] = personalization['PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - NOME DA OPÇÃO'];
+    tempObj['PISOS - DORMITÓRIO 1'] = personalization['PISOS - DORMITÓRIO 1 - OPÇÃO DE REVESTIMENTO - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
     tempObj['RODAPE - DORMITÓRIO 1'] = personalization['PISOS - DORMITÓRIO 1 - RODAPE'];
-    tempObj['PISOS - DORMITÓRIO 2'] = personalization['PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - NOME DA OPÇÃO'];
+    tempObj['PISOS - DORMITÓRIO 2'] = personalization['PISOS - DORMITÓRIO 2 - OPÇÃO DE REVESTIMENTO - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
     tempObj['RODAPE - DORMITÓRIO 2'] = personalization['PISOS - DORMITÓRIO 2 - RODAPE'];
 
     return tempObj;
@@ -811,9 +811,9 @@ export class ContractGeneratorComponent implements OnInit {
     tempObj['PAREDE - ÁREA DE SERVIÇO'] = personalization['PAREDE - ÁREA DE SERVIÇO - NOME DA OPÇÃO'];
     tempObj['PAREDE - TERRAÇO'] = personalization['PAREDE - TERRAÇO - NOME DA OPÇÃO'];
     tempObj['PAREDE BOX - BANHO 1'] = personalization['PAREDE - BANHO 1 - BOX - NOME DA OPÇÃO'];
-    tempObj['PAREDE BANHEIRO - BANHO 1  '] = personalization['PAREDE - BANHEIRO - BANHO 1 - NOME DA OPÇÃO'];
+    tempObj['PAREDE BANHEIRO - BANHO 1  '] = personalization['PAREDE - COMPLETO OU SOMENTE O BOX'] != 'SB' ? personalization['PAREDE - BANHEIRO - BANHO 1 - NOME DA OPÇÃO'] : '';
     tempObj['PAREDE BOX - BANHO 2'] = personalization['PAREDE - BANHO 2 - BOX - NOME DA OPÇÃO'];
-    tempObj['PAREDE BANHEIRO - BANHO 2  '] = personalization['PAREDE - BANHEIRO - BANHO 2 - NOME DA OPÇÃO'];
+    tempObj['PAREDE BANHEIRO - BANHO 2  '] = personalization['PAREDE - COMPLETO OU SOMENTE O BOX'] != 'SB' ? personalization['PAREDE - BANHEIRO - BANHO 2 - NOME DA OPÇÃO'] : '';
 
     return tempObj;
   }
