@@ -807,13 +807,13 @@ export class ContractGeneratorComponent implements OnInit {
       "TIPO": personalization['TIPO']
     };
 
-    tempObj['PAREDE - COZINHA'] = personalization['PAREDE - COZINHA - NOME DA OPÇÃO'];
-    tempObj['PAREDE - ÁREA DE SERVIÇO'] = personalization['PAREDE - ÁREA DE SERVIÇO - NOME DA OPÇÃO'];
-    tempObj['PAREDE - TERRAÇO'] = personalization['PAREDE - TERRAÇO - NOME DA OPÇÃO'];
-    tempObj['PAREDE BOX - BANHO 1'] = personalization['PAREDE - BANHO 1 - BOX - NOME DA OPÇÃO'];
-    tempObj['PAREDE BANHEIRO - BANHO 1  '] = personalization['PAREDE - COMPLETO OU SOMENTE O BOX'] != 'SB' ? personalization['PAREDE - BANHEIRO - BANHO 1 - NOME DA OPÇÃO'] : '';
-    tempObj['PAREDE BOX - BANHO 2'] = personalization['PAREDE - BANHO 2 - BOX - NOME DA OPÇÃO'];
-    tempObj['PAREDE BANHEIRO - BANHO 2  '] = personalization['PAREDE - COMPLETO OU SOMENTE O BOX'] != 'SB' ? personalization['PAREDE - BANHEIRO - BANHO 2 - NOME DA OPÇÃO'] : '';
+    tempObj['PAREDE - COZINHA'] = personalization['PAREDE - COZINHA - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
+    tempObj['PAREDE - ÁREA DE SERVIÇO'] = personalization['PAREDE - ÁREA DE SERVIÇO - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
+    tempObj['PAREDE - TERRAÇO'] = personalization['PAREDE - TERRAÇO - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
+    tempObj['PAREDE BOX - BANHO 1'] = personalization['PAREDE - BANHO 1 - BOX - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
+    tempObj['PAREDE BANHEIRO - BANHO 1  '] = personalization['PAREDE - COMPLETO OU SOMENTE O BOX'] != 'SB' ? personalization['PAREDE - BANHEIRO - BANHO 1 - NOME DA OPÇÃO']?.replace('Lux', 'Satin') : '';
+    tempObj['PAREDE BOX - BANHO 2'] = personalization['PAREDE - BANHO 2 - BOX - NOME DA OPÇÃO']?.replace('Lux', 'Satin');
+    tempObj['PAREDE BANHEIRO - BANHO 2  '] = personalization['PAREDE - COMPLETO OU SOMENTE O BOX'] != 'SB' ? personalization['PAREDE - BANHEIRO - BANHO 2 - NOME DA OPÇÃO']?.replace('Lux', 'Satin') : '';
 
     return tempObj;
   }

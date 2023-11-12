@@ -707,7 +707,12 @@ export class ContractService {
   getValue(arr: any, key: any) {
     for(let i=0; i<arr.length; i++) {
       if(arr[i].key == key) {
-        return arr[i].value;
+        if(typeof arr[i].value === 'string' && arr[i].value !== '') {
+          return arr[i].value?.replace('Lux', 'Satin')
+        } else {
+          return arr[i].value;
+        }
+
       }
     }
     return '';
